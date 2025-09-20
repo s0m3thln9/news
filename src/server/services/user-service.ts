@@ -7,6 +7,7 @@ import { prisma } from '@/server/prisma-client'
 import { omit } from '@/server/utils/omit'
 import { generateVerificationCode } from '@/server/utils/generate-verification-code'
 import { sendVerificationEmail } from '@/server/utils/send-verification-email'
+import { sendResetPasswordEmail } from '@/server/utils/send-reset-password-email'
 
 const createUserSchema = z.object({
   firstName: z.string().min(1, 'Имя обязательно'),
@@ -143,23 +144,22 @@ export const confirmEmail = async (
 ) => {
   confirmEmailSchema.parse({ code })
 
-  console.log(code, uuid)
-
-  const emailVerifications: UserEmailVerification[] =
-    await prisma.userEmailVerification.findMany({
+  const emailVerification: UserEmailVerification | null =
+    await prisma.userEmailVerification.findFirst({
       where: {
         userUuid: uuid,
         code,
+        status: 'PENDING',
       },
     })
 
-  if (emailVerifications.length === 0) {
+  if (!emailVerification) {
     throw new ApiError({ status: 400, message: 'Неверный код' })
   }
 
   await prisma.userEmailVerification.update({
     where: {
-      uuid: emailVerifications[0].uuid,
+      uuid: emailVerification.uuid,
     },
     data: {
       status: 'FULLFILLED',
@@ -171,6 +171,85 @@ export const confirmEmail = async (
     },
     data: {
       emailVerificationAt: new Date().toISOString(),
+    },
+    omit: {
+      password: true,
+    },
+  })
+}
+
+export const requestPasswordReset = async (uuid: string) => {
+  const code = generateVerificationCode()
+
+  const user: User | null = await prisma.user.findFirst({
+    where: {
+      uuid,
+    },
+  })
+
+  if (!user) {
+    throw new ApiError({ status: 401, message: 'Не авторизован' })
+  }
+
+  await prisma.userEmailVerification.create({
+    data: {
+      code,
+      userUuid: uuid,
+    },
+  })
+
+  await sendResetPasswordEmail(user.email, code)
+}
+
+const resetPasswordSchema = z.object({
+  code: z
+    .string()
+    .min(6, 'Email обязателен')
+    .max(6, 'Код должен быть 6-ти значным'),
+  password: z
+    .string()
+    .min(8, 'Пароль слишком короткий')
+    .max(64, 'Пароль слишком длинный'),
+})
+
+export type ResetPasswordRequestBody = z.infer<typeof resetPasswordSchema>
+
+export const resetPassword = async (
+  uuid: string,
+  body: ResetPasswordRequestBody,
+) => {
+  resetPasswordSchema.parse(body)
+
+  const emailVerification: UserEmailVerification | null =
+    await prisma.userEmailVerification.findFirst({
+      where: {
+        userUuid: uuid,
+        code: body.code,
+        status: 'PENDING',
+      },
+    })
+
+  if (!emailVerification) {
+    throw new ApiError({ status: 400, message: 'Неверный код' })
+  }
+
+  await prisma.userEmailVerification.update({
+    where: {
+      uuid: emailVerification.uuid,
+    },
+    data: {
+      status: 'FULLFILLED',
+    },
+  })
+  const hashedPassword = await bcrypt.hash(body.password, 12)
+
+  return prisma.user.update({
+    where: {
+      uuid,
+    },
+    data: {
+      emailVerificationAt: new Date().toISOString(),
+      password: hashedPassword,
     },
     omit: {
       password: true,
