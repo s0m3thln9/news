@@ -1,10 +1,12 @@
 import bcrypt from 'bcrypt'
-import { Prisma, User } from '@/generated/prisma'
+import { Prisma, User, UserEmailVerification } from '@/generated/prisma'
 import { ApiError } from '@/types/api-response'
 import { UserDTO } from '@/types/dto/user'
 import z from 'zod'
 import { prisma } from '@/server/prisma-client'
 import { omit } from '@/server/utils/omit'
+import { generateVerificationCode } from '@/server/utils/generate-verification-code'
+import { sendVerificationEmail } from '@/server/utils/send-verification-email'
 
 const createUserSchema = z.object({
   firstName: z.string().min(1, 'Имя обязательно'),
@@ -28,23 +30,31 @@ export const createUser = async (
 ): Promise<UserDTO> => {
   createUserSchema.parse(body)
 
-  const hashedPassword = await bcrypt.hash(
-    body.password,
-    process.env.BCRYPT_SALT_ROUNDS || 12,
-  )
+  const hashedPassword = await bcrypt.hash(body.password, 12)
 
   try {
-    return await prisma.user.create({
+    const code = generateVerificationCode()
+
+    const user: UserDTO = await prisma.user.create({
       data: {
         email: body.email,
         firstName: body.firstName,
         lastName: body.lastName,
         password: hashedPassword,
+        userEmailVerification: {
+          create: {
+            code,
+          },
+        },
       },
       omit: {
         password: true,
       },
     })
+
+    await sendVerificationEmail(user.email, code)
+
+    return user
   } catch (e) {
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
@@ -116,4 +126,54 @@ export const getMe = async (uuid: string): Promise<UserDTO> => {
   }
 
   return user
+}
+
+const confirmEmailSchema = z.object({
+  code: z
+    .string()
+    .min(6, 'Email обязателен')
+    .max(6, 'Код должен быть 6-ти значным'),
+})
+
+export type ConfirmEmailRequestBody = z.infer<typeof confirmEmailSchema>
+
+export const confirmEmail = async (
+  uuid: string,
+  { code }: ConfirmEmailRequestBody,
+) => {
+  confirmEmailSchema.parse({ code })
+
+  console.log(code, uuid)
+
+  const emailVerifications: UserEmailVerification[] =
+    await prisma.userEmailVerification.findMany({
+      where: {
+        userUuid: uuid,
+        code,
+      },
+    })
+
+  if (emailVerifications.length === 0) {
+    throw new ApiError({ status: 400, message: 'Неверный код' })
+  }
+
+  await prisma.userEmailVerification.update({
+    where: {
+      uuid: emailVerifications[0].uuid,
+    },
+    data: {
+      status: 'FULLFILLED',
+    },
+  })
+  return prisma.user.update({
+    where: {
+      uuid,
+    },
+    data: {
+      emailVerificationAt: new Date().toISOString(),
+    },
+    omit: {
+      password: true,
+    },
+  })
 }

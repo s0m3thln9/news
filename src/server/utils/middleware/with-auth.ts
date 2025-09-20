@@ -9,7 +9,7 @@ export const withAuth = (handler: Handler) => {
     const cookieHeader = request.headers.get('cookie') || ''
 
     const cookies = parse(cookieHeader)
-    const token = cookies.token
+    const token = cookies.jwt
 
     if (!token) {
       throw new ApiError({ status: 401, message: 'Не авторизован' })

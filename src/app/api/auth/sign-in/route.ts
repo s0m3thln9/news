@@ -6,7 +6,7 @@ import {
 import { handleResponse } from '@/server/utils/handle-response'
 import { withJsonBody } from '@/server/utils/middleware/with-json-body'
 import { withErrorHandler } from '@/server/utils/middleware/with-error-handler'
-import { generateJwtCookie } from '@/server/utils/generate-jwt-token'
+import { generateJwtCookie } from '@/server/utils/generate-jwt-cookie'
 import { withAuth } from '@/server/utils/middleware/with-auth'
 
 /**

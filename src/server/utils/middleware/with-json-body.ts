@@ -1,9 +1,9 @@
 import { ApiError } from '@/types/api-response'
 import { handleError } from '@/server/utils/handle-error'
 
-type Handler<T> = (body: T) => Promise<Response>
+type JsonHandler<T> = (body: T, request: Request) => Promise<Response>
 
-export const withJsonBody = <T>(handler: Handler<T>) => {
+export const withJsonBody = <T>(handler: JsonHandler<T>) => {
   return async (request: Request) => {
     let body: T
     try {
@@ -16,6 +16,6 @@ export const withJsonBody = <T>(handler: Handler<T>) => {
         }),
       )
     }
-    return handler(body)
+    return handler(body, request)
   }
 }
