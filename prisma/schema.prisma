@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  uuid      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email     String   @unique
+  firstName String
+  lastName  String
+  password  String
+  role      UserRole @default(USER)
+  createdAt DateTime @default(dbgenerated("NOW()")) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
+}
+
+enum UserRole {
+  USER // обычный пользователь: просмотр новостей, редактирование своих данных
+  EDITOR // редактор: постит в своей категории
+  ADMIN // админ: назначает роли, создаёт категории, полный доступ
+}
