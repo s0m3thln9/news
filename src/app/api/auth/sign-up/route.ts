@@ -1,14 +1,14 @@
 import {
   createUser,
   CreateUserRequestBody,
-} from '@/server/services/userService'
-import { handleResponse } from '@/server/utils/handleResponse'
-import { withJsonBody } from '@/server/utils/middleware/parseJson'
-import { withErrorHandler } from '@/server/utils/middleware/errorHandle'
+} from '@/server/services/user-service'
+import { handleResponse } from '@/server/utils/handle-response'
+import { withJsonBody } from '@/server/utils/middleware/with-json-body'
+import { withErrorHandler } from '@/server/utils/middleware/with-error-handler'
 
 /**
  * @swagger
- * /api/auth:
+ * /api/auth/sign-up:
  *   post:
  *     summary: Создание пользователя
  *     requestBody:
@@ -28,7 +28,7 @@ import { withErrorHandler } from '@/server/utils/middleware/errorHandle'
  *                 format: email
  *     responses:
  *       200:
- *         description: Успешное создание пользователя
+ *         description: Пользователь успешно создан
  *       400:
  *         description: Некорректные данные (например, invalid email)
  *       500:

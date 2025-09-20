@@ -1,4 +1,4 @@
-import { handleError } from '@/server/utils/handleError'
+import { handleError } from '@/server/utils/handle-error'
 
 type Handler = (request: Request) => Promise<Response>
 

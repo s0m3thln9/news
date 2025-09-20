@@ -1,5 +1,5 @@
 import { ApiError, getApiError } from '@/types/api-response'
-import { handleResponse } from '@/server/utils/handleResponse'
+import { handleResponse } from '@/server/utils/handle-response'
 import { ZodError } from 'zod'
 
 export const handleError = (error: unknown) => {

@@ -1,5 +1,5 @@
 import { ApiError } from '@/types/api-response'
-import { handleError } from '@/server/utils/handleError'
+import { handleError } from '@/server/utils/handle-error'
 
 type Handler<T> = (body: T) => Promise<Response>
 

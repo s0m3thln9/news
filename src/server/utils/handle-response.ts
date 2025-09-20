@@ -4,6 +4,10 @@ export const handleResponse = (
   message: string,
   status: number,
   data?: unknown,
+  headers?: {
+    'Set-Cookie': string
+    'Content-Type': 'application/json'
+  },
 ) => {
   return NextResponse.json(
     {
@@ -11,6 +15,6 @@ export const handleResponse = (
       message,
       data,
     },
-    { status },
+    { status, headers },
   )
 }
