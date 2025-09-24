@@ -78,7 +78,11 @@ function Header() {
   }, [])
 
   return (
-    <AppBar color="secondary" position="static">
+    <AppBar
+      color="secondary"
+      position="static"
+      className="border-b-[5px] border-[#5BB3EA]"
+    >
       <Toolbar
         variant="dense"
         color="secondary"
