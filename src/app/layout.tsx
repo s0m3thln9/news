@@ -1,11 +1,15 @@
+import theme from "@/theme/theme"
+import { ThemeProvider } from "@mui/system"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import type { ReactNode } from "react"
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter"
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin", "cyrillic"],
+  display: "swap",
   weight: ["400", "700"],
 })
 
@@ -68,7 +72,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${inter.variable} antialiased`}>{children}</body>
+      <body className={`${inter.variable} antialiased`}>
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        </AppRouterCacheProvider>
+      </body>
     </html>
   )
 }
