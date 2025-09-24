@@ -78,7 +78,7 @@ function Header() {
   }, [])
 
   return (
-    <AppBar position="sticky" color="secondary">
+    <AppBar color="secondary">
       <Toolbar
         variant="dense"
         color="secondary"

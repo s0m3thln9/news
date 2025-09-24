@@ -1,3 +1,4 @@
+import Header from "@/components/Header"
 import theme from "@/theme/theme"
 import { ThemeProvider } from "@mui/system"
 import type { Metadata } from "next"
@@ -74,7 +75,10 @@ export default function RootLayout({
     <html lang="ru">
       <body className={`${inter.variable} antialiased`}>
         <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          <ThemeProvider theme={theme}>
+            <Header />
+            {children}
+          </ThemeProvider>
         </AppRouterCacheProvider>
       </body>
     </html>
