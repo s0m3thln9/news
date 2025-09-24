@@ -19,6 +19,7 @@ model User {
   emailVerificationAt   DateTime?
   createdAt             DateTime                @default(dbgenerated("NOW()")) @db.Timestamptz(3)
   updatedAt             DateTime                @updatedAt @db.Timestamptz(3)
+  editorLocations       EditorLocation[]
 }
 
 model UserEmailVerification {
@@ -40,4 +41,24 @@ enum UserRole {
 enum UserEmailVerificationStatus {
   PENDING
   FULLFILLED
+}
+
+model Location {
+  uuid      String           @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  title     String
+  editors   EditorLocation[]
+  createdAt DateTime         @default(dbgenerated("NOW()")) @db.Timestamptz(3)
+  updatedAt DateTime         @updatedAt @db.Timestamptz(3)
+}
+
+model EditorLocation {
+  uuid         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user         User     @relation(fields: [userUuid], references: [uuid])
+  userUuid     String   @db.Uuid
+  location     Location @relation(fields: [locationUuid], references: [uuid])
+  locationUuid String   @db.Uuid
+  createdAt    DateTime @default(dbgenerated("NOW()")) @db.Timestamptz(3)
+  updatedAt    DateTime @updatedAt @db.Timestamptz(3)
+
+  @@unique([userUuid, locationUuid])
 }
