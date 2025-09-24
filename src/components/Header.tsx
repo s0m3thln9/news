@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import {
   AppBar,
   Button,
@@ -85,6 +86,29 @@ function Header() {
           >
             Войти
           </Button>
+        </Box>
+      </Toolbar>
+      <Toolbar
+        variant="dense"
+        className="flex items-center justify-between py-5"
+        sx={{ bgcolor: "background.default" }}
+      >
+        <Box className="flex items-center">
+          <Image
+            src="/logo.svg"
+            alt="Логотип"
+            width={147}
+            height={74}
+            priority
+          />
+        </Box>
+        <Box className="flex items-center">
+          <Image
+            src="/header.svg"
+            alt="Декоративная картинка"
+            width={766}
+            height={80}
+          />
         </Box>
       </Toolbar>
     </AppBar>
