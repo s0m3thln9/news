@@ -75,7 +75,7 @@ function LastNews() {
               <Typography
                 variant="h4"
                 gutterBottom
-                className="line-clamp-3 leading-tight break-words"
+                className="line-clamp-3 leading-tight font-bold break-words"
               >
                 {featuredNews.title}
               </Typography>
@@ -86,6 +86,7 @@ function LastNews() {
                   color="primary"
                   variant="outlined"
                   sx={{ color: "common.white" }}
+                  className="font-bold"
                 />
               </Box>
             </Box>
@@ -108,7 +109,7 @@ function LastNews() {
                     <Typography
                       variant="h5"
                       gutterBottom
-                      className="line-clamp-2 leading-tight break-words"
+                      className="line-clamp-2 leading-tight font-bold break-words"
                     >
                       {item.title}
                     </Typography>
@@ -120,6 +121,7 @@ function LastNews() {
                         color="primary"
                         variant="outlined"
                         sx={{ color: "common.white" }}
+                        className="font-bold"
                       />
                     </Box>
                   </Box>

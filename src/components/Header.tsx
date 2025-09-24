@@ -93,13 +93,15 @@ function Header() {
             sx={{ bgcolor: "primary.main" }}
             className="flex items-center self-stretch px-5"
           >
-            <Typography variant="body2">{currentDate}</Typography>
+            <Typography variant="body2" className="font-bold">
+              {currentDate}
+            </Typography>
           </Box>
           <Button
             variant="text"
             sx={{ color: "common.white" }}
             size="medium"
-            className="normal-case"
+            className="font-bold normal-case"
           >
             Недавний пост
           </Button>
@@ -120,13 +122,14 @@ function Header() {
                   padding: "4px 0",
                 },
               }}
-              className="text-sm"
+              className="text-sm font-bold"
             >
               <MenuItem
                 value="ru"
                 sx={{
                   color: "primary.main",
                 }}
+                className="font-bold"
               >
                 RU
               </MenuItem>
@@ -135,6 +138,7 @@ function Header() {
                 sx={{
                   color: "primary.main",
                 }}
+                className="font-bold"
               >
                 EN
               </MenuItem>
@@ -147,7 +151,7 @@ function Header() {
             variant="text"
             sx={{ color: "common.white" }}
             size="medium"
-            className="normal-case"
+            className="font-bold normal-case"
           >
             Войти
           </Button>
@@ -185,7 +189,7 @@ function Header() {
           <Button
             variant="text"
             size="medium"
-            className="relative flex items-center self-stretch rounded-none px-5 normal-case transition-all duration-300"
+            className="relative flex items-center self-stretch rounded-none px-5 font-bold normal-case transition-all duration-300"
             sx={{
               color: "common.white",
               bgcolor: activeTab === "home" ? "primary.main" : "transparent",
@@ -243,7 +247,7 @@ function Header() {
                 },
                 minWidth: 230,
               }}
-              className="rounded-none text-sm transition-all duration-300"
+              className="rounded-none text-sm font-bold transition-all duration-300"
             >
               <MenuItem
                 value=""
@@ -251,6 +255,7 @@ function Header() {
                 sx={{
                   color: "primary.main",
                 }}
+                className="font-bold"
               >
                 Выберите университет
               </MenuItem>
@@ -259,6 +264,7 @@ function Header() {
                 sx={{
                   color: "primary.main",
                 }}
+                className="font-bold"
               >
                 ГГУ им. Франциска Скорины
               </MenuItem>
@@ -267,6 +273,7 @@ function Header() {
                 sx={{
                   color: "primary.main",
                 }}
+                className="font-bold"
               >
                 ГГТУ им. П.О. Сухого
               </MenuItem>
@@ -275,6 +282,7 @@ function Header() {
                 sx={{
                   color: "primary.main",
                 }}
+                className="font-bold"
               >
                 ГГМУ
               </MenuItem>
@@ -283,6 +291,7 @@ function Header() {
                 sx={{
                   color: "primary.main",
                 }}
+                className="font-bold"
               >
                 БелГУТ
               </MenuItem>
@@ -309,7 +318,7 @@ function Header() {
               },
             }}
             onClick={handleNewsClick}
-            className="relative flex items-center self-stretch rounded-none px-5 normal-case transition-all duration-300"
+            className="relative flex items-center self-stretch rounded-none px-5 font-bold normal-case transition-all duration-300"
           >
             Вести братского народа
           </Button>
@@ -328,6 +337,7 @@ function Header() {
                 color: "common.white",
                 padding: "16px",
                 fontSize: 14,
+                fontWeight: "bold",
               },
             }}
             slotProps={{
