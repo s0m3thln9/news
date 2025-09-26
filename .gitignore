@@ -43,3 +43,6 @@ next-env.d.ts
 #ide
 /.idea
 /src/generated/prisma
+
+#uploaded files
+/public/uploads

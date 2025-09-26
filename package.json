@@ -18,6 +18,7 @@
     "@mui/material-nextjs": "^7.3.2",
     "bcrypt": "^6.0.0",
     "cookie": "^1.0.2",
+    "formidable": "^3.5.4",
     "jsonwebtoken": "^9.0.2",
     "next": "15.5.3",
     "nodemailer": "^7.0.6",
@@ -30,6 +31,7 @@
     "zod": "^4.1.9"
   },
   "devDependencies": {
+    "@types/formidable": "^3.4.5",
     "@types/nodemailer": "^7.0.1",
     "@types/bcrypt": "^6.0.0",
     "@types/jsonwebtoken": "^9.0.10",
