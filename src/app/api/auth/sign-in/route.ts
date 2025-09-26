@@ -2,12 +2,15 @@ import {
   getMe,
   signInUser,
   SignInUserRequestBody,
-} from '@/server/services/user-service'
-import { handleResponse } from '@/server/utils/handle-response'
-import { withJsonBody } from '@/server/utils/middleware/with-json-body'
-import { withErrorHandler } from '@/server/utils/middleware/with-error-handler'
-import { generateJwtCookie } from '@/server/utils/generate-jwt-cookie'
-import { withAuth } from '@/server/utils/middleware/with-auth'
+} from "@/server/services/user-service"
+import { handleResponse } from "@/server/utils/handle-response"
+import { generateJwtCookie } from "@/server/utils/generate-jwt-cookie"
+import {
+  auth,
+  createRoute,
+  errorBoundary,
+  jsonBody,
+} from "@/server/utils/middleware/compose"
 
 /**
  * @swagger
@@ -35,20 +38,36 @@ import { withAuth } from '@/server/utils/middleware/with-auth'
  *       500:
  *         description: Внутренняя ошибка сервера
  */
-export const POST = withErrorHandler(
+/*export const POST = withErrorHandler(
   withJsonBody<SignInUserRequestBody>(async (body) => {
     const signedInUser = await signInUser(body)
 
     return handleResponse(
-      'Пользователь успешно авторизован',
+      "Пользователь успешно авторизован",
       200,
       signedInUser,
       {
-        'Content-Type': 'application/json',
-        'Set-Cookie': generateJwtCookie(signedInUser.uuid),
+        "Content-Type": "application/json",
+        "Set-Cookie": generateJwtCookie(signedInUser.uuid),
       },
     )
   }),
+)*/
+export const POST = createRoute(
+  [errorBoundary(), jsonBody<SignInUserRequestBody>()],
+  async ({ body }) => {
+    const signedInUser = await signInUser(body as SignInUserRequestBody)
+
+    return handleResponse(
+      "Пользователь успешно авторизован",
+      200,
+      signedInUser,
+      {
+        "Content-Type": "application/json",
+        "Set-Cookie": generateJwtCookie(signedInUser.uuid),
+      },
+    )
+  },
 )
 
 /**
@@ -64,9 +83,10 @@ export const POST = withErrorHandler(
  *       500:
  *         description: Внутренняя ошибка сервера
  */
-export const GET = withErrorHandler(
-  withAuth(async (uuid) => {
-    const signedInUser = await getMe(uuid)
-    return handleResponse('Пользователь успешно авторизован', 200, signedInUser)
-  }),
+export const GET = createRoute(
+  [errorBoundary(), auth()],
+  async ({ userUuid }) => {
+    const signedInUser = await getMe(userUuid as string)
+    return handleResponse("Пользователь успешно авторизован", 200, signedInUser)
+  },
 )

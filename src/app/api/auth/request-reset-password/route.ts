@@ -1,7 +1,10 @@
-import { requestPasswordReset } from '@/server/services/user-service'
-import { handleResponse } from '@/server/utils/handle-response'
-import { withErrorHandler } from '@/server/utils/middleware/with-error-handler'
-import { withAuth } from '@/server/utils/middleware/with-auth'
+import { requestPasswordReset } from "@/server/services/user-service"
+import { handleResponse } from "@/server/utils/handle-response"
+import {
+  auth,
+  createRoute,
+  errorBoundary,
+} from "@/server/utils/middleware/compose"
 
 /**
  * @swagger
@@ -18,11 +21,11 @@ import { withAuth } from '@/server/utils/middleware/with-auth'
  *       500:
  *         description: Внутренняя ошибка сервера
  */
+export const POST = createRoute(
+  [errorBoundary(), auth()],
+  async ({ userUuid }) => {
+    await requestPasswordReset(userUuid as string)
 
-const requestResetPasswordHandler = async (uuid: string) => {
-  await requestPasswordReset(uuid)
-
-  return handleResponse('Запрос на сброс пароля создан', 200)
-}
-
-export const POST = withErrorHandler(withAuth(requestResetPasswordHandler))
+    return handleResponse("Запрос на сброс пароля создан", 200)
+  },
+)

@@ -1,12 +1,15 @@
 import {
   resetPassword,
   ResetPasswordRequestBody,
-} from '@/server/services/user-service'
-import { handleResponse } from '@/server/utils/handle-response'
-import { withErrorHandler } from '@/server/utils/middleware/with-error-handler'
-import { withAuth } from '@/server/utils/middleware/with-auth'
-import { withJsonBody } from '@/server/utils/middleware/with-json-body'
-import { UserDTO } from '@/types/dto/user'
+} from "@/server/services/user-service"
+import {
+  auth,
+  createRoute,
+  errorBoundary,
+  jsonBody,
+} from "@/server/utils/middleware/compose"
+import { UserDTO } from "@/types/dto/user"
+import { handleResponse } from "@/server/utils/handle-response"
 
 /**
  * @swagger
@@ -30,13 +33,14 @@ import { UserDTO } from '@/types/dto/user'
  *       500:
  *         description: Внутренняя ошибка сервера
  */
+export const POST = createRoute(
+  [errorBoundary(), auth(), jsonBody<ResetPasswordRequestBody>()],
+  async ({ body, userUuid }) => {
+    const updatedUser: UserDTO = await resetPassword(
+      body as ResetPasswordRequestBody,
+      userUuid as string,
+    )
 
-export const POST = withErrorHandler(
-  withAuth((uuid, request) =>
-    withJsonBody<ResetPasswordRequestBody>(async (body) => {
-      const updatedUser: UserDTO = await resetPassword(uuid, body)
-
-      return handleResponse('Пароль успешно обновлен', 200, updatedUser)
-    })(request),
-  ),
+    return handleResponse("Пароль успешно обновлен", 200, updatedUser)
+  },
 )
