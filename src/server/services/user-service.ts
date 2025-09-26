@@ -1,27 +1,27 @@
-import bcrypt from 'bcrypt'
-import { Prisma, User, UserEmailVerification } from '@/generated/prisma'
-import { ApiError } from '@/types/api-response'
-import { UserDTO } from '@/types/dto/user'
-import z from 'zod'
-import { prisma } from '@/server/prisma-client'
-import { omit } from '@/server/utils/omit'
-import { generateVerificationCode } from '@/server/utils/generate-verification-code'
-import { sendVerificationEmail } from '@/server/utils/send-verification-email'
-import { sendResetPasswordEmail } from '@/server/utils/send-reset-password-email'
+import bcrypt from "bcrypt"
+import { Prisma, User, UserEmailVerification } from "@/generated/prisma"
+import { ApiError } from "@/types/api-response"
+import { UserDTO } from "@/types/dto/user"
+import z from "zod"
+import { prisma } from "@/server/prisma-client"
+import { omit } from "@/server/utils/omit"
+import { generateVerificationCode } from "@/server/utils/generate-verification-code"
+import { sendVerificationEmail } from "@/server/utils/send-verification-email"
+import { sendResetPasswordEmail } from "@/server/utils/send-reset-password-email"
 
 const createUserSchema = z.object({
-  firstName: z.string().min(1, 'Имя обязательно'),
-  lastName: z.string().min(1, 'Фамилия обязательна'),
+  firstName: z.string().min(1, "Имя обязательно"),
+  lastName: z.string().min(1, "Фамилия обязательна"),
   email: z
     .string()
-    .min(1, 'Email обязателен')
+    .min(1, "Email обязателен")
     .refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-      message: 'Некорректный email адрес',
+      message: "Некорректный email адрес",
     }),
   password: z
     .string()
-    .min(8, 'Пароль слишком короткий')
-    .max(64, 'Пароль слишком длинный'),
+    .min(8, "Пароль слишком короткий")
+    .max(64, "Пароль слишком длинный"),
 })
 
 export type CreateUserRequestBody = z.infer<typeof createUserSchema>
@@ -59,16 +59,16 @@ export const createUser = async (
   } catch (e) {
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
-      e.code === 'P2002'
+      e.code === "P2002"
     ) {
       throw new ApiError({
         status: 400,
-        message: 'Пользователь с таким email уже есть',
+        message: "Пользователь с таким email уже есть",
       })
     }
     throw new ApiError({
       status: 500,
-      message: 'Неизвестная ошибка',
+      message: "Неизвестная ошибка",
     })
   }
 }
@@ -76,14 +76,14 @@ export const createUser = async (
 const signInUserSchema = z.object({
   email: z
     .string()
-    .min(1, 'Email обязателен')
+    .min(1, "Email обязателен")
     .refine((val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val), {
-      message: 'Некорректный email адрес',
+      message: "Некорректный email адрес",
     }),
   password: z
     .string()
-    .min(8, 'Пароль слишком короткий')
-    .max(64, 'Пароль слишком длинный'),
+    .min(8, "Пароль слишком короткий")
+    .max(64, "Пароль слишком длинный"),
 })
 
 export type SignInUserRequestBody = z.infer<typeof signInUserSchema>
@@ -100,16 +100,16 @@ export const signInUser = async (
   })
 
   if (!user) {
-    throw new ApiError({ status: 400, message: 'Неверный email или пароль' })
+    throw new ApiError({ status: 400, message: "Неверный email или пароль" })
   }
 
   const isPasswordValid = await bcrypt.compare(body.password, user.password)
 
   if (!isPasswordValid) {
-    throw new ApiError({ status: 400, message: 'Неверный email или пароль' })
+    throw new ApiError({ status: 400, message: "Неверный email или пароль" })
   }
 
-  return omit(user, ['password'])
+  return omit(user, ["password"])
 }
 
 export const getMe = async (uuid: string): Promise<UserDTO> => {
@@ -123,7 +123,7 @@ export const getMe = async (uuid: string): Promise<UserDTO> => {
   })
 
   if (!user) {
-    throw new ApiError({ status: 401, message: 'Не авторизован' })
+    throw new ApiError({ status: 401, message: "Не авторизован" })
   }
 
   return user
@@ -132,8 +132,8 @@ export const getMe = async (uuid: string): Promise<UserDTO> => {
 const confirmEmailSchema = z.object({
   code: z
     .string()
-    .min(6, 'Email обязателен')
-    .max(6, 'Код должен быть 6-ти значным'),
+    .min(6, "Email обязателен")
+    .max(6, "Код должен быть 6-ти значным"),
 })
 
 export type ConfirmEmailRequestBody = z.infer<typeof confirmEmailSchema>
@@ -149,12 +149,12 @@ export const confirmEmail = async (
       where: {
         userUuid: uuid,
         code,
-        status: 'PENDING',
+        status: "PENDING",
       },
     })
 
   if (!emailVerification) {
-    throw new ApiError({ status: 400, message: 'Неверный код' })
+    throw new ApiError({ status: 400, message: "Неверный код" })
   }
 
   await prisma.userEmailVerification.update({
@@ -162,7 +162,7 @@ export const confirmEmail = async (
       uuid: emailVerification.uuid,
     },
     data: {
-      status: 'FULLFILLED',
+      status: "FULLFILLED",
     },
   })
   return prisma.user.update({
@@ -188,7 +188,7 @@ export const requestPasswordReset = async (uuid: string) => {
   })
 
   if (!user) {
-    throw new ApiError({ status: 401, message: 'Не авторизован' })
+    throw new ApiError({ status: 401, message: "Не авторизован" })
   }
 
   await prisma.userEmailVerification.create({
@@ -204,19 +204,19 @@ export const requestPasswordReset = async (uuid: string) => {
 const resetPasswordSchema = z.object({
   code: z
     .string()
-    .min(6, 'Email обязателен')
-    .max(6, 'Код должен быть 6-ти значным'),
+    .min(6, "Email обязателен")
+    .max(6, "Код должен быть 6-ти значным"),
   password: z
     .string()
-    .min(8, 'Пароль слишком короткий')
-    .max(64, 'Пароль слишком длинный'),
+    .min(8, "Пароль слишком короткий")
+    .max(64, "Пароль слишком длинный"),
 })
 
 export type ResetPasswordRequestBody = z.infer<typeof resetPasswordSchema>
 
 export const resetPassword = async (
-  uuid: string,
   body: ResetPasswordRequestBody,
+  uuid?: string,
 ) => {
   resetPasswordSchema.parse(body)
 
@@ -225,12 +225,12 @@ export const resetPassword = async (
       where: {
         userUuid: uuid,
         code: body.code,
-        status: 'PENDING',
+        status: "PENDING",
       },
     })
 
   if (!emailVerification) {
-    throw new ApiError({ status: 400, message: 'Неверный код' })
+    throw new ApiError({ status: 400, message: "Неверный код" })
   }
 
   await prisma.userEmailVerification.update({
@@ -238,7 +238,7 @@ export const resetPassword = async (
       uuid: emailVerification.uuid,
     },
     data: {
-      status: 'FULLFILLED',
+      status: "FULLFILLED",
     },
   })
   const hashedPassword = await bcrypt.hash(body.password, 12)

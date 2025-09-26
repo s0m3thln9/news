@@ -1,6 +1,4 @@
-import { swaggerSpec } from '@/libs/swagger'
-import { NextResponse } from 'next/server'
+import { swaggerSpec } from "@/libs/swagger"
+import { NextResponse } from "next/server"
 
-export const GET = async () => {
-  return NextResponse.json(swaggerSpec)
-}
+export const GET = async () => NextResponse.json(swaggerSpec)

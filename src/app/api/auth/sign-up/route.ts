@@ -1,10 +1,13 @@
 import {
   createUser,
   CreateUserRequestBody,
-} from '@/server/services/user-service'
-import { handleResponse } from '@/server/utils/handle-response'
-import { withJsonBody } from '@/server/utils/middleware/with-json-body'
-import { withErrorHandler } from '@/server/utils/middleware/with-error-handler'
+} from "@/server/services/user-service"
+import { handleResponse } from "@/server/utils/handle-response"
+import {
+  createRoute,
+  errorBoundary,
+  jsonBody,
+} from "@/server/utils/middleware/compose"
 
 /**
  * @swagger
@@ -34,9 +37,10 @@ import { withErrorHandler } from '@/server/utils/middleware/with-error-handler'
  *       500:
  *         description: Внутренняя ошибка сервера
  */
-export const POST = withErrorHandler(
-  withJsonBody<CreateUserRequestBody>(async (body) => {
-    const createdUser = await createUser(body)
-    return handleResponse('Пользователь успешно создан', 200, createdUser)
-  }),
+export const POST = createRoute(
+  [errorBoundary(), jsonBody<CreateUserRequestBody>()],
+  async ({ body }) => {
+    const createdUser = await createUser(body as CreateUserRequestBody)
+    return handleResponse("Пользователь успешно создан", 200, createdUser)
+  },
 )

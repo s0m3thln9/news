@@ -1,8 +1,5 @@
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
-import { $Enums } from "@/generated/prisma"
-import UserRole = $Enums.UserRole
-import { ApiError } from "@/types/api-response"
 
 const createLocationSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -10,25 +7,36 @@ const createLocationSchema = z.object({
 
 export type CreateLocationRequestBody = z.infer<typeof createLocationSchema>
 
-export const createLocation = async (
-  body: CreateLocationRequestBody,
-  uuid: string,
-) => {
-  const user = await prisma.user.findFirst({
-    where: {
-      uuid,
-    },
-  })
-
-  if (user?.role !== UserRole.ADMIN) {
-    throw new ApiError({ status: 403, message: "Нет доступа" })
-  }
-
+export const createLocation = async (body: CreateLocationRequestBody) => {
   createLocationSchema.parse(body)
 
   return prisma.location.create({
     data: {
       title: body.title,
     },
+  })
+}
+
+export const getLocations = async () => prisma.location.findMany()
+
+const updateLocationSchema = createLocationSchema.partial()
+
+export type UpdateLocationRequestBody = z.infer<typeof updateLocationSchema>
+
+export const updateLocation = async (
+  uuid: string,
+  body: UpdateLocationRequestBody,
+) => {
+  updateLocationSchema.parse(body)
+
+  return prisma.location.update({
+    where: { uuid },
+    data: body,
+  })
+}
+
+export const deleteLocation = async (uuid: string) => {
+  return prisma.location.delete({
+    where: { uuid },
   })
 }
