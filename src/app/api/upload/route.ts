@@ -1,7 +1,11 @@
-import { writeFile } from "fs/promises"
-import { join } from "path"
-import { NextResponse, NextRequest } from "next/server"
-import { mkdir } from "fs/promises"
+import { NextRequest } from "next/server"
+import {
+  auth,
+  createRoute,
+  errorBoundary,
+} from "@/server/utils/middleware/compose"
+import { uploadImage } from "@/server/services/file-service"
+import { handleResponse } from "@/server/utils/handle-response"
 
 /**
  * @swagger
@@ -32,12 +36,9 @@ import { mkdir } from "fs/promises"
  *             schema:
  *               type: object
  *               properties:
- *                 message:
+ *                 public_id:
  *                   type: string
- *                   example: File uploaded successfully
- *                 filePath:
- *                   type: string
- *                   example: /uploads/1635123456789-image.jpg
+ *                   example: uploads/ecyk5mkmgo3jl7cersra.jpg
  *       400:
  *         description: Некорректные данные (отсутствует файл, неверный тип или размер превышен)
  *         content:
@@ -59,46 +60,10 @@ import { mkdir } from "fs/promises"
  *                   type: string
  *                   example: Failed to upload file
  */
-export async function POST(request: NextRequest) {
-  try {
-    const uploadDir = join(process.cwd(), "public/uploads")
-    await mkdir(uploadDir, { recursive: true })
-
-    const formData = await request.formData()
-    const file = formData.get("image")
-
-    if (!file || !(file instanceof File)) {
-      return NextResponse.json(
-        { error: "No file uploaded or invalid file" },
-        { status: 400 },
-      )
-    }
-
-    const allowedTypes = ["image/jpeg", "image/png", "image/gif"]
-    if (!allowedTypes.includes(file.type)) {
-      return NextResponse.json({ error: "Invalid file type" }, { status: 400 })
-    }
-
-    if (file.size > 5 * 1024 * 1024) {
-      return NextResponse.json({ error: "File too large" }, { status: 400 })
-    }
-
-    const buffer = Buffer.from(await file.arrayBuffer())
-
-    const fileName = `${Date.now()}-${file.name}`
-    const filePath = join(uploadDir, fileName)
-
-    await writeFile(filePath, buffer)
-
-    return NextResponse.json({
-      message: "File uploaded successfully",
-      filePath: `/uploads/${fileName}`,
-    })
-  } catch (error) {
-    console.error("Upload error:", error)
-    return NextResponse.json(
-      { error: "Failed to upload file" },
-      { status: 500 },
-    )
-  }
-}
+export const POST = createRoute(
+  [errorBoundary(), auth()],
+  async ({ request }) => {
+    const uploadedFileInfo = await uploadImage(request as NextRequest)
+    return handleResponse("File uploaded successfully", 200, uploadedFileInfo)
+  },
+)
