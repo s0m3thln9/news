@@ -47,6 +47,7 @@ enum UserEmailVerificationStatus {
 model Location {
   uuid      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   title     String
+  image     String?
   editors   User[]
   createdAt DateTime @default(dbgenerated("NOW()")) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)

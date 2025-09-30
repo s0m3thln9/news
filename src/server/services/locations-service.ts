@@ -3,6 +3,7 @@ import { prisma } from "@/server/prisma-client"
 
 const createLocationSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
+  image: z.string().optional(),
 })
 
 export type CreateLocationRequestBody = z.infer<typeof createLocationSchema>
@@ -11,9 +12,7 @@ export const createLocation = async (body: CreateLocationRequestBody) => {
   createLocationSchema.parse(body)
 
   return prisma.location.create({
-    data: {
-      title: body.title,
-    },
+    data: body,
   })
 }
 
