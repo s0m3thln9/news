@@ -11,6 +11,8 @@ import {
  * /api/auth/request-reset-password:
  *   post:
  *     summary: Запрос на сброс пароля
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: false
  *     responses:

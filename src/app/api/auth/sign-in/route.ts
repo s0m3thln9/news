@@ -17,6 +17,8 @@ import {
  * /api/auth/sign-in:
  *   post:
  *     summary: Авторизация пользователя
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
@@ -38,21 +40,6 @@ import {
  *       500:
  *         description: Внутренняя ошибка сервера
  */
-/*export const POST = withErrorHandler(
-  withJsonBody<SignInUserRequestBody>(async (body) => {
-    const signedInUser = await signInUser(body)
-
-    return handleResponse(
-      "Пользователь успешно авторизован",
-      200,
-      signedInUser,
-      {
-        "Content-Type": "application/json",
-        "Set-Cookie": generateJwtCookie(signedInUser.uuid),
-      },
-    )
-  }),
-)*/
 export const POST = createRoute(
   [errorBoundary(), jsonBody<SignInUserRequestBody>()],
   async ({ body }) => {
@@ -75,6 +62,8 @@ export const POST = createRoute(
  * /api/auth/sign-in:
  *   get:
  *     summary: Получение данных пользователя через jwt
+ *     tags:
+ *       - Auth
  *     responses:
  *       200:
  *         description: Пользователь успешно авторизован

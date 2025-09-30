@@ -39,3 +39,23 @@ export const deleteLocation = async (uuid: string) => {
     where: { uuid },
   })
 }
+
+const addEditorToLocationSchema = z.object({
+  editorUuid: z.string().min(1, "Uuid редактора обязательно"),
+})
+
+export type AddEditorToLocationRequestBody = z.infer<
+  typeof addEditorToLocationSchema
+>
+
+export const addEditorToLocation = async (
+  uuid: string,
+  body: AddEditorToLocationRequestBody,
+) => {
+  addEditorToLocationSchema.parse(body)
+
+  return prisma.location.update({
+    where: { uuid },
+    data: { editors: { connect: { uuid: body.editorUuid } } },
+  })
+}

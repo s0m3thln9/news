@@ -53,7 +53,7 @@ export const createUser = async (
       },
     })
 
-    await sendVerificationEmail(user.email, code)
+    void sendVerificationEmail(user.email, code)
 
     return user
   } catch (e) {

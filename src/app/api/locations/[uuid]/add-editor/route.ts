@@ -8,17 +8,16 @@ import {
 import { UserRole } from "@/generated/prisma"
 import { handleResponse } from "@/server/utils/handle-response"
 import {
+  addEditorToLocation,
+  AddEditorToLocationRequestBody,
   deleteLocation,
-  updateLocation,
-  UpdateLocationRequestBody,
 } from "@/server/services/locations-service"
-import { checkEditorAllowedToLocation } from "@/server/utils/check-editor-allowed-to-location"
 
 /**
  * @swagger
- * /api/locations/{uuid}:
- *   patch:
- *     summary: Обновление локации
+ * /api/locations/{uuid}/add-editor:
+ *   post:
+ *     summary: Добавление редактора для локации
  *     tags:
  *       - Locations
  *     parameters:
@@ -35,31 +34,29 @@ import { checkEditorAllowedToLocation } from "@/server/utils/check-editor-allowe
  *           schema:
  *             type: object
  *             properties:
- *               title:
+ *               editorUuid:
  *                 type: string
  *     responses:
  *       200:
- *         description: Локация успешно обновлена
+ *         description: Редактор успешно добавлен
  *       400:
  *         description: Некорректные данные
  *       500:
  *         description: Внутренняя ошибка сервера
  */
-export const PATCH = createRoute(
+export const POST = createRoute(
   [
     errorBoundary(),
     auth(),
-    requireRole([UserRole.ADMIN, UserRole.EDITOR]),
-    jsonBody<UpdateLocationRequestBody>(),
+    requireRole(UserRole.ADMIN),
+    jsonBody<AddEditorToLocationRequestBody>(),
   ],
-  async ({ body, params, userUuid }) => {
-    await checkEditorAllowedToLocation(userUuid || "", params?.uuid || "")
-
-    const updatedLocation = await updateLocation(
+  async ({ body, params }) => {
+    const updatedLocation = await addEditorToLocation(
       params?.uuid || "",
-      body as UpdateLocationRequestBody,
+      body as AddEditorToLocationRequestBody,
     )
-    return handleResponse("Локация успешно обновлена", 200, updatedLocation)
+    return handleResponse("Редактор успешно добавлен", 200, updatedLocation)
   },
 )
 

@@ -16,6 +16,8 @@ import { handleResponse } from "@/server/utils/handle-response"
  * /api/auth/reset-password:
  *   post:
  *     summary: Сброс пароля
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: false
  *       content:

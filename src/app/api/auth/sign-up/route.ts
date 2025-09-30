@@ -14,6 +14,8 @@ import {
  * /api/auth/sign-up:
  *   post:
  *     summary: Создание пользователя
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:

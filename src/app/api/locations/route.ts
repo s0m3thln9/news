@@ -18,6 +18,8 @@ import { UserRole } from "@/generated/prisma"
  * /api/locations:
  *   post:
  *     summary: Создание локации
+ *     tags:
+ *       - Locations
  *     requestBody:
  *       required: true
  *       content:
@@ -54,6 +56,8 @@ export const POST = createRoute(
  * /api/locations:
  *   get:
  *     summary: Получение локаций
+ *     tags:
+ *       - Locations
  *     responses:
  *       200:
  *         description: Локации успешно получены

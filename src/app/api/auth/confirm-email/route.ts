@@ -16,6 +16,8 @@ import {
  * /api/auth/confirm-email:
  *   post:
  *     summary: Подтверждение email пользователя
+ *     tags:
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
