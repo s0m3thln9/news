@@ -7,6 +7,7 @@ import {
   FormControl,
   IconButton,
   MenuItem,
+  Popover,
   Select,
   TextField,
   Toolbar,
@@ -17,12 +18,25 @@ import { useEffect, useState } from "react"
 import TelegramIcon from "@mui/icons-material/Telegram"
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"
 import SearchIcon from "@mui/icons-material/Search"
+import { SignInModal } from "@/components/SignInModal"
+import { setSignInModalOpen } from "@/components/SignInModal/slice"
+import { useAppDispatch } from "@/hooks/useAppDispatch"
+import { SignUpModal } from "@/components/SignUpModal"
+import { useAppSelector } from "@/hooks/useAppSelector"
+import Cookies from "js-cookie"
+import { logOut } from "@/features/user/slice"
 
 function Header() {
   const [language, setLanguage] = useState("ru")
   const [activeTab, setActiveTab] = useState("home")
   const [selectedUniversity, setSelectedUniversity] = useState("")
   const [currentDate, setCurrentDate] = useState("")
+  const [logoutPopoverAnchor, setLogoutPopoverAnchor] =
+    useState<HTMLElement | null>(null)
+
+  const user = useAppSelector((state) => state.userSlice.user)
+
+  const dispatch = useAppDispatch()
 
   const handleTabClick = (tab: string) => {
     setActiveTab(tab)
@@ -41,6 +55,11 @@ function Header() {
 
   const handleNewsClick = () => {
     setActiveTab("news")
+  }
+
+  const handleLogout = () => {
+    Cookies.remove("jwt")
+    dispatch(logOut())
   }
 
   useEffect(() => {
@@ -152,9 +171,32 @@ function Header() {
             sx={{ color: "common.white" }}
             size="medium"
             className="font-bold normal-case"
+            onClick={(e) =>
+              user
+                ? setLogoutPopoverAnchor(e.currentTarget)
+                : dispatch(setSignInModalOpen(true))
+            }
           >
-            Войти
+            {user ? user.firstName : "Войти"}
           </Button>
+          {!user ? (
+            <>
+              <SignInModal />
+              <SignUpModal />
+            </>
+          ) : (
+            <Popover
+              open={Boolean(logoutPopoverAnchor)}
+              anchorEl={logoutPopoverAnchor}
+              onClose={() => setLogoutPopoverAnchor(null)}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+            >
+              <Button onClick={handleLogout}>Выйти</Button>
+            </Popover>
+          )}
         </Box>
       </Toolbar>
       <Toolbar

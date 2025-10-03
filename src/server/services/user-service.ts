@@ -1,5 +1,10 @@
 import bcrypt from "bcrypt"
-import { Prisma, User, UserEmailVerification } from "@/generated/prisma"
+import {
+  Language,
+  Prisma,
+  User,
+  UserEmailVerification,
+} from "@/generated/prisma"
 import { ApiError } from "@/types/api-response"
 import { UserDTO } from "@/types/dto/user"
 import z from "zod"
@@ -9,7 +14,7 @@ import { generateVerificationCode } from "@/server/utils/generate-verification-c
 import { sendVerificationEmail } from "@/server/utils/send-verification-email"
 import { sendResetPasswordEmail } from "@/server/utils/send-reset-password-email"
 
-const createUserSchema = z.object({
+const signUpUserSchema = z.object({
   firstName: z.string().min(1, "Имя обязательно"),
   lastName: z.string().min(1, "Фамилия обязательна"),
   email: z
@@ -24,12 +29,10 @@ const createUserSchema = z.object({
     .max(64, "Пароль слишком длинный"),
 })
 
-export type CreateUserRequestBody = z.infer<typeof createUserSchema>
+export type SignUpRequestBody = z.infer<typeof signUpUserSchema>
 
-export const createUser = async (
-  body: CreateUserRequestBody,
-): Promise<UserDTO> => {
-  createUserSchema.parse(body)
+export const signUpUser = async (body: SignUpRequestBody): Promise<UserDTO> => {
+  signUpUserSchema.parse(body)
 
   const hashedPassword = await bcrypt.hash(body.password, 12)
 
@@ -255,4 +258,27 @@ export const resetPassword = async (
       password: true,
     },
   })
+}
+
+export const updateLanguageSchema = z.object({
+  language: z.enum(Language),
+})
+
+export type UpdateLanguageRequestBody = z.infer<typeof updateLanguageSchema>
+
+export const updateLanguage = async (
+  body: UpdateLanguageRequestBody,
+  uuid?: string,
+) => {
+  updateLanguageSchema.parse(body)
+
+  const user: UserDTO = await prisma.user.update({
+    where: { uuid },
+    data: {
+      language: body.language,
+    },
+    omit: { password: true },
+  })
+
+  return user
 }

@@ -1,0 +1,33 @@
+{
+  "header": {
+    "universityList": "University List"
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign in to account:",
+      "email": "Email",
+      "password": "Password",
+      "createAccount": "Create new account",
+      "submit": "Sign in"
+    },
+    "signUp": {
+      "title": "Create new account:",
+      "username": "Username",
+      "email": "Email",
+      "password": "Password",
+      "repeatPassword": "Repeat password",
+      "signIn": "Sign in to existing account",
+      "submit": "Sign up"
+    },
+    "validation": {
+      "emailRequired": "User email is required",
+      "usernameRequired": "Username is required",
+      "passwordMinLength": "Minimum password length is 8 characters",
+      "passwordMaxLength": "Maximum password length is 64 characters",
+      "passwordsNotMatch": "Passwords do not match",
+      "firstNameRequired": "First name is required",
+      "lastNameRequired": "Last name is required",
+      "emailTaken": "Email is already taken"
+    }
+  }
+}

@@ -17,6 +17,7 @@ model User {
   role                  UserRole                @default(USER)
   userEmailVerification UserEmailVerification[]
   emailVerificationAt   DateTime?
+  language              Language?
   createdAt             DateTime                @default(dbgenerated("NOW()")) @db.Timestamptz(3)
   updatedAt             DateTime                @updatedAt @db.Timestamptz(3)
   Location              Location?               @relation(fields: [locationUuid], references: [uuid])
@@ -38,6 +39,11 @@ enum UserRole {
   USER // обычный пользователь: просмотр новостей, редактирование своих данных
   EDITOR // редактор: постит в своей категории
   ADMIN // админ: назначает роли, создаёт категории, полный доступ
+}
+
+enum Language {
+  RU
+  EN
 }
 
 enum UserEmailVerificationStatus {

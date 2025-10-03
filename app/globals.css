@@ -1,0 +1,32 @@
+@layer theme, base, mui, components, utilities;
+@import 'tailwindcss';
+
+@theme {
+    --color-primary-main: #5BB3EA;
+    --color-primary-contrastText: #F8FAFF;
+
+    --color-secondary-main: #464646;
+    --color-secondary-contrastText: #F8FAFF;
+
+    --color-error-main: #F44336;
+    --color-error-contrastText: #F8FAFF;
+
+    --color-warning-main: #FF9800;
+    --color-warning-contrastText: #000000;
+
+    --color-info-main: #00BCD4;
+    --color-info-contrastText: #000000;
+
+    --color-success-main: #4CAF50;
+    --color-success-contrastText: #000000;
+
+    --color-bg-default: #FFFFFF;
+
+    --color-text-primary: #F8FAFF;
+    --color-text-secondary: #000000;
+    --color-text-disabled: #BDBDBD;
+
+    --color-common-black: #000000;
+    --color-common-white: #F8FAFF;
+}
+
