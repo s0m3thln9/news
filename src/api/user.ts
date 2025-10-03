@@ -6,6 +6,8 @@ import {
   SignInUserRequestBody,
   SignUpRequestBody,
 } from "@/server/services/user-service"
+import { $Enums } from "@/generated/prisma"
+import Language = $Enums.Language
 
 const userApi = createApi({
   reducerPath: "userApi",
@@ -25,8 +27,22 @@ const userApi = createApi({
         body,
       }),
     }),
+    updateLanguage: builder.mutation<
+      ApiResponse<UserDTO>,
+      { language: Language }
+    >({
+      query: (body) => ({
+        url: "/update-language",
+        method: "POST",
+        body,
+      }),
+    }),
   }),
 })
 
 export default userApi
-export const { useSignUpUserMutation, useSignInUserMutation } = userApi
+export const {
+  useSignUpUserMutation,
+  useSignInUserMutation,
+  useUpdateLanguageMutation,
+} = userApi

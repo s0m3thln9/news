@@ -25,9 +25,10 @@ import { SignUpModal } from "@/components/SignUpModal"
 import { useAppSelector } from "@/hooks/useAppSelector"
 import Cookies from "js-cookie"
 import { logOut } from "@/features/user/slice"
+import { Translate } from "../ui/translate"
+import { UpdateLanguageSelect } from "@/components/Header/UpdateLanguageSelect"
 
 function Header() {
-  const [language, setLanguage] = useState("ru")
   const [activeTab, setActiveTab] = useState("home")
   const [selectedUniversity, setSelectedUniversity] = useState("")
   const [currentDate, setCurrentDate] = useState("")
@@ -126,43 +127,7 @@ function Header() {
           </Button>
         </Box>
         <Box className="flex items-center gap-4">
-          <FormControl variant="standard" size="small">
-            <Select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value as string)}
-              label="Язык"
-              autoWidth
-              sx={{
-                color: "common.white",
-                "& .MuiSvgIcon-root": {
-                  color: "common.white",
-                },
-                "& .MuiSelect-select": {
-                  padding: "4px 0",
-                },
-              }}
-              className="text-sm font-bold"
-            >
-              <MenuItem
-                value="ru"
-                sx={{
-                  color: "primary.main",
-                }}
-                className="font-bold"
-              >
-                RU
-              </MenuItem>
-              <MenuItem
-                value="en"
-                sx={{
-                  color: "primary.main",
-                }}
-                className="font-bold"
-              >
-                EN
-              </MenuItem>
-            </Select>
-          </FormControl>
+          <UpdateLanguageSelect />
           <IconButton sx={{ color: "common.white" }} size="small">
             <TelegramIcon />
           </IconButton>
@@ -299,7 +264,7 @@ function Header() {
                 }}
                 className="font-bold"
               >
-                Выберите университет
+                <Translate value={"header.universityList"} />
               </MenuItem>
               <MenuItem
                 value="gsu"
