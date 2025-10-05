@@ -16,7 +16,7 @@ import { checkEditorAllowedToNews } from "@/server/utils/check-editor-allowed-to
 /**
  * @swagger
  * /api/news/{uuid}:
- *   post:
+ *   patch:
  *     summary: Обновление новости
  *     tags:
  *       - News
@@ -34,7 +34,7 @@ import { checkEditorAllowedToNews } from "@/server/utils/check-editor-allowed-to
  *       500:
  *         description: Внутренняя ошибка сервера
  */
-export const POST = createRoute(
+export const PATCH = createRoute(
   [
     errorBoundary(),
     auth(),

@@ -1,5 +1,6 @@
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
+import type { Location } from "@/generated/prisma"
 
 const createLocationSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -16,7 +17,8 @@ export const createLocation = async (body: CreateLocationRequestBody) => {
   })
 }
 
-export const getLocations = async () => prisma.location.findMany()
+export const getLocations = async (): Promise<Location[]> =>
+  prisma.location.findMany()
 
 const updateLocationSchema = createLocationSchema.partial()
 
@@ -57,5 +59,14 @@ export const addEditorToLocation = async (
   return prisma.location.update({
     where: { uuid },
     data: { editors: { connect: { uuid: body.editorUuid } } },
+  })
+}
+
+export const getLocationWithNews = async (uuid: string) => {
+  return prisma.location.findFirst({
+    where: { uuid },
+    include: {
+      news: true,
+    },
   })
 }

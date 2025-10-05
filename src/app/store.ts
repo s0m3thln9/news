@@ -3,11 +3,13 @@ import signInReducer from "@/components/SignInModal/slice"
 import signUpReducer from "@/components/SignUpModal/slice"
 import userReducer from "@/features/user/slice"
 import userApi from "@/api/user"
+import locationsReducer from "@/features/locations/slice"
 
 const rootReducer = {
   signInSlice: signInReducer,
   signUpSlice: signUpReducer,
   userSlice: userReducer,
+  locationsSlice: locationsReducer,
   [userApi.reducerPath]: userApi.reducer,
 }
 

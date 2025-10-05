@@ -4,11 +4,8 @@ import Image from "next/image"
 import {
   AppBar,
   Button,
-  FormControl,
   IconButton,
-  MenuItem,
   Popover,
-  Select,
   TextField,
   Toolbar,
   Typography,
@@ -16,7 +13,6 @@ import {
 import { Box } from "@mui/system"
 import { useEffect, useState } from "react"
 import TelegramIcon from "@mui/icons-material/Telegram"
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded"
 import SearchIcon from "@mui/icons-material/Search"
 import { SignInModal } from "@/components/SignInModal"
 import { setSignInModalOpen } from "@/components/SignInModal/slice"
@@ -25,12 +21,10 @@ import { SignUpModal } from "@/components/SignUpModal"
 import { useAppSelector } from "@/hooks/useAppSelector"
 import Cookies from "js-cookie"
 import { logOut } from "@/features/user/slice"
-import { Translate } from "../ui/translate"
 import { UpdateLanguageSelect } from "@/components/Header/UpdateLanguageSelect"
+import { LocationSelect } from "@/components/Header/LocationSelect"
 
 function Header() {
-  const [activeTab, setActiveTab] = useState("home")
-  const [selectedUniversity, setSelectedUniversity] = useState("")
   const [currentDate, setCurrentDate] = useState("")
   const [logoutPopoverAnchor, setLogoutPopoverAnchor] =
     useState<HTMLElement | null>(null)
@@ -38,25 +32,6 @@ function Header() {
   const user = useAppSelector((state) => state.userSlice.user)
 
   const dispatch = useAppDispatch()
-
-  const handleTabClick = (tab: string) => {
-    setActiveTab(tab)
-  }
-
-  const handleUniversityChange = (value: string) => {
-    setSelectedUniversity(value)
-    if (value) {
-      setActiveTab("university")
-    }
-  }
-
-  const handleSelectClick = () => {
-    setActiveTab("university")
-  }
-
-  const handleNewsClick = () => {
-    setActiveTab("news")
-  }
 
   const handleLogout = () => {
     Cookies.remove("jwt")
@@ -192,144 +167,7 @@ function Header() {
         className="flex items-center justify-between"
         color="secondary"
       >
-        <Box className="flex items-center self-stretch">
-          <Button
-            variant="text"
-            size="medium"
-            className="relative flex items-center self-stretch rounded-none px-5 font-bold normal-case transition-all duration-300"
-            sx={{
-              color: "common.white",
-              bgcolor: activeTab === "home" ? "primary.main" : "transparent",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                top: -10,
-                left: 0,
-                right: 0,
-                height: "10px",
-                backgroundColor: "primary.main",
-                zIndex: 1,
-                opacity: activeTab === "home" ? "1" : "0",
-                transition: "all 0.3s ease",
-              },
-            }}
-            onClick={() => handleTabClick("home")}
-          >
-            <HomeRoundedIcon fontSize="large" />
-          </Button>
-          <FormControl
-            variant="standard"
-            size="small"
-            className="flex h-full items-center justify-center self-stretch px-4 transition-all duration-300"
-            sx={{
-              bgcolor:
-                activeTab === "university" ? "primary.main" : "transparent",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                top: -10,
-                left: 0,
-                right: 0,
-                height: "10px",
-                backgroundColor: "primary.main",
-                zIndex: 1,
-                opacity: activeTab === "university" ? "1" : "0",
-                transition: "all 0.3s ease",
-              },
-            }}
-          >
-            <Select
-              value={selectedUniversity || ""}
-              onChange={(e) => handleUniversityChange(e.target.value as string)}
-              onClick={handleSelectClick}
-              displayEmpty
-              sx={{
-                color: "common.white",
-                bgcolor: "transparent",
-                "& .MuiSvgIcon-root": {
-                  color: "common.white",
-                },
-                "& .MuiSelect-select": {
-                  padding: "4px 0",
-                },
-                minWidth: 230,
-              }}
-              className="rounded-none text-sm font-bold transition-all duration-300"
-            >
-              <MenuItem
-                value=""
-                disabled
-                sx={{
-                  color: "primary.main",
-                }}
-                className="font-bold"
-              >
-                <Translate value={"header.universityList"} />
-              </MenuItem>
-              <MenuItem
-                value="gsu"
-                sx={{
-                  color: "primary.main",
-                }}
-                className="font-bold"
-              >
-                ГГУ им. Франциска Скорины
-              </MenuItem>
-              <MenuItem
-                value="gstu"
-                sx={{
-                  color: "primary.main",
-                }}
-                className="font-bold"
-              >
-                ГГТУ им. П.О. Сухого
-              </MenuItem>
-              <MenuItem
-                value="ggmu"
-                sx={{
-                  color: "primary.main",
-                }}
-                className="font-bold"
-              >
-                ГГМУ
-              </MenuItem>
-              <MenuItem
-                value="bgt"
-                sx={{
-                  color: "primary.main",
-                }}
-                className="font-bold"
-              >
-                БелГУТ
-              </MenuItem>
-            </Select>
-          </FormControl>
-          <Button
-            variant="text"
-            size="medium"
-            sx={{
-              color: "common.white",
-              backgroundColor:
-                activeTab === "news" ? "primary.main" : "transparent",
-              "&::before": {
-                content: '""',
-                position: "absolute",
-                top: -10,
-                left: 0,
-                right: 0,
-                height: "10px",
-                backgroundColor: "primary.main",
-                zIndex: 1,
-                opacity: activeTab === "news" ? "1" : "0",
-                transition: "all 0.3s ease",
-              },
-            }}
-            onClick={handleNewsClick}
-            className="relative flex items-center self-stretch rounded-none px-5 font-bold normal-case transition-all duration-300"
-          >
-            Вести братского народа
-          </Button>
-        </Box>
+        <LocationSelect />
         <Box className="self-stretch">
           <TextField
             variant="filled"

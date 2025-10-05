@@ -7,10 +7,13 @@ import {
   updateLanguage,
   UpdateLanguageRequestBody,
 } from "@/server/services/user-service"
+import { getLocations } from "@/server/services/locations-service"
+import type { Location } from "@/generated/prisma"
 const jwtModule = await import("jsonwebtoken")
 
 export type PreloadedState = {
   userSlice: { user: UserDTO | null }
+  locationsSlice: { locations: Location[] }
 }
 
 export const getPreloadedState = async (): Promise<PreloadedState> => {
@@ -22,6 +25,7 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
   if (!jwt) {
     return {
       userSlice: { user: null },
+      locationsSlice: { locations: [] },
     }
   }
 
@@ -31,6 +35,7 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
   ) as string
 
   let user = await getMe(userUuid as string)
+  const locations: Location[] = await getLocations()
 
   if (!user.language) {
     user = await updateLanguage(
@@ -41,6 +46,7 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
 
   return {
     userSlice: { user },
+    locationsSlice: { locations },
   }
 }
 
