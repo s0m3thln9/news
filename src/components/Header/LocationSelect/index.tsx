@@ -5,28 +5,36 @@ import { Box, Button, FormControl, MenuItem, Select } from "@mui/material"
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"
 import { Translate } from "@/components/ui/translate"
 import { useAppSelector } from "@/hooks/useAppSelector"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { useAppDispatch } from "@/hooks/useAppDispatch"
 import { setCurrentLocation } from "@/features/locations/slice"
+import { cn } from "@/utils/cn"
 
 export const LocationSelect = () => {
   const locations = useAppSelector((state) => state.locationsSlice.locations)
+  const brothers = useAppSelector((state) => state.locationsSlice.brothers)
   const currentLocation = useAppSelector(
     (state) => state.locationsSlice.currentLocation,
   )
 
   const router = useRouter()
   const dispatch = useAppDispatch()
+  const pathname = usePathname()
 
-  const selectedUniversity = currentLocation?.uuid || ""
+  const findLocation = (uuid: string) =>
+    locations.find((location) => location.uuid === uuid) || null
+
+  const isBrothers = (uuid: string) =>
+    brothers?.uuid === uuid ? brothers : null
 
   const handleLocationSelect = (uuid: string) => {
-    if (uuid === currentLocation?.uuid) return
-
-    const newLocation =
-      locations.find((location) => location.uuid === uuid) || null
+    if (
+      currentLocation?.uuid === uuid &&
+      currentLocation.uuid !== brothers?.uuid
+    )
+      return null
+    const newLocation = findLocation(uuid) || isBrothers(uuid)
     dispatch(setCurrentLocation(newLocation))
-
     router.replace(`/locations/${uuid}`)
   }
 
@@ -35,88 +43,47 @@ export const LocationSelect = () => {
   }
 
   const activeTab =
-    currentLocation?.title !== "Вести братского народа"
+    pathname === "/" || currentLocation?.title !== "Вести братского народа"
       ? "universities"
       : "brothers"
 
   return (
-    <Box className="flex items-center self-stretch">
-      <Button
-        variant="text"
-        size="medium"
-        className="relative flex items-center self-stretch rounded-none px-5 font-bold normal-case transition-all duration-300"
-        sx={{
-          color: "common.white",
-          bgcolor:
-            activeTab === "universities" ? "primary.main" : "transparent",
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: -10,
-            left: 0,
-            right: 0,
-            height: "10px",
-            backgroundColor: "primary.main",
-            zIndex: 1,
-            opacity:
-              currentLocation?.title !== "Вести братского народа" ? "1" : "0",
-            transition: "all 0.3s ease",
-          },
-        }}
-        onClick={handleHomeClick}
+    <Box className="flex self-stretch">
+      <Box
+        className={cn(
+          "relative flex py-1 transition-all duration-300 ease-in-out",
+          `before:bg-primary-main before:absolute before:top-[-10px] before:right-0 before:left-0 before:z-[1] before:h-[10px] before:opacity-0` +
+            `before:transition-all before:duration-300 before:ease-in-out`,
+          activeTab === "universities"
+            ? "bg-primary-main"
+            : "bg-transparent before:bg-transparent",
+        )}
       >
-        <HomeRoundedIcon fontSize="large" />
-      </Button>
-      <FormControl
-        variant="standard"
-        size="small"
-        className="flex h-full items-center justify-center self-stretch px-4 transition-all duration-300"
-        sx={{
-          bgcolor:
-            activeTab === "universities" ? "primary.main" : "transparent",
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: -10,
-            left: 0,
-            right: 0,
-            height: "10px",
-            backgroundColor: "primary.main",
-            zIndex: 1,
-            opacity: activeTab === "universities" ? "1" : "0",
-            transition: "all 0.3s ease",
-          },
-        }}
-      >
-        <Select
-          value={selectedUniversity || ""}
-          onChange={(e) => handleLocationSelect(e.target.value as string)}
-          displayEmpty
-          sx={{
-            color: "common.white",
-            bgcolor: "transparent",
-            "& .MuiSvgIcon-root": {
-              color: "common.white",
-            },
-            "& .MuiSelect-select": {
-              padding: "4px 0",
-            },
-            minWidth: 230,
-          }}
-          className="rounded-none text-sm font-bold transition-all duration-300"
-          renderValue={(value) => {
-            if (!value) {
-              return <Translate value="header.universityList" />
-            }
-            const location = locations.find((loc) => loc.uuid === value)
-            return (
-              location?.title || <Translate value="header.universityList" />
-            )
-          }}
+        <Button
+          variant="text"
+          size="medium"
+          className={`relative flex h-full items-center justify-center self-stretch rounded-none px-5 font-bold normal-case`}
+          onClick={handleHomeClick}
         >
-          {locations
-            .filter((location) => location.title !== "Вести братского народа")
-            .map((location) => (
+          <HomeRoundedIcon fontSize="large" className={"fill-white"} />
+        </Button>
+        <FormControl
+          variant="standard"
+          size="small"
+          className={`flex h-full items-center justify-center self-stretch px-4`}
+        >
+          <Select
+            value={currentLocation?.uuid || ""}
+            onChange={(e) => handleLocationSelect(e.target.value as string)}
+            displayEmpty
+            className="min-w-[230px] rounded-none text-sm font-bold [&_svg]:fill-white"
+            renderValue={(uuid) =>
+              findLocation(uuid)?.title || (
+                <Translate value="header.universityList" />
+              )
+            }
+          >
+            {locations.map((location) => (
               <MenuItem
                 value={location.uuid}
                 sx={{
@@ -128,36 +95,21 @@ export const LocationSelect = () => {
                 {location.title}
               </MenuItem>
             ))}
-        </Select>
-      </FormControl>
+          </Select>
+        </FormControl>
+      </Box>
       <Button
         variant="text"
         size="medium"
-        sx={{
-          color: "common.white",
-          backgroundColor:
-            activeTab === "brothers" ? "primary.main" : "transparent",
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: -10,
-            left: 0,
-            right: 0,
-            height: "10px",
-            backgroundColor: "primary.main",
-            zIndex: 1,
-            opacity: activeTab === "brothers" ? "1" : "0",
-            transition: "all 0.3s ease",
-          },
-        }}
-        onClick={() =>
-          handleLocationSelect(
-            locations.find(
-              (locations) => locations.title === "Вести братского народа",
-            )?.uuid || "",
-          )
-        }
-        className="relative flex items-center self-stretch rounded-none px-5 font-bold normal-case transition-all duration-300"
+        onClick={() => handleLocationSelect(brothers?.uuid || "")}
+        className={cn(
+          `relative flex h-full items-center self-stretch rounded-none px-5 font-bold text-white normal-case transition-all duration-300 ease-in-out ` +
+            `before:bg-primary-main before:absolute before:top-[-10px] before:right-0 before:left-0 before:z-[1] before:h-[10px] before:opacity-0` +
+            `before:transition-all before:duration-300 before:ease-in-out`,
+          activeTab === "brothers"
+            ? "bg-primary-main before:opacity-100"
+            : "bg-transparent before:bg-transparent",
+        )}
       >
         Вести братского народа
       </Button>

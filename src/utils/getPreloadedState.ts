@@ -13,7 +13,7 @@ const jwtModule = await import("jsonwebtoken")
 
 export type PreloadedState = {
   userSlice: { user: UserDTO | null }
-  locationsSlice: { locations: Location[] }
+  locationsSlice: { locations: Location[]; brothers: Location | null }
 }
 
 export const getPreloadedState = async (): Promise<PreloadedState> => {
@@ -25,7 +25,7 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
   if (!jwt) {
     return {
       userSlice: { user: null },
-      locationsSlice: { locations: [] },
+      locationsSlice: { locations: [], brothers: null },
     }
   }
 
@@ -37,6 +37,10 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
   let user = await getMe(userUuid as string)
   const locations: Location[] = await getLocations()
 
+  const brothersLocation = locations.find(
+    (location) => location.title === "Вести братского народа",
+  )
+
   if (!user.language) {
     user = await updateLanguage(
       { language } as UpdateLanguageRequestBody,
@@ -46,7 +50,12 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
 
   return {
     userSlice: { user },
-    locationsSlice: { locations },
+    locationsSlice: {
+      locations: locations.filter(
+        (location) => location.uuid !== brothersLocation?.uuid,
+      ),
+      brothers: brothersLocation || null,
+    },
   }
 }
 

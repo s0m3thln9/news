@@ -3,11 +3,13 @@ import type { Location } from "@/generated/prisma"
 
 type InitialState = {
   locations: Location[]
+  brothers: Location | null
   currentLocation: Location | null
 }
 
 const initialState: InitialState = {
   locations: [],
+  brothers: null,
   currentLocation: null,
 }
 
