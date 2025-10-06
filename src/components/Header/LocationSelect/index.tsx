@@ -1,14 +1,17 @@
 "use client"
 
-import { Box, Button, FormControl, MenuItem, Select } from "@mui/material"
+import { Box } from "@mui/material"
 
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"
-import { Translate } from "@/components/ui/translate"
 import { useAppSelector } from "@/hooks/useAppSelector"
 import { usePathname, useRouter } from "next/navigation"
 import { useAppDispatch } from "@/hooks/useAppDispatch"
 import { setCurrentLocation } from "@/features/locations/slice"
 import { cn } from "@/utils/cn"
+import { Select } from "@base-ui-components/react/select"
+import { useTranslation } from "@/components/providers/I18Provider"
+import { SelectBody, SelectRoot, SelectTrigger } from "@/components/ui/select"
+import { Button } from "@/components/ui/Button"
 
 export const LocationSelect = () => {
   const locations = useAppSelector((state) => state.locationsSlice.locations)
@@ -17,6 +20,7 @@ export const LocationSelect = () => {
     (state) => state.locationsSlice.currentLocation,
   )
 
+  const t = useTranslation()
   const router = useRouter()
   const dispatch = useAppDispatch()
   const pathname = usePathname()
@@ -60,47 +64,36 @@ export const LocationSelect = () => {
         )}
       >
         <Button
-          variant="text"
-          size="medium"
-          className={`relative flex h-full items-center justify-center self-stretch rounded-none px-5 font-bold normal-case`}
+          className={`relative flex h-full items-center justify-center self-stretch rounded-none bg-transparent px-4 font-bold normal-case hover:bg-white/10`}
           onClick={handleHomeClick}
         >
           <HomeRoundedIcon fontSize="large" className={"fill-white"} />
         </Button>
-        <FormControl
-          variant="standard"
-          size="small"
-          className={`flex h-full items-center justify-center self-stretch px-4`}
+        <SelectRoot
+          items={locations.map((location) => ({
+            label: location.title,
+            value: location.uuid,
+          }))}
+          defaultValue={t("header.universityList")}
         >
-          <Select
-            value={currentLocation?.uuid || ""}
-            onChange={(e) => handleLocationSelect(e.target.value as string)}
-            displayEmpty
-            className="min-w-[230px] rounded-none text-sm font-bold [&_svg]:fill-white"
-            renderValue={(uuid) =>
-              findLocation(uuid)?.title || (
-                <Translate value="header.universityList" />
-              )
-            }
-          >
-            {locations.map((location) => (
-              <MenuItem
-                value={location.uuid}
-                sx={{
-                  color: "primary.main",
-                }}
-                className="font-bold"
-                key={location.uuid}
+          <SelectTrigger />
+          <SelectBody>
+            {locations.map(({ uuid, title }) => (
+              <Select.Item
+                key={uuid}
+                value={uuid}
+                className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
+                onClick={() => handleLocationSelect(uuid)}
               >
-                {location.title}
-              </MenuItem>
+                <Select.ItemText className="font-normal">
+                  {title}
+                </Select.ItemText>
+              </Select.Item>
             ))}
-          </Select>
-        </FormControl>
+          </SelectBody>
+        </SelectRoot>
       </Box>
       <Button
-        variant="text"
-        size="medium"
         onClick={() => handleLocationSelect(brothers?.uuid || "")}
         className={cn(
           `relative flex h-full items-center self-stretch rounded-none px-5 font-bold text-white normal-case transition-all duration-300 ease-in-out ` +
