@@ -34,7 +34,7 @@ export const LocationSelect = () => {
   const handleLocationSelect = (uuid: string) => {
     if (
       currentLocation?.uuid === uuid &&
-      currentLocation.uuid !== brothers?.uuid
+      currentLocation?.uuid !== brothers?.uuid
     )
       return null
     const newLocation = findLocation(uuid) || isBrothers(uuid)

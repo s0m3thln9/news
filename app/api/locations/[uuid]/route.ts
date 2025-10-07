@@ -9,7 +9,6 @@ import { UserRole } from "@/generated/prisma"
 import { handleResponse } from "@/server/utils/handle-response"
 import {
   deleteLocation,
-  getLocationWithNews,
   updateLocation,
   UpdateLocationRequestBody,
 } from "@/server/services/locations-service"
@@ -102,30 +101,3 @@ export const DELETE = createRoute(
     return handleResponse("Локация успешно удалена", 200, deletedLocation)
   },
 )
-
-/**
- * @swagger
- * /api/locations/{uuid}:
- *   get:
- *     summary: Получение локации
- *     tags:
- *       - Locations
- *     parameters:
- *       - in: path
- *         name: uuid
- *         required: true
- *         schema:
- *           type: string
- *         description: UUID локации
- *     responses:
- *       200:
- *         description: Локация успешно получена
- *       400:
- *         description: Некорректные данные
- *       500:
- *         description: Внутренняя ошибка сервера
- */
-export const GET = createRoute([errorBoundary()], async ({ params }) => {
-  const location = await getLocationWithNews(params?.uuid || "")
-  return handleResponse("Локация успешно получена", 200, location)
-})

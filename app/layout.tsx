@@ -74,7 +74,7 @@ export default async function RootLayout({
   const preloadedState = await getPreloadedState()
 
   return (
-    <html lang={preloadedState.userSlice.user?.language?.toLowerCase()}>
+    <html lang={preloadedState.userSlice?.user?.language?.toLowerCase()}>
       <body className={`${inter.variable} antialiased`}>
         <div className="root">
           <Providers preloadedState={preloadedState}>

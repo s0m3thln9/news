@@ -1,11 +1,10 @@
 "use client"
 
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { Box, Button, Grid } from "@mui/material"
 import { LocationWithNews } from "@/types/dto/location-with-news"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import { useAppSelector } from "@/hooks/useAppSelector"
-import { useAppDispatch } from "@/hooks/useAppDispatch"
 
 type LocationNewsPageProps = {
   location: LocationWithNews
@@ -14,13 +13,6 @@ type LocationNewsPageProps = {
 export const LocationNewsPage: FC<LocationNewsPageProps> = ({ location }) => {
   const userLanguage =
     useAppSelector((state) => state.userSlice.user?.language) || "ru"
-
-  const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    dispatch
-  }, [location])
-
   return (
     <Grid
       container

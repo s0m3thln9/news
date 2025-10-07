@@ -21,7 +21,9 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
   return configureStore({
     reducer: mainReducer,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(userApi.middleware),
+      getDefaultMiddleware({
+        serializableCheck: false,
+      }).concat(userApi.middleware),
     preloadedState,
   })
 }

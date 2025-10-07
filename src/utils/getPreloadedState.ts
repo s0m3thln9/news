@@ -1,7 +1,6 @@
 "use server"
 
 import { cookies, headers } from "next/headers"
-import { UserDTO } from "@/types/dto/user"
 import {
   getMe,
   updateLanguage,
@@ -9,12 +8,10 @@ import {
 } from "@/server/services/user-service"
 import { getLocations } from "@/server/services/locations-service"
 import type { Location } from "@/generated/prisma"
+import { RootState } from "@/app/store"
 const jwtModule = await import("jsonwebtoken")
 
-export type PreloadedState = {
-  userSlice: { user: UserDTO | null }
-  locationsSlice: { locations: Location[]; brothers: Location | null }
-}
+export type PreloadedState = Partial<RootState>
 
 export const getPreloadedState = async (): Promise<PreloadedState> => {
   const cookiesObj = await cookies()
@@ -22,10 +19,12 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
 
   const language = await getUserLanguage()
 
+  const headersList = await headers()
+
   if (!jwt) {
     return {
       userSlice: { user: null },
-      locationsSlice: { locations: [], brothers: null },
+      locationsSlice: { locations: [], brothers: null, currentLocation: null },
     }
   }
 
@@ -37,8 +36,27 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
   let user = await getMe(userUuid as string)
   const locations: Location[] = await getLocations()
 
+  const url = headersList.get("referer")
+  let locationUuid: string | null = null
+
+  if (url?.includes("locations/")) {
+    const urlObj = new URL(url)
+    const pathname = urlObj.pathname
+    const parts = pathname.split("/")
+
+    const locationsIndex = parts.indexOf("locations")
+
+    if (locationsIndex !== -1 && locationsIndex + 1 < parts.length) {
+      locationUuid = parts[locationsIndex + 1] || null
+    }
+  }
+
   const brothersLocation = locations.find(
     (location) => location.title === "Вести братского народа",
+  )
+
+  const currentLocation = locations.find(
+    (location) => location.uuid === locationUuid,
   )
 
   if (!user.language) {
@@ -54,6 +72,7 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
       locations: locations.filter(
         (location) => location.uuid !== brothersLocation?.uuid,
       ),
+      currentLocation: currentLocation || null,
       brothers: brothersLocation || null,
     },
   }

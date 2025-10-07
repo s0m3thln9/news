@@ -11,7 +11,7 @@ import {
   Typography,
 } from "@mui/material"
 import { Box } from "@mui/system"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import TelegramIcon from "@mui/icons-material/Telegram"
 import SearchIcon from "@mui/icons-material/Search"
 import { SignInModal } from "@/components/SignInModal"
@@ -23,9 +23,9 @@ import Cookies from "js-cookie"
 import { logOut } from "@/features/user/slice"
 import { UpdateLanguageSelect } from "@/components/Header/UpdateLanguageSelect"
 import { LocationSelect } from "@/components/Header/LocationSelect"
+import { formatCurrentDate } from "@/utils/formatCurrentDate"
 
 function Header() {
-  const [currentDate, setCurrentDate] = useState("")
   const [logoutPopoverAnchor, setLogoutPopoverAnchor] =
     useState<HTMLElement | null>(null)
 
@@ -38,39 +38,7 @@ function Header() {
     dispatch(logOut())
   }
 
-  useEffect(() => {
-    const now = new Date()
-    const days = [
-      "Воскресенье",
-      "Понедельник",
-      "Вторник",
-      "Среда",
-      "Четверг",
-      "Пятница",
-      "Суббота",
-    ]
-    const months = [
-      "января",
-      "февраля",
-      "марта",
-      "апреля",
-      "мая",
-      "июня",
-      "июля",
-      "августа",
-      "сентября",
-      "октября",
-      "ноября",
-      "декабря",
-    ]
-
-    const dayName = days[now.getDay()]
-    const day = now.getDate()
-    const month = months[now.getMonth()]
-    const year = now.getFullYear()
-
-    setCurrentDate(`${dayName}, ${day} ${month}, ${year}`)
-  }, [])
+  const currentDate = formatCurrentDate()
 
   return (
     <AppBar
