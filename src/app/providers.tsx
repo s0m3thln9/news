@@ -21,21 +21,19 @@ export const Providers: FC<ProvidersProps> = ({ children, preloadedState }) => {
   }
 
   return (
-    <div className={"z-[1]"}>
-      <Provider store={storeRef.current}>
-        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <ThemeProvider theme={theme}>
-            <I18Provider
-              language={
-                (preloadedState.userSlice?.user?.language?.toLowerCase() ||
-                  "ru") as "en" | "ru"
-              }
-            >
-              {children}
-            </I18Provider>
-          </ThemeProvider>
-        </AppRouterCacheProvider>
-      </Provider>
-    </div>
+    <Provider store={storeRef.current}>
+      <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+        <ThemeProvider theme={theme}>
+          <I18Provider
+            language={
+              (preloadedState.userSlice?.user?.language?.toLowerCase() ||
+                "ru") as "en" | "ru"
+            }
+          >
+            {children}
+          </I18Provider>
+        </ThemeProvider>
+      </AppRouterCacheProvider>
+    </Provider>
   )
 }

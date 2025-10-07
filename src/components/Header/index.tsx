@@ -38,8 +38,6 @@ function Header() {
     dispatch(logOut())
   }
 
-  const currentDate = formatCurrentDate()
-
   return (
     <AppBar
       color="secondary"
@@ -57,7 +55,7 @@ function Header() {
             className="flex items-center self-stretch px-5"
           >
             <Typography variant="body2" className="font-bold">
-              {currentDate}
+              {formatCurrentDate()}
             </Typography>
           </Box>
           <Button

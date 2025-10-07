@@ -1,6 +1,7 @@
 import { LocationNewsPage } from "@/components/LocationNewsPage"
 import { getLocationWithNews } from "@/server/services/locations-service"
 import { LocationWithNews } from "@/types/dto/location-with-news"
+import { notFound } from "next/navigation"
 
 export default async function LocationPage({
   params,
@@ -11,12 +12,12 @@ export default async function LocationPage({
   const uuidRegex =
     /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
   if (!uuid || !uuidRegex.test(uuid)) {
-    return <div>Локация не найдена</div>
+    notFound()
   }
   const location: LocationWithNews | null = await getLocationWithNews(uuid)
 
   if (!location) {
-    return <div>Локация не найдена</div>
+    notFound()
   }
 
   return <LocationNewsPage location={location} />

@@ -1,5 +1,6 @@
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
+import { NewsDTO } from "@/types/dto/news"
 
 export const createNewsSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -45,5 +46,16 @@ export const updateNews = async (uuid: string, body: UpdateNewsRequestBody) =>
     },
     data: {
       ...body,
+    },
+  })
+
+export const getOneNews = async (uuid: string): Promise<NewsDTO | null> =>
+  prisma.news.findFirst({
+    where: {
+      uuid,
+    },
+    omit: {
+      userUuid: true,
+      locationUuid: true,
     },
   })

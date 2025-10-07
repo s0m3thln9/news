@@ -1,10 +1,11 @@
 "use client"
 
 import { FC } from "react"
-import { Box, Button, Grid } from "@mui/material"
+import { Box, Grid } from "@mui/material"
 import { LocationWithNews } from "@/types/dto/location-with-news"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import { useAppSelector } from "@/hooks/useAppSelector"
+import Link from "next/link"
 
 type LocationNewsPageProps = {
   location: LocationWithNews
@@ -58,7 +59,7 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({ location }) => {
                     <CalendarMonthIcon />
                     <span>{dateKey}</span>
                   </div>
-                  <Button variant={"contained"}>Подробнее</Button>
+                  <Link href={`/${news.uuid}`}>Подробнее</Link>
                 </div>
               </div>
             </Box>

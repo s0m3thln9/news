@@ -76,7 +76,7 @@ export default async function RootLayout({
   return (
     <html lang={preloadedState.userSlice?.user?.language?.toLowerCase()}>
       <body className={`${inter.variable} antialiased`}>
-        <div className="root">
+        <div className="root z-[1] flex min-h-screen flex-col">
           <Providers preloadedState={preloadedState}>
             <Header />
             {children}
