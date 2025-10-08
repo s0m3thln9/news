@@ -1,3 +1,4 @@
+import FixedNews from "@/components/FixedNews"
 import NewsByCategories from "@/components/NewsByCategories"
 import { Grid } from "@mui/material"
 
@@ -7,7 +8,9 @@ function NewsByCategoriesAndFixedNews() {
       <Grid size={{ xs: 10, md: 6 }}>
         <NewsByCategories />
       </Grid>
-      <Grid size={{ xs: 10, md: 4 }}></Grid>
+      <Grid size={{ xs: 10, md: 4 }}>
+        <FixedNews />
+      </Grid>
     </Grid>
   )
 }
