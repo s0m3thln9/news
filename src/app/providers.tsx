@@ -1,6 +1,6 @@
 "use client"
 
-import { I18nProvider } from "@/components/providers/i18n-provider"
+import { I18nProvider } from "../providers/i18n-provider"
 import { Provider } from "react-redux"
 import { AppStore, makeStore, RootState } from "@/app/store"
 import { FC, ReactNode, useRef } from "react"

@@ -1,4 +1,4 @@
-import { useTranslation } from "@/components/providers/i18n-provider"
+import { useTranslation } from "@/providers/i18n-provider"
 import {
   type SignInFormData,
   signInSchema,

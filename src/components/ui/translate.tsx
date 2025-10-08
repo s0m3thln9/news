@@ -1,7 +1,7 @@
 "use client"
 
 import { FC } from "react"
-import { useTranslation } from "@/components/providers/i18n-provider"
+import { useTranslation } from "@/providers/i18n-provider"
 
 type TranslateProps = {
   value: string

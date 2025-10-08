@@ -1,5 +1,5 @@
 import z from "zod"
-import { Translate } from "@/components/providers/i18n-provider"
+import { Translate } from "../../providers/i18n-provider"
 
 export const signUpSchema = (t: Translate) =>
   z
