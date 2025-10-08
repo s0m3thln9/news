@@ -70,7 +70,8 @@ function NewsByCategories() {
       featuredNews: {
         id: 5,
         title: "Международная конференция по IT в ГГТУ",
-        description: "Эксперты обсудят будущие тренды в технологиях.",
+        description:
+          "В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги.",
         date: "20 сентября 2025",
         image: "/news-img.png",
       },
@@ -78,7 +79,8 @@ function NewsByCategories() {
         {
           id: 6,
           title: "Новые лаборатории в ГГТУ",
-          description: "Эксперты обсудят будущие тренды в технологиях.",
+          description:
+            "В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги. В мире высшего образования происходят кардинальные сдвиги.",
           date: "19 сентября 2025",
           image: "/news-img.png",
         },
@@ -158,7 +160,7 @@ function NewsByCategories() {
                     image={featuredNews.image}
                     title={featuredNews.title}
                   />
-                  <CardContent className="relative z-[1] flex flex-1 flex-col px-2 py-0">
+                  <CardContent className="relative z-[1] flex flex-1 flex-col overflow-hidden px-2 py-0">
                     <Box className="mt-2 flex items-center gap-2">
                       <CalendarMonthIcon sx={{ color: "common.black" }} />
                       <Chip
@@ -172,8 +174,7 @@ function NewsByCategories() {
                     <Typography
                       variant="h5"
                       gutterBottom
-                      className="line-clamp-2 break-words font-bold leading-tight"
-                      title={featuredNews.title}
+                      className="line-clamp-2 min-h-[3.6rem] break-words font-bold leading-tight"
                       sx={{
                         color: "common.black",
                       }}
@@ -182,7 +183,7 @@ function NewsByCategories() {
                     </Typography>
                     <Typography
                       variant="body1"
-                      className="line-clamp-4"
+                      className="line-clamp-4 min-h-[6rem]"
                       sx={{
                         color: "common.black",
                       }}
@@ -208,10 +209,10 @@ function NewsByCategories() {
                         <CardMedia
                           image={item.image}
                           title={item.title}
-                          className="aspect-[1/1] h-full"
+                          className="aspect-[1/1] flex-shrink-0"
                         />
-                        <Box className="flex flex-col">
-                          <CardContent className="flex-grow px-2 py-0">
+                        <Box className="flex flex-1 flex-col">
+                          <CardContent className="flex-grow overflow-hidden px-2 py-0">
                             <Box className="flex items-center gap-1">
                               <CalendarMonthIcon
                                 fontSize="small"
@@ -228,19 +229,17 @@ function NewsByCategories() {
                             </Box>
                             <Typography
                               variant="subtitle1"
-                              className="mt-1 line-clamp-2 break-words font-bold leading-tight"
-                              title={item.title}
+                              className="mt-1 line-clamp-2 min-h-[2.5rem] break-words font-bold leading-tight"
                               sx={{ color: "common.black" }}
                             >
                               {item.title}
                             </Typography>
                             <Typography
                               variant="body2"
-                              className="mt-1 line-clamp-3 break-words leading-tight"
-                              title={item.title}
+                              className="mt-1 line-clamp-3 min-h-[3.5rem] break-words leading-tight"
                               sx={{ color: "common.black" }}
                             >
-                              {item.title}
+                              {item.description}
                             </Typography>
                           </CardContent>
                           <CardActions className="flex items-center justify-end p-0">
