@@ -61,7 +61,7 @@ function LastNews() {
   const otherNews = news.slice(1, 5)
 
   return (
-    <Grid container spacing={3} className="mt-10 w-full px-6">
+    <Grid container spacing={3} className="w-full">
       <Grid size={{ xs: 12, sm: 6 }}>
         <Card className="relative flex aspect-[4/3] h-full flex-col overflow-hidden rounded-none">
           <Image

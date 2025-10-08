@@ -79,7 +79,7 @@ export default async function RootLayout({
         <div className="root z-[1] flex min-h-screen flex-col">
           <Providers preloadedState={preloadedState}>
             <Header />
-            {children}
+            <main className="flex flex-col gap-10 px-6 py-10">{children}</main>
           </Providers>
         </div>
       </body>
