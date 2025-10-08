@@ -5,6 +5,7 @@ import {
   AppBar,
   Button,
   IconButton,
+  Link,
   Popover,
   TextField,
   Toolbar,
@@ -69,9 +70,16 @@ function Header() {
         </Box>
         <Box className="flex items-center gap-4">
           <UpdateLanguageSelect />
-          <IconButton sx={{ color: "common.white" }} size="small">
-            <TelegramIcon />
-          </IconButton>
+          <Link
+            href="https://t.me/yourchannel"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Telegram канал"
+          >
+            <IconButton className="text-text-primary" size="small">
+              <TelegramIcon />
+            </IconButton>
+          </Link>
           <Button
             variant="text"
             sx={{ color: "common.white" }}

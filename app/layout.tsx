@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer"
 import Header from "@/components/Header"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
@@ -80,6 +81,7 @@ export default async function RootLayout({
           <Providers preloadedState={preloadedState}>
             <Header />
             <main className="flex flex-col gap-10 px-6 py-10">{children}</main>
+            <Footer />
           </Providers>
         </div>
       </body>
