@@ -1,11 +1,11 @@
-import Footer from "@/components/Footer"
-import Header from "@/components/Header"
+import { Footer } from "@/components/footer"
+import { Header } from "@/components/header"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import type { ReactNode } from "react"
 
-import { getPreloadedState } from "@/utils/getPreloadedState"
+import { getPreloadedState } from "@/utils/get-preloaded-state"
 import { Providers } from "@/app/providers"
 
 const inter = Inter({

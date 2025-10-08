@@ -1,4 +1,4 @@
-import { LocationNewsPage } from "@/components/LocationNewsPage"
+import { LocationNewsPage } from "@/components/location-news-page"
 import { getLocationWithNews } from "@/server/services/locations-service"
 import { LocationWithNews } from "@/types/dto/location-with-news"
 import { notFound } from "next/navigation"

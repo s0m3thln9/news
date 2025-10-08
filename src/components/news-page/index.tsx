@@ -10,7 +10,7 @@ type NewsPageProps = {
   news: NewsDTO
 }
 
-const NewsPage: FC<NewsPageProps> = ({ news }) => {
+export const NewsPage: FC<NewsPageProps> = ({ news }) => {
   const userLanguage =
     useAppSelector((state) => state.userSlice.user?.language) || "ru"
 
@@ -49,4 +49,3 @@ const NewsPage: FC<NewsPageProps> = ({ news }) => {
     </Container>
   )
 }
-export default NewsPage

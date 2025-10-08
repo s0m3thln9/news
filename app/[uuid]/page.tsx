@@ -1,4 +1,4 @@
-import NewsPage from "@/components/NewsPage"
+import { NewsPage } from "@/components/news-page"
 import { getOneNews } from "@/server/services/news-service"
 import { notFound } from "next/navigation"
 
