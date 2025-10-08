@@ -75,7 +75,7 @@ function LastNews() {
               <Typography
                 variant="h4"
                 gutterBottom
-                className="line-clamp-3 leading-tight font-bold break-words"
+                className="line-clamp-3 break-words font-bold leading-tight"
               >
                 {featuredNews.title}
               </Typography>
@@ -109,7 +109,7 @@ function LastNews() {
                     <Typography
                       variant="h5"
                       gutterBottom
-                      className="line-clamp-2 leading-tight font-bold break-words"
+                      className="line-clamp-2 break-words font-bold leading-tight"
                     >
                       {item.title}
                     </Typography>

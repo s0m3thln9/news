@@ -172,7 +172,7 @@ function NewsByCategories() {
                     <Typography
                       variant="h5"
                       gutterBottom
-                      className="line-clamp-2 leading-tight font-bold break-words"
+                      className="line-clamp-2 break-words font-bold leading-tight"
                       title={featuredNews.title}
                       sx={{
                         color: "common.black",
@@ -228,7 +228,7 @@ function NewsByCategories() {
                             </Box>
                             <Typography
                               variant="subtitle1"
-                              className="mt-1 line-clamp-2 leading-tight font-bold break-words"
+                              className="mt-1 line-clamp-2 break-words font-bold leading-tight"
                               title={item.title}
                               sx={{ color: "common.black" }}
                             >
@@ -236,7 +236,7 @@ function NewsByCategories() {
                             </Typography>
                             <Typography
                               variant="body2"
-                              className="mt-1 line-clamp-3 leading-tight break-words"
+                              className="mt-1 line-clamp-3 break-words leading-tight"
                               title={item.title}
                               sx={{ color: "common.black" }}
                             >

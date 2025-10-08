@@ -1,7 +1,5 @@
 "use client"
-
 import { Box } from "@mui/material"
-
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"
 import { useAppSelector } from "@/hooks/useAppSelector"
 import { usePathname, useRouter } from "next/navigation"
@@ -46,29 +44,40 @@ export const LocationSelect = () => {
     router.push("/")
   }
 
-  const activeTab =
-    pathname === "/" || currentLocation?.title !== "Вести братского народа"
-      ? "universities"
-      : "brothers"
+  const activeTab = (() => {
+    if (pathname === "/") return "home"
+    if (currentLocation?.title === "Вести братского народа") return "brothers"
+    return "universities"
+  })()
+
+  const beforeClass = cn(
+    "before:bg-primary-main before:absolute before:left-0 before:right-0 before:top-[-10px] before:z-[1] before:h-[10px] before:opacity-0",
+    "before:transition-all before:duration-300 before:ease-in-out",
+  )
 
   return (
     <Box className="flex self-stretch">
+      <Button
+        className={cn(
+          "relative flex h-full items-center justify-center self-stretch rounded-none bg-transparent px-4 font-bold normal-case transition-all duration-300 ease-in-out hover:bg-white/10",
+          beforeClass,
+          activeTab === "home"
+            ? "bg-primary-main before:opacity-100"
+            : "bg-transparent before:bg-transparent",
+        )}
+        onClick={handleHomeClick}
+      >
+        <HomeRoundedIcon fontSize="large" className="fill-white" />
+      </Button>
       <Box
         className={cn(
           "relative flex py-1 transition-all duration-300 ease-in-out",
-          `before:bg-primary-main before:absolute before:top-[-10px] before:right-0 before:left-0 before:z-[1] before:h-[10px] before:opacity-0` +
-            `before:transition-all before:duration-300 before:ease-in-out`,
+          beforeClass,
           activeTab === "universities"
             ? "bg-primary-main"
             : "bg-transparent before:bg-transparent",
         )}
       >
-        <Button
-          className={`relative flex h-full items-center justify-center self-stretch rounded-none bg-transparent px-4 font-bold normal-case hover:bg-white/10`}
-          onClick={handleHomeClick}
-        >
-          <HomeRoundedIcon fontSize="large" className={"fill-white"} />
-        </Button>
         <SelectRoot
           items={locations.map((location) => ({
             label: location.title,
@@ -82,7 +91,7 @@ export const LocationSelect = () => {
               <Select.Item
                 key={uuid}
                 value={uuid}
-                className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
+                className="hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
                 onClick={() => handleLocationSelect(uuid)}
               >
                 <Select.ItemText className="font-normal">
@@ -96,9 +105,8 @@ export const LocationSelect = () => {
       <Button
         onClick={() => handleLocationSelect(brothers?.uuid || "")}
         className={cn(
-          `relative flex h-full items-center self-stretch rounded-none px-5 font-bold text-white normal-case transition-all duration-300 ease-in-out ` +
-            `before:bg-primary-main before:absolute before:top-[-10px] before:right-0 before:left-0 before:z-[1] before:h-[10px] before:opacity-0` +
-            `before:transition-all before:duration-300 before:ease-in-out`,
+          `relative flex h-full items-center self-stretch rounded-none px-5 font-bold normal-case text-white transition-all duration-300 ease-in-out`,
+          beforeClass,
           activeTab === "brothers"
             ? "bg-primary-main before:opacity-100"
             : "bg-transparent before:bg-transparent",
