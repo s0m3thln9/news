@@ -1,9 +1,9 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
-import signInReducer from "@/components/SignInModal/slice"
-import signUpReducer from "@/components/SignUpModal/slice"
 import userReducer from "@/features/user/slice"
 import userApi from "@/api/user"
 import locationsReducer from "@/features/locations/slice"
+import signInReducer from "@/components/sign-in-modal/slice"
+import signUpReducer from "@/components/sign-up-modal/slice"
 
 const rootReducer = {
   signInSlice: signInReducer,

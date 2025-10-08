@@ -1,5 +1,13 @@
 "use client"
 
+import { LocationSelect } from "@/components/header/location-select"
+import { UpdateLanguageSelect } from "@/components/header/update-language-select"
+import { SignInModal } from "@/components/sign-in-modal"
+import { setSignInModalOpen } from "@/components/sign-in-modal/slice"
+import { SignUpModal } from "@/components/sign-up-modal"
+import { useAppDispatch } from "@/hooks/use-app-dispatch"
+import { formatCurrentDate } from "@/utils/format-current-date"
+import Cookies from "js-cookie"
 import Image from "next/image"
 import {
   AppBar,
@@ -15,18 +23,10 @@ import { Box } from "@mui/system"
 import { useState } from "react"
 import TelegramIcon from "@mui/icons-material/Telegram"
 import SearchIcon from "@mui/icons-material/Search"
-import { SignInModal } from "@/components/SignInModal"
-import { setSignInModalOpen } from "@/components/SignInModal/slice"
-import { useAppDispatch } from "@/hooks/useAppDispatch"
-import { SignUpModal } from "@/components/SignUpModal"
-import { useAppSelector } from "@/hooks/useAppSelector"
-import Cookies from "js-cookie"
+import { useAppSelector } from "@/hooks/use-app-selector"
 import { logOut } from "@/features/user/slice"
-import { UpdateLanguageSelect } from "@/components/Header/UpdateLanguageSelect"
-import { LocationSelect } from "@/components/Header/LocationSelect"
-import { formatCurrentDate } from "@/utils/formatCurrentDate"
 
-function Header() {
+export const Header = () => {
   const [logoutPopoverAnchor, setLogoutPopoverAnchor] =
     useState<HTMLElement | null>(null)
 
@@ -172,5 +172,3 @@ function Header() {
     </AppBar>
   )
 }
-
-export default Header

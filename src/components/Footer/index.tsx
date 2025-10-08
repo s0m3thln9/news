@@ -12,7 +12,7 @@ import {
 } from "@mui/material"
 import Image from "next/image"
 
-function Footer() {
+export const Footer = () => {
   return (
     <Box className="bg-secondary-main py-8">
       <Grid container spacing={4} columns={12} className="px-6">
@@ -159,5 +159,3 @@ function Footer() {
     </Box>
   )
 }
-
-export default Footer
