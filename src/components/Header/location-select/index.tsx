@@ -6,7 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { setCurrentLocation } from "@/features/locations/slice"
 import { cn } from "@/utils/cn"
 import { Select } from "@base-ui-components/react/select"
-import { useTranslation } from "@/components/providers/I18Provider"
+import { useTranslation } from "@/providers/i18n-provider"
 import { SelectBody, SelectRoot, SelectTrigger } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { useAppSelector } from "@/hooks/use-app-selector"
@@ -91,7 +91,7 @@ export const LocationSelect = () => {
               <Select.Item
                 key={uuid}
                 value={uuid}
-                className="hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
+                className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
                 onClick={() => handleLocationSelect(uuid)}
               >
                 <Select.ItemText className="font-normal">
@@ -105,7 +105,7 @@ export const LocationSelect = () => {
       <Button
         onClick={() => handleLocationSelect(brothers?.uuid || "")}
         className={cn(
-          `relative flex h-full items-center self-stretch rounded-none px-5 font-bold normal-case text-white transition-all duration-300 ease-in-out`,
+          `relative flex h-full items-center self-stretch rounded-none px-5 font-bold text-white normal-case transition-all duration-300 ease-in-out`,
           beforeClass,
           activeTab === "brothers"
             ? "bg-primary-main before:opacity-100"

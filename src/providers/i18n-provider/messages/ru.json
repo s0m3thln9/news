@@ -31,5 +31,12 @@
       "lastNameRequired": "Фамилия обязательна",
       "emailTaken": "Email занят"
     }
+  },
+  "profile": {
+    "title": "Профиль",
+    "firstName": "Имя",
+    "lastName": "Фамилия",
+    "email": "Адрес электронной почты",
+    "role": "Роль"
   }
 }
