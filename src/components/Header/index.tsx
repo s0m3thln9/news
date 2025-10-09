@@ -1,7 +1,7 @@
 "use client"
 
-import { LocationSelect } from "@/components/header/location-select"
-import { UpdateLanguageSelect } from "@/components/header/update-language-select"
+import { UpdateLanguageSelect } from "@/components/Header/update-language-select"
+import { LocationSelect } from "@/components/Header/location-select"
 import { SignInModal } from "@/components/sign-in-modal"
 import { setSignInModalOpen } from "@/components/sign-in-modal/slice"
 import { SignUpModal } from "@/components/sign-up-modal"

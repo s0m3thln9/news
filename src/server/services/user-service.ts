@@ -282,3 +282,23 @@ export const updateLanguage = async (
 
   return user
 }
+
+const updateUserSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+})
+
+export type UpdateUserRequestBody = z.infer<typeof updateUserSchema>
+
+export const updateUser = async (uuid: string, body: UpdateUserRequestBody) => {
+  updateUserSchema.parse(body)
+
+  return prisma.user.update({
+    where: {
+      uuid,
+    },
+    data: {
+      ...body,
+    },
+  })
+}

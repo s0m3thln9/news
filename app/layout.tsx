@@ -1,10 +1,10 @@
 import { Footer } from "@/components/footer"
-import { Header } from "@/components/header"
+import { Header } from "@/components/Header"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-import type { ReactNode } from "react"
 
+import type { ReactNode } from "react"
 import { getPreloadedState } from "@/utils/get-preloaded-state"
 import { Providers } from "@/app/providers"
 
@@ -80,7 +80,9 @@ export default async function RootLayout({
         <div className="root z-[1] flex min-h-screen flex-col">
           <Providers preloadedState={preloadedState}>
             <Header />
-            <main className="flex flex-col gap-10 px-6 py-10">{children}</main>
+            <main className="flex grow flex-col gap-10 px-6 py-10">
+              {children}
+            </main>
             <Footer />
           </Providers>
         </div>

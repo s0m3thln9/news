@@ -1,7 +1,7 @@
 import z from "zod"
 import { Translate } from "@/providers/i18n-provider"
 
-export const profileSchema = (t: Translate) =>
+export const updateUserSchema = (t: Translate) =>
   z.object({
     firstName: z
       .string()
@@ -15,7 +15,4 @@ export const profileSchema = (t: Translate) =>
       .max(50, t("profile.validation.lastNameMaxLength")),
   })
 
-export type ProfileFormData = z.infer<ReturnType<typeof profileSchema>> & {
-  readonly email: string
-  readonly role: string
-}
+export type UpdateUserFormData = z.infer<ReturnType<typeof updateUserSchema>>

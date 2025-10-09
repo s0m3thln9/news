@@ -6,7 +6,7 @@ type ButtonProps = ComponentProps<"button"> &
   VariantProps<typeof buttonVariants>
 
 const buttonVariants = cva(
-  "cursor-pointer w-fit rounded-lg py-2 px-8 font-semibold text-text-brand-inverse flex gap-2.5 items-center",
+  "cursor-pointer w-fit rounded-lg py-2 px-8 font-semibold text-text-brand-inverse flex gap-2.5 items-center justify-center",
   {
     variants: {
       variant: {
@@ -24,12 +24,18 @@ export const Button: FC<ButtonProps> = ({
   variant,
   className,
   children,
+  disabled,
   ...props
 }) => {
   return (
     <button
       type={type}
-      className={cn(buttonVariants({ variant }), className)}
+      className={cn(
+        buttonVariants({ variant }),
+        disabled &&
+          "bg-primary-main/50 hover:bg-primary-main/50 text-text-disabled",
+        className,
+      )}
       {...props}
     >
       {children}

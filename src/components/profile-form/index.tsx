@@ -3,10 +3,11 @@
 import { Box, Typography } from "@mui/material"
 import { Input } from "@/components/ui/input"
 import { useAppSelector } from "@/hooks/use-app-selector"
-import { useProfileForm } from "./use-profile-form"
-import { useProfileSubmit } from "./use-profile-submit"
+import { useUpdateUserForm } from "./use-update-user-form"
+import { useUpdateUserSubmit } from "./use-update-user-submit"
 import { useTranslation } from "@/providers/i18n-provider"
 import { Translate } from "@/components/ui/translate"
+import { Button } from "@/components/ui/button"
 
 export const ProfileForm = () => {
   const t = useTranslation()
@@ -16,17 +17,10 @@ export const ProfileForm = () => {
     register,
     handleSubmit,
     formState: { errors, isDirty },
-    watch,
-  } = useProfileForm()
+    reset,
+  } = useUpdateUserForm()
 
-  const onSubmit = useProfileSubmit()
-
-  const handleBlur = async (field: "firstName" | "lastName") => {
-    const data = watch()
-    if (isDirty && data[field]) {
-      await handleSubmit((fullData) => onSubmit(fullData, field))()
-    }
-  }
+  const { onSubmit, isLoading } = useUpdateUserSubmit(reset)
 
   if (!user) {
     return <Typography>Загрузка профиля...</Typography>
@@ -35,7 +29,7 @@ export const ProfileForm = () => {
   return (
     <Box
       component="form"
-      onSubmit={handleSubmit((data) => onSubmit(data, "firstName"))}
+      onSubmit={handleSubmit(onSubmit)}
       className="border-secondary-main flex max-w-md flex-col gap-10 border-4 p-10"
     >
       <Typography
@@ -51,14 +45,12 @@ export const ProfileForm = () => {
           errorMessage={errors.firstName?.message}
           label={t("profile.firstName")}
           placeholder={t("profile.firstNamePlaceholder")}
-          onBlur={() => handleBlur("firstName")}
         />
         <Input
           {...register("lastName")}
           errorMessage={errors.lastName?.message}
           label={t("profile.lastName")}
           placeholder={t("profile.lastNamePlaceholder")}
-          onBlur={() => handleBlur("lastName")}
         />
         <Input
           value={user.email}
@@ -73,6 +65,13 @@ export const ProfileForm = () => {
           placeholder="Роль"
           disabled
         />
+        <Button
+          type={"submit"}
+          className={"w-full"}
+          disabled={!isDirty || isLoading}
+        >
+          Сохранить изменения
+        </Button>
       </div>
     </Box>
   )

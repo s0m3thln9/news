@@ -85,14 +85,14 @@ const FixedNews = () => {
                   <Typography
                     variant="h5"
                     gutterBottom
-                    className="line-clamp-3 break-words font-bold leading-tight"
+                    className="line-clamp-3 leading-tight font-bold break-words"
                   >
                     {fixedNews[0].title}
                   </Typography>
                   <Typography
                     variant="body1"
                     gutterBottom
-                    className="line-clamp-3 break-words leading-tight"
+                    className="line-clamp-3 leading-tight break-words"
                   >
                     {fixedNews[0].description}
                   </Typography>

@@ -5,13 +5,14 @@ import { UserDTO } from "@/types/dto/user"
 import {
   SignInUserRequestBody,
   SignUpRequestBody,
+  UpdateUserRequestBody,
 } from "@/server/services/user-service"
 import { $Enums } from "@/generated/prisma"
 import Language = $Enums.Language
 
 const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: baseQuery("auth"),
+  baseQuery: baseQuery("user"),
   endpoints: (builder) => ({
     signUpUser: builder.mutation<ApiResponse<UserDTO>, SignUpRequestBody>({
       query: (body) => ({
@@ -37,6 +38,13 @@ const userApi = createApi({
         body,
       }),
     }),
+    updateUser: builder.mutation<ApiResponse<UserDTO>, UpdateUserRequestBody>({
+      query: (body) => ({
+        url: "",
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 })
 
@@ -45,4 +53,5 @@ export const {
   useSignUpUserMutation,
   useSignInUserMutation,
   useUpdateLanguageMutation,
+  useUpdateUserMutation,
 } = userApi
