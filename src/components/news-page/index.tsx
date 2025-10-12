@@ -2,9 +2,11 @@
 
 import { FC } from "react"
 import { NewsDTO } from "@/types/dto/news"
-import { Box, Container, Link } from "@mui/material"
+import { Box, Container } from "@mui/material"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import { useAppSelector } from "@/hooks/use-app-selector"
+import { useRouter } from "next/navigation"
+import ArrowLeftIcon from "@mui/icons-material/ArrowLeft"
 
 type NewsPageProps = {
   news: NewsDTO
@@ -22,28 +24,32 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
     },
   )
 
+  const route = useRouter()
+
   return (
-    <Container>
-      <Box key={news.uuid} className={"flex gap-10"}>
-        <div className={"flex w-[500px] shrink-0 items-center justify-center"}>
-          <img
-            src={process.env.NEXT_PUBLIC_UPLOADS + news.images[0]}
-            alt={news.title}
-            className={"w-full object-cover"}
-          />
+    <Container className={"max-w-[860px]"}>
+      <Box key={news.uuid} className={"flex flex-col gap-4"}>
+        <div
+          onClick={() => route.back()}
+          className={
+            "text-secondary-main flex w-fit cursor-pointer items-center text-base"
+          }
+        >
+          <ArrowLeftIcon />
+          <span>Назад</span>
         </div>
-        <div className={"flex flex-col justify-between"}>
-          <div className={"flex flex-col gap-10"}>
-            <h3 className={"text-[32px] font-bold"}>{news.title}</h3>
-            <p>{news.content}</p>
-          </div>
-          <div className={"flex items-center justify-between"}>
-            <div className={"flex items-center gap-2.5"}>
-              <CalendarMonthIcon />
-              <span>{dateKey}</span>
-            </div>
-            <Link href={`/${news.uuid}`}>Подробнее</Link>
-          </div>
+        <h3 className={"text-[32px] font-bold"}>{news.title}</h3>
+        <img
+          src={process.env.NEXT_PUBLIC_UPLOADS + news.images[0]}
+          alt={news.title}
+          className={"w-full object-cover"}
+        />
+        <div className={"flex items-center gap-2.5 border-b-4 pb-4"}>
+          <CalendarMonthIcon />
+          <span>{dateKey}</span>
+        </div>
+        <div className={"flex flex-col gap-10"}>
+          <p>{news.content}</p>
         </div>
       </Box>
     </Container>
