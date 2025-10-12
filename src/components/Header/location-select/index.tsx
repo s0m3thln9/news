@@ -14,6 +14,7 @@ import {
   setDebouncedNewsQuery,
   setNewsQuery,
   setOffset,
+  setTotal,
   setTouched,
 } from "@/features/search-news/slice"
 
@@ -40,6 +41,7 @@ export const LocationSelect = () => {
     dispatch(setDebouncedNewsQuery(""))
     dispatch(setTouched(false))
     dispatch(setOffset(0))
+    dispatch(setTotal(-1))
   }
 
   const handleLocationSelect = (uuid: string) => {

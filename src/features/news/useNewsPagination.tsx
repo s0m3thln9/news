@@ -3,7 +3,7 @@ import { useGetNewsMutation } from "@/api/news"
 import { loadMoreNewsToLocation } from "@/features/locations/slice"
 import { useEffect } from "react"
 import { useAppSelector } from "@/hooks/use-app-selector"
-import { setLoading, setOffset } from "@/features/search-news/slice"
+import { setLoading, setOffset, setTotal } from "@/features/search-news/slice"
 import { loadMoreNews } from "@/features/news/slice"
 
 export const useNewsPagination = () => {
@@ -30,8 +30,9 @@ export const useNewsPagination = () => {
           locationUuid: currentLocationUuid,
         }).unwrap()
         if (response?.data) {
-          dispatch(loadMoreNewsToLocation(response.data))
-          dispatch(loadMoreNews(response.data))
+          dispatch(loadMoreNewsToLocation(response.data.data))
+          dispatch(loadMoreNews(response.data.data))
+          dispatch(setTotal(response.data.total))
         }
       } catch (err) {
         console.error("Ошибка загрузки:", err)
@@ -54,7 +55,7 @@ export const useNewsPagination = () => {
   ])
 
   const loadMore = () => {
-    dispatch(setOffset(offset + 10))
+    dispatch(setOffset(offset + limit))
   }
 
   const isLoading = useAppSelector((state) => state.searchNewsSlice.isLoading)

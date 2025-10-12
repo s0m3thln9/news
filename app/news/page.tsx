@@ -1,5 +1,4 @@
 import { getNews, GetNewsQueryParams } from "@/server/services/news-service"
-import { NewsDTO } from "@/types/dto/news"
 import { NewsListPage } from "@/components/news-list-page"
 
 export default async function LocationPage({
@@ -12,7 +11,7 @@ export default async function LocationPage({
   const offsetValue = Number(offset) || undefined
   const limitValue = Number(limit) || undefined
 
-  const news: NewsDTO[] = await getNews({
+  const news = await getNews({
     offset: offsetValue,
     limit: limitValue,
     search,

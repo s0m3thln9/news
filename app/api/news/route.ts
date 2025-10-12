@@ -77,11 +77,11 @@ export const GET = createRoute([errorBoundary()], async ({ queryParams }) => {
   const offset = Number(queryParams?.offset) || undefined
   const limit = Number(queryParams?.limit) || undefined
 
-  const news = await getNews({
+  const paginationNews = await getNews({
     offset,
     limit,
     search: queryParams?.search,
     locationUuid: queryParams?.locationUuid,
   })
-  return handleResponse("Новости успешно получены", 200, news)
+  return handleResponse("Новости успешно получены", 200, paginationNews)
 })

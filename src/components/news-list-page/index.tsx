@@ -9,20 +9,26 @@ import { NewsListItem } from "@/components/news-list-item"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { setNews } from "@/features/news/slice"
 import { useNewsPagination } from "@/features/news/useNewsPagination"
+import { Pagination } from "@/types/dto/Pagination"
+import { setTotal } from "@/features/search-news/slice"
 
 type NewsListPageProps = {
-  news: NewsDTO[]
+  news: Pagination<NewsDTO[]>
 }
 
 export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
   const newsList = useAppSelector((state) => state.newsSlice.news)
+  const total = useAppSelector((state) => state.searchNewsSlice.total)
+  const offset = useAppSelector((state) => state.searchNewsSlice.offset)
+  const limit = useAppSelector((state) => state.searchNewsSlice.limit)
   const isLoading = useAppSelector((state) => state.searchNewsSlice.isLoading)
 
   const dispatch = useAppDispatch()
   const { loadMore } = useNewsPagination()
 
   useEffect(() => {
-    dispatch(setNews(news))
+    dispatch(setNews(news.data))
+    dispatch(setTotal(news.total))
   }, [dispatch, news])
 
   return (
@@ -45,7 +51,9 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
       {isLoading ? (
         <span>Загрузка...</span>
       ) : (
-        <Button onClick={loadMore}>Загрузить еще</Button>
+        total > offset + limit && (
+          <Button onClick={loadMore}>Загрузить еще</Button>
+        )
       )}
     </Grid>
   )

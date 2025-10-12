@@ -1,8 +1,7 @@
 import { LocationNewsPage } from "@/components/location-news-page"
-import { getLocationWithNews } from "@/server/services/locations-service"
-import { LocationWithNews } from "@/types/dto/location-with-news"
 import { notFound } from "next/navigation"
-import { GetNewsQueryParams } from "@/server/services/news-service"
+import { getNews, GetNewsQueryParams } from "@/server/services/news-service"
+import { getLocation } from "@/server/services/locations-service"
 
 export default async function LocationPage({
   params,
@@ -23,16 +22,19 @@ export default async function LocationPage({
   const offsetValue = Number(offset) || undefined
   const limitValue = Number(limit) || undefined
 
-  const location: LocationWithNews | null = await getLocationWithNews(uuid, {
-    offset: offsetValue,
-    limit: limitValue,
-    search,
-    locationUuid,
-  })
+  const [location, news] = await Promise.all([
+    getLocation(uuid),
+    getNews({
+      offset: offsetValue,
+      limit: limitValue,
+      search,
+      locationUuid,
+    }),
+  ])
 
   if (!location) {
     notFound()
   }
 
-  return <LocationNewsPage location={location} />
+  return <LocationNewsPage location={location} news={news} />
 }

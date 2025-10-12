@@ -2,6 +2,7 @@ import z from "zod"
 import { prisma } from "@/server/prisma-client"
 import { NewsDTO } from "@/types/dto/news"
 import { Prisma } from "@/generated/prisma"
+import { Pagination } from "@/types/dto/Pagination"
 
 export const createNewsSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -30,7 +31,9 @@ export const createNews = async (
     },
   })
 
-type GetNews = (queryParams: GetNewsQueryParams) => Promise<NewsDTO[]>
+type GetNews = (
+  queryParams: GetNewsQueryParams,
+) => Promise<Pagination<NewsDTO[]>>
 
 export type GetNewsQueryParams = {
   offset?: number
@@ -60,8 +63,20 @@ export const getNewsQueryOptions = (
   },
 })
 
-export const getNews: GetNews = async (queryParams) =>
-  prisma.news.findMany(getNewsQueryOptions(queryParams))
+export const getNews: GetNews = async (queryParams) => ({
+  data: await prisma.news.findMany(getNewsQueryOptions(queryParams)),
+  limit: queryParams.limit || 10,
+  offset: queryParams.offset || 0,
+  total: await prisma.news.count({
+    where: {
+      title: {
+        contains: queryParams.search,
+        mode: "insensitive",
+      },
+      locationUuid: queryParams.locationUuid,
+    },
+  }),
+})
 
 export type UpdateNewsRequestBody = Partial<z.infer<typeof createNewsSchema>>
 

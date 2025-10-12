@@ -7,6 +7,7 @@ import {
   setDebouncedNewsQuery,
   setLoading,
   setNewsQuery,
+  setTotal,
   setTouched,
 } from "@/features/search-news/slice"
 import { useRouter } from "next/navigation"
@@ -50,8 +51,9 @@ export const useNewsSearch = () => {
           locationUuid: currentLocationUuid,
         }).unwrap()
         if (response?.data) {
-          dispatch(addNewsToLocation(response.data))
-          dispatch(setNews(response.data))
+          dispatch(addNewsToLocation(response.data.data))
+          dispatch(setNews(response.data.data))
+          dispatch(setTotal(response.data.total))
         }
       } catch (err) {
         console.error("Ошибка загрузки:", err)
