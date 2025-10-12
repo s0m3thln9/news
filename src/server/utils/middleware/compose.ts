@@ -7,6 +7,7 @@ export interface Context {
   body?: unknown
   userUuid?: string
   params?: Record<string, string>
+  queryParams?: Record<string, string>
 }
 
 export type Handler = (ctx: Context) => Promise<Response>
@@ -41,7 +42,10 @@ export const createRoute = (
         ? await (maybeParams as Promise<Record<string, string>>)
         : (maybeParams as Record<string, string> | undefined)
 
-    return pipeline({ request, params })
+    const url = new URL(request.url)
+    const queryParams = Object.fromEntries(url.searchParams.entries())
+
+    return pipeline({ request, params, queryParams })
   }
 }
 

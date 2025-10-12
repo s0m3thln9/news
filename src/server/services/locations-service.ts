@@ -1,6 +1,11 @@
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
 import type { Location } from "@/generated/prisma"
+import {
+  getNewsQueryOptions,
+  GetNewsQueryParams,
+} from "@/server/services/news-service"
+import { LocationWithNews } from "@/types/dto/location-with-news"
 
 const createLocationSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -62,11 +67,19 @@ export const addEditorToLocation = async (
   })
 }
 
-export const getLocationWithNews = async (uuid: string) => {
+type GetLocationWithNews = (
+  uuid: string,
+  queryParams: GetNewsQueryParams,
+) => Promise<LocationWithNews | null>
+
+export const getLocationWithNews: GetLocationWithNews = async (
+  uuid: string,
+  queryParams,
+) => {
   return prisma.location.findFirst({
     where: { uuid },
     include: {
-      news: true,
+      news: getNewsQueryOptions(queryParams),
     },
   })
 }

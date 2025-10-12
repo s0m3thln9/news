@@ -15,6 +15,9 @@ type NewsPageProps = {
 export const NewsPage: FC<NewsPageProps> = ({ news }) => {
   const userLanguage =
     useAppSelector((state) => state.userSlice.user?.language) || "ru"
+  const currentLocationUuid = useAppSelector(
+    (state) => state.locationsSlice.currentLocation?.uuid,
+  )
 
   const dateKey = new Date(news.createdAt).toLocaleDateString(
     `${userLanguage}-${userLanguage?.toUpperCase()}`,
@@ -30,7 +33,11 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
     <Container className={"max-w-[860px]"}>
       <Box key={news.uuid} className={"flex flex-col gap-4"}>
         <div
-          onClick={() => route.back()}
+          onClick={() =>
+            route.replace(
+              currentLocationUuid ? `locations/${currentLocationUuid}` : "/",
+            )
+          }
           className={
             "text-secondary-main flex w-fit cursor-pointer items-center text-base"
           }

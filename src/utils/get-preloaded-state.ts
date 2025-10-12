@@ -20,7 +20,7 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
     headersList.get("accept-language"),
   )
 
-  const locationsSlice = await getLocationsData(headersList.get("referer"))
+  const locationsSlice = await getLocationsData(headersList.get("x-pathname"))
 
   if (!userUuid) {
     return {
@@ -54,12 +54,10 @@ export const getLanguageFromRequest = async (
   return "EN"
 }
 
-const getLocationsData = async (url: string | null) => {
+const getLocationsData = async (pathname: string | null) => {
   let locationUuid: string | null = null
 
-  if (url) {
-    const urlObj = new URL(url)
-    const pathname = urlObj.pathname
+  if (pathname) {
     const parts = pathname.split("/")
 
     const locationsIndex = parts.indexOf("locations")
@@ -79,11 +77,11 @@ const getLocationsData = async (url: string | null) => {
     locations.find((location) => location.uuid === locationUuid) || null
 
   return {
-    locations: locations.filter(
-      (location) => location.uuid !== brothersLocation?.uuid,
-    ),
-    brothers: brothersLocation,
-    currentLocation,
+    locations: locations
+      .filter((location) => location.uuid !== brothersLocation?.uuid)
+      .map((location) => ({ ...location, news: [] })),
+    brothers: brothersLocation ? { ...brothersLocation, news: [] } : null,
+    currentLocation: currentLocation ? { ...currentLocation, news: [] } : null,
   }
 }
 

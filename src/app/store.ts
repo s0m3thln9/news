@@ -4,13 +4,17 @@ import userApi from "@/api/user"
 import locationsReducer from "@/features/locations/slice"
 import signInReducer from "@/components/sign-in-modal/slice"
 import signUpReducer from "@/components/sign-up-modal/slice"
+import newsApi from "@/api/news"
+import searchNewsReducer from "@/features/search-news/slice"
 
 const rootReducer = {
   signInSlice: signInReducer,
   signUpSlice: signUpReducer,
   userSlice: userReducer,
   locationsSlice: locationsReducer,
+  searchNewsSlice: searchNewsReducer,
   [userApi.reducerPath]: userApi.reducer,
+  [newsApi.reducerPath]: newsApi.reducer,
 }
 
 const mainReducer = combineReducers(rootReducer)
@@ -23,7 +27,9 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,
-      }).concat(userApi.middleware),
+      })
+        .concat(userApi.middleware)
+        .concat(newsApi.middleware),
     preloadedState,
   })
 }

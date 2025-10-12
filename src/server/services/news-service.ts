@@ -1,6 +1,7 @@
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
 import { NewsDTO } from "@/types/dto/news"
+import { Prisma } from "@/generated/prisma"
 
 export const createNewsSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -29,13 +30,38 @@ export const createNews = async (
     },
   })
 
-export const getNews = async () =>
-  prisma.news.findMany({
-    omit: {
-      userUuid: true,
-      locationUuid: true,
+type GetNews = (queryParams: GetNewsQueryParams) => Promise<NewsDTO[]>
+
+export type GetNewsQueryParams = {
+  offset?: number
+  limit?: number
+  search?: string
+  locationUuid?: string
+}
+
+export const getNewsQueryOptions = (
+  queryParams: GetNewsQueryParams,
+): Prisma.NewsFindManyArgs => ({
+  where: {
+    title: {
+      contains: queryParams.search,
+      mode: "insensitive",
     },
-  })
+    locationUuid: queryParams.locationUuid,
+  },
+  take: queryParams.limit || 10,
+  skip: queryParams.offset || 0,
+  orderBy: {
+    createdAt: "asc",
+  },
+  omit: {
+    userUuid: true,
+    locationUuid: true,
+  },
+})
+
+export const getNews: GetNews = async (queryParams) =>
+  prisma.news.findMany(getNewsQueryOptions(queryParams))
 
 export type UpdateNewsRequestBody = Partial<z.infer<typeof createNewsSchema>>
 

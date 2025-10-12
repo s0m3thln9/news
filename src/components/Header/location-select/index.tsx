@@ -10,6 +10,10 @@ import { useTranslation } from "@/providers/i18n-provider"
 import { SelectBody, SelectRoot, SelectTrigger } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { useAppSelector } from "@/hooks/use-app-selector"
+import {
+  setDebouncedNewsQuery,
+  setNewsQuery,
+} from "@/features/search-news/slice"
 
 export const LocationSelect = () => {
   const locations = useAppSelector((state) => state.locationsSlice.locations)
@@ -37,11 +41,15 @@ export const LocationSelect = () => {
       return null
     const newLocation = findLocation(uuid) || isBrothers(uuid)
     dispatch(setCurrentLocation(newLocation))
-    router.replace(`/locations/${uuid}`)
+    dispatch(setNewsQuery(""))
+    dispatch(setDebouncedNewsQuery(""))
+    router.push(`/locations/${uuid}`)
   }
 
   const handleHomeClick = () => {
     dispatch(setCurrentLocation(null))
+    dispatch(setNewsQuery(""))
+    dispatch(setDebouncedNewsQuery(""))
     router.push("/")
   }
 
