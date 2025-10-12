@@ -41,6 +41,7 @@ export const LocationSelect = () => {
   }
 
   const handleHomeClick = () => {
+    dispatch(setCurrentLocation(null))
     router.push("/")
   }
 
@@ -54,6 +55,15 @@ export const LocationSelect = () => {
     "before:bg-primary-main before:absolute before:left-0 before:right-0 before:top-[-10px] before:z-[1] before:h-[10px] before:opacity-0",
     "before:transition-all before:duration-300 before:ease-in-out",
   )
+
+  const placeholder = t("header.universityList")
+
+  const getSelectValue = () => {
+    if (isBrothers(currentLocation?.uuid || "")) {
+      return placeholder
+    }
+    return currentLocation?.title || placeholder
+  }
 
   return (
     <Box className="flex self-stretch">
@@ -83,7 +93,8 @@ export const LocationSelect = () => {
             label: location.title,
             value: location.uuid,
           }))}
-          defaultValue={t("header.universityList")}
+          value={getSelectValue()}
+          onValueChange={handleLocationSelect}
         >
           <SelectTrigger />
           <SelectBody>
@@ -92,7 +103,6 @@ export const LocationSelect = () => {
                 key={uuid}
                 value={uuid}
                 className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
-                onClick={() => handleLocationSelect(uuid)}
               >
                 <Select.ItemText className="font-normal">
                   {title}

@@ -5,7 +5,7 @@ import { FC } from "react"
 import { Box, Grid } from "@mui/material"
 import { LocationWithNews } from "@/types/dto/location-with-news"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
-import Link from "next/link"
+import { useRouter } from "next/navigation"
 
 type LocationNewsPageProps = {
   location: LocationWithNews
@@ -14,6 +14,8 @@ type LocationNewsPageProps = {
 export const LocationNewsPage: FC<LocationNewsPageProps> = ({ location }) => {
   const userLanguage =
     useAppSelector((state) => state.userSlice.user?.language) || "ru"
+
+  const router = useRouter()
   return (
     <Grid
       container
@@ -37,7 +39,11 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({ location }) => {
           )
 
           return (
-            <Box key={news.uuid} className={"flex gap-10"}>
+            <Box
+              key={news.uuid}
+              className={"flex cursor-pointer gap-10"}
+              onClick={() => router.replace(`/${news.uuid}`)}
+            >
               <div
                 className={
                   "flex w-[500px] shrink-0 items-center justify-center"
@@ -59,7 +65,6 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({ location }) => {
                     <CalendarMonthIcon />
                     <span>{dateKey}</span>
                   </div>
-                  <Link href={`/${news.uuid}`}>Подробнее</Link>
                 </div>
               </div>
             </Box>
