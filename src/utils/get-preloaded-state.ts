@@ -1,45 +1,63 @@
 "use server"
 
 import { cookies, headers } from "next/headers"
-import {
-  getMe,
-  updateLanguage,
-  UpdateLanguageRequestBody,
-} from "@/server/services/user-service"
+import { getMe, updateLanguage } from "@/server/services/user-service"
 import { getLocations } from "@/server/services/locations-service"
 import type { Location } from "@/generated/prisma"
 import { RootState } from "@/app/store"
+import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
+
 const jwtModule = await import("jsonwebtoken")
 
 export type PreloadedState = Partial<RootState>
 
 export const getPreloadedState = async (): Promise<PreloadedState> => {
-  const cookiesObj = await cookies()
-  const jwt = cookiesObj.get("jwt")?.value
-
-  const language = await getUserLanguage()
+  const userUuid = await getUserUuid(await cookies())
 
   const headersList = await headers()
 
-  if (!jwt) {
+  const language = await getLanguageFromRequest(
+    headersList.get("accept-language"),
+  )
+
+  const locationsSlice = await getLocationsData(headersList.get("referer"))
+
+  if (!userUuid) {
     return {
       userSlice: { user: null },
-      locationsSlice: { locations: [], brothers: null, currentLocation: null },
+      locationsSlice,
     }
   }
 
-  const userUuid = jwtModule.default.verify(
-    jwt,
-    process.env.JWT_SECRET!,
-  ) as string
+  let user = await getMe(userUuid)
 
-  let user = await getMe(userUuid as string)
-  const locations: Location[] = await getLocations()
+  if (!user.language) {
+    user = await updateLanguage({ language }, userUuid)
+  }
 
-  const url = headersList.get("referer")
+  return {
+    userSlice: { user },
+    locationsSlice,
+  }
+}
+
+export const getLanguageFromRequest = async (
+  acceptLanguage: string | null,
+): Promise<"EN" | "RU"> => {
+  const language =
+    acceptLanguage?.split(",")[0].split("-")[0].toUpperCase() || "EN"
+
+  if (language === "EN" || language === "RU") {
+    return language
+  }
+
+  return "EN"
+}
+
+const getLocationsData = async (url: string | null) => {
   let locationUuid: string | null = null
 
-  if (url?.includes("locations/")) {
+  if (url) {
     const urlObj = new URL(url)
     const pathname = urlObj.pathname
     const parts = pathname.split("/")
@@ -51,42 +69,36 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
     }
   }
 
-  const brothersLocation = locations.find(
-    (location) => location.title === "Вести братского народа",
-  )
+  const locations: Location[] = await getLocations()
 
-  const currentLocation = locations.find(
-    (location) => location.uuid === locationUuid,
-  )
+  const brothersLocation: Location | null =
+    locations.find((location) => location.title === "Вести братского народа") ||
+    null
 
-  if (!user.language) {
-    user = await updateLanguage(
-      { language } as UpdateLanguageRequestBody,
-      userUuid as string,
-    )
-  }
+  const currentLocation: Location | null =
+    locations.find((location) => location.uuid === locationUuid) || null
 
   return {
-    userSlice: { user },
-    locationsSlice: {
-      locations: locations.filter(
-        (location) => location.uuid !== brothersLocation?.uuid,
-      ),
-      currentLocation: currentLocation || null,
-      brothers: brothersLocation || null,
-    },
+    locations: locations.filter(
+      (location) => location.uuid !== brothersLocation?.uuid,
+    ),
+    brothers: brothersLocation,
+    currentLocation,
   }
 }
 
-export const getUserLanguage = async (): Promise<"EN" | "RU"> => {
-  const headersList = await headers()
-  const acceptLanguage = headersList.get("accept-language")
-  const language =
-    acceptLanguage?.split(",")[0].split("-")[0].toUpperCase() || "EN"
+const getUserUuid = async (
+  cookiesObj: ReadonlyRequestCookies,
+): Promise<string | null> => {
+  const jwt = cookiesObj.get("jwt")?.value
 
-  if (language === "EN" || language === "RU") {
-    return language
+  if (!jwt) {
+    return null
   }
 
-  return "EN"
+  try {
+    return jwtModule.default.verify(jwt, process.env.JWT_SECRET!) as string
+  } catch {
+    return null
+  }
 }

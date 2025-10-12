@@ -64,7 +64,7 @@ export const POST = createRoute(
  *       500:
  *         description: Внутренняя ошибка сервера
  */
-export const GET = createRoute([errorBoundary(), auth()], async () => {
+export const GET = createRoute([errorBoundary()], async () => {
   const createdLocation = await getLocations()
   return handleResponse("Локации успешно получены", 200, createdLocation)
 })
