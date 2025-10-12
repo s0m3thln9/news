@@ -3,49 +3,43 @@
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { FC, useEffect } from "react"
 import { Box, Grid } from "@mui/material"
-import { LocationWithNews } from "@/types/dto/location-with-news"
 import { Button } from "@/components/ui/button"
-import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { updateLocationWithNews } from "@/features/locations/slice"
 import { NewsDTO } from "@/types/dto/news"
 import { NewsListItem } from "@/components/news-list-item"
+import { useAppDispatch } from "@/hooks/use-app-dispatch"
+import { setNews } from "@/features/news/slice"
 import { useNewsPagination } from "@/features/news/useNewsPagination"
 
-type LocationNewsPageProps = {
-  location: LocationWithNews
+type NewsListPageProps = {
+  news: NewsDTO[]
 }
 
-export const LocationNewsPage: FC<LocationNewsPageProps> = ({ location }) => {
-  const dispatch = useAppDispatch()
-
-  const news =
-    useAppSelector((state) => state.locationsSlice.currentLocation?.news) ||
-    location.news
+export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
+  const newsList = useAppSelector((state) => state.newsSlice.news)
   const isLoading = useAppSelector((state) => state.searchNewsSlice.isLoading)
 
+  const dispatch = useAppDispatch()
   const { loadMore } = useNewsPagination()
 
   useEffect(() => {
-    dispatch(updateLocationWithNews(location))
-  }, [dispatch, location])
+    dispatch(setNews(news))
+  }, [dispatch, news])
 
   return (
     <Grid
       container
       className="mx-auto mt-10 w-full max-w-[1440px] flex-col gap-2.5 px-6"
     >
-      <h1 className={"text-primary-main text-2xl font-bold"}>
-        {location.title}
-      </h1>
+      <h1 className={"text-primary-main text-2xl font-bold"}>Новости</h1>
       <Box
         className={
           "border-primary-main flex flex-col gap-2.5 border-t-[5px] py-10"
         }
       >
-        {news.length === 0 ? (
+        {newsList.length === 0 ? (
           <span>Нет новостей</span>
         ) : (
-          news.map((n: NewsDTO) => <NewsListItem news={n} key={n.uuid} />)
+          newsList.map((n: NewsDTO) => <NewsListItem news={n} key={n.uuid} />)
         )}
       </Box>
       {isLoading ? (

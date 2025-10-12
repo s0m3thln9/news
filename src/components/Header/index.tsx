@@ -1,7 +1,7 @@
 "use client"
 
-import { UpdateLanguageSelect } from "@/components/Header/update-language-select"
-import { LocationSelect } from "@/components/Header/location-select"
+import { UpdateLanguageSelect } from "@/components/header/update-language-select"
+import { LocationSelect } from "@/components/header/location-select"
 import { SignInModal } from "@/components/sign-in-modal"
 import { setSignInModalOpen } from "@/components/sign-in-modal/slice"
 import { SignUpModal } from "@/components/sign-up-modal"
@@ -23,7 +23,7 @@ import { useState } from "react"
 import TelegramIcon from "@mui/icons-material/Telegram"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { logOut } from "@/features/user/slice"
-import { NewsSearch } from "@/components/Header/news-search"
+import { NewsSearch } from "@/components/header/news-search"
 
 export const Header = () => {
   const [logoutPopoverAnchor, setLogoutPopoverAnchor] =

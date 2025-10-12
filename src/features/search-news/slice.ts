@@ -6,6 +6,7 @@ type InitialState = {
   query: string
   debouncedQuery: string
   isLoading: boolean
+  touched: boolean
 }
 
 const initialState: InitialState = {
@@ -14,6 +15,7 @@ const initialState: InitialState = {
   query: "",
   debouncedQuery: "",
   isLoading: false,
+  touched: false,
 }
 
 export const searchNewsSlice = createSlice({
@@ -29,9 +31,20 @@ export const searchNewsSlice = createSlice({
     setLoading: (state, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload
     },
+    setTouched: (state, action: PayloadAction<boolean>) => {
+      state.touched = action.payload
+    },
+    setOffset: (state, action: PayloadAction<number>) => {
+      state.offset = action.payload
+    },
   },
 })
 
-export const { setNewsQuery, setDebouncedNewsQuery, setLoading } =
-  searchNewsSlice.actions
+export const {
+  setNewsQuery,
+  setDebouncedNewsQuery,
+  setLoading,
+  setTouched,
+  setOffset,
+} = searchNewsSlice.actions
 export default searchNewsSlice.reducer

@@ -47,9 +47,27 @@ export const locationsSlice = createSlice({
         state.currentLocation.news = action.payload
       }
     },
+    loadMoreNewsToLocation: (state, action: PayloadAction<NewsDTO[]>) => {
+      state.locations = state.locations.map((location) =>
+        location.uuid === state.currentLocation?.uuid
+          ? { ...location, news: [...location.news, ...action.payload] }
+          : location,
+      )
+
+      if (state.currentLocation) {
+        state.currentLocation.news = [
+          ...state.currentLocation.news,
+          ...action.payload,
+        ]
+      }
+    },
   },
 })
 
-export const { setCurrentLocation, updateLocationWithNews, addNewsToLocation } =
-  locationsSlice.actions
+export const {
+  setCurrentLocation,
+  updateLocationWithNews,
+  addNewsToLocation,
+  loadMoreNewsToLocation,
+} = locationsSlice.actions
 export default locationsSlice.reducer

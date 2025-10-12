@@ -13,6 +13,8 @@ import { useAppSelector } from "@/hooks/use-app-selector"
 import {
   setDebouncedNewsQuery,
   setNewsQuery,
+  setOffset,
+  setTouched,
 } from "@/features/search-news/slice"
 
 export const LocationSelect = () => {
@@ -33,6 +35,13 @@ export const LocationSelect = () => {
   const isBrothers = (uuid: string) =>
     brothers?.uuid === uuid ? brothers : null
 
+  const resetSearchParams = () => {
+    dispatch(setNewsQuery(""))
+    dispatch(setDebouncedNewsQuery(""))
+    dispatch(setTouched(false))
+    dispatch(setOffset(0))
+  }
+
   const handleLocationSelect = (uuid: string) => {
     if (
       currentLocation?.uuid === uuid &&
@@ -41,20 +50,18 @@ export const LocationSelect = () => {
       return null
     const newLocation = findLocation(uuid) || isBrothers(uuid)
     dispatch(setCurrentLocation(newLocation))
-    dispatch(setNewsQuery(""))
-    dispatch(setDebouncedNewsQuery(""))
+    resetSearchParams()
     router.push(`/locations/${uuid}`)
   }
 
   const handleHomeClick = () => {
     dispatch(setCurrentLocation(null))
-    dispatch(setNewsQuery(""))
-    dispatch(setDebouncedNewsQuery(""))
+    resetSearchParams()
     router.push("/")
   }
 
   const activeTab = (() => {
-    if (pathname === "/") return "home"
+    if (pathname === "/" || pathname === "/news") return "home"
     if (currentLocation?.title === "Вести братского народа") return "brothers"
     return "universities"
   })()
