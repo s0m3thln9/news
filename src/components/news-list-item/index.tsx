@@ -2,26 +2,16 @@ import { NewsDTO } from "@/types/dto/news"
 import { FC } from "react"
 import { Box } from "@mui/system"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
-import { useAppSelector } from "@/hooks/use-app-selector"
 import { useRouter } from "next/navigation"
+import { useGetDateKey } from "@/utils/use-get-date-key"
 
 type NewsListItemProps = {
   news: NewsDTO
 }
 
 export const NewsListItem: FC<NewsListItemProps> = ({ news }) => {
-  const userLanguage =
-    useAppSelector((state) => state.userSlice.user?.language) || "ru"
-
   const router = useRouter()
-
-  const dateKey = new Date(news.createdAt).toLocaleDateString(
-    `${userLanguage}-${userLanguage?.toUpperCase()}`,
-    {
-      day: "numeric",
-      month: "long",
-    },
-  )
+  const getDateKey = useGetDateKey()
 
   return (
     <Box
@@ -44,7 +34,7 @@ export const NewsListItem: FC<NewsListItemProps> = ({ news }) => {
         <div className={"flex items-center justify-between"}>
           <div className={"flex items-center gap-2.5"}>
             <CalendarMonthIcon />
-            <span>{dateKey}</span>
+            <span>{getDateKey(news.createdAt)}</span>
           </div>
         </div>
       </div>

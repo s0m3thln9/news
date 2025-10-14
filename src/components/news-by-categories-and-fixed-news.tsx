@@ -1,17 +1,27 @@
 import FixedNews from "@/components/fixed-news"
-import NewsByCategories from "@/components/news-by-categories"
-import { Grid } from "@mui/material"
+import { Box } from "@mui/material"
+import { FC } from "react"
+import { LocationNewsList } from "@/components/location-with-news"
+import { LocationWithNews } from "@/types/dto/location-with-news"
 
-function NewsByCategoriesAndFixedNews() {
+type NewsByCategoriesAndFixedNewsProps = {
+  locationsWithNews: LocationWithNews[]
+}
+
+const NewsByCategoriesAndFixedNews: FC<NewsByCategoriesAndFixedNewsProps> = ({
+  locationsWithNews,
+}) => {
   return (
-    <Grid className="w-full" container spacing={3} columns={10}>
-      <Grid size={{ xs: 10, md: 6 }}>
-        <NewsByCategories />
-      </Grid>
-      <Grid size={{ xs: 10, md: 4 }}>
+    <Box className="grid w-full grid-cols-10 gap-8">
+      <Box className={"col-span-6"}>
+        {locationsWithNews.map((location) => (
+          <LocationNewsList location={location} key={location.uuid} />
+        ))}
+      </Box>
+      <Box className={"col-span-4"}>
         <FixedNews />
-      </Grid>
-    </Grid>
+      </Box>
+    </Box>
   )
 }
 
