@@ -3,6 +3,7 @@ import { prisma } from "@/server/prisma-client"
 import { NewsDTO } from "@/types/dto/news"
 import { Prisma } from "@/generated/prisma"
 import { Pagination } from "@/types/dto/Pagination"
+import { ApiError } from "@/types/api-response"
 
 export const createNewsSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -94,6 +95,40 @@ export const getOneNews = async (uuid: string): Promise<NewsDTO | null> =>
   prisma.news.findFirst({
     where: {
       uuid,
+    },
+    omit: {
+      userUuid: true,
+      locationUuid: true,
+    },
+  })
+
+export const togglePinNews = async (uuid: string): Promise<NewsDTO> => {
+  const news = await prisma.news.findUnique({
+    where: { uuid },
+  })
+
+  if (!news) {
+    throw new ApiError({ status: 404, message: "No such news" })
+  }
+
+  const isCurrentlyPinned = news.pinnedAt !== null
+  const newPinnedAt = isCurrentlyPinned ? null : new Date()
+
+  return prisma.news.update({
+    where: { uuid },
+    data: { pinnedAt: newPinnedAt },
+    omit: {
+      userUuid: true,
+      locationUuid: true,
+    },
+  })
+}
+
+export const getPinnedNews = (): Promise<NewsDTO[]> =>
+  prisma.news.findMany({
+    where: { pinnedAt: { not: null } },
+    orderBy: {
+      pinnedAt: "desc",
     },
     omit: {
       userUuid: true,

@@ -62,14 +62,15 @@ model Location {
 }
 
 model News {
-  uuid         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  author       User     @relation(fields: [userUuid], references: [uuid])
+  uuid         String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  author       User      @relation(fields: [userUuid], references: [uuid])
   images       String[]
   title        String
   content      String
-  location     Location @relation(fields: [locationUuid], references: [uuid])
-  createdAt    DateTime @default(dbgenerated("NOW()")) @db.Timestamptz(3)
-  updatedAt    DateTime @updatedAt @db.Timestamptz(3)
-  userUuid     String   @db.Uuid
-  locationUuid String   @db.Uuid
+  pinnedAt     DateTime?
+  location     Location  @relation(fields: [locationUuid], references: [uuid])
+  createdAt    DateTime  @default(dbgenerated("NOW()")) @db.Timestamptz(3)
+  updatedAt    DateTime  @updatedAt @db.Timestamptz(3)
+  userUuid     String    @db.Uuid
+  locationUuid String    @db.Uuid
 }
