@@ -4,9 +4,11 @@ import { getNews, getPinnedNews } from "@/server/services/news-service"
 import { getLocationsWithNews } from "@/server/services/locations-service"
 
 export default async function Home() {
-  const lastNews = await getNews({ limit: 5 })
-  const locationsWithNews = await getLocationsWithNews()
-  const pinnedNews = await getPinnedNews()
+  const [lastNews, locationsWithNews, pinnedNews] = await Promise.all([
+    getNews({ limit: 5 }),
+    getLocationsWithNews(),
+    getPinnedNews(),
+  ])
 
   return (
     <>
