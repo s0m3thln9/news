@@ -6,13 +6,14 @@ import { useAppSelector } from "@/hooks/use-app-selector"
 
 export const useUpdateUserForm = () => {
   const t = useTranslation()
-  const user = useAppSelector((state) => state.userSlice.user)
+  const firstName = useAppSelector((state) => state.userSlice.user?.firstName)
+  const lastName = useAppSelector((state) => state.userSlice.user?.lastName)
 
   return useForm<UpdateUserFormData>({
     resolver: zodResolver(updateUserSchema(t)),
     defaultValues: {
-      firstName: user?.firstName || "",
-      lastName: user?.lastName || "",
+      firstName: firstName,
+      lastName: lastName,
     },
     mode: "onChange",
   })
