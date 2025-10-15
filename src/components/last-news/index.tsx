@@ -20,6 +20,8 @@ const LastNews: FC<LastNewsProps> = ({ news }) => {
   const getDateKey = useGetDateKey()
   const router = useRouter()
 
+  if (!featuredNews) return
+
   return (
     <Grid container spacing={3} className="w-full">
       <Grid
