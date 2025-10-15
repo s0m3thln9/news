@@ -28,7 +28,7 @@ export default async function LocationPage({
       offset: offsetValue,
       limit: limitValue,
       search,
-      locationUuid,
+      locationUuid: locationUuid ? locationUuid : uuid,
     }),
   ])
 

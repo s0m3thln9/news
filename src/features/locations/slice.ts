@@ -48,18 +48,25 @@ export const locationsSlice = createSlice({
       }
     },
     loadMoreNewsToLocation: (state, action: PayloadAction<NewsDTO[]>) => {
+      if (!state.currentLocation) return
+
+      const existingIds = new Set(
+        state.currentLocation.news.map((item) => item.uuid),
+      )
+      const uniqueNewNews = action.payload.filter(
+        (item) => !existingIds.has(item.uuid),
+      )
+
       state.locations = state.locations.map((location) =>
         location.uuid === state.currentLocation?.uuid
-          ? { ...location, news: [...location.news, ...action.payload] }
+          ? { ...location, news: [...location.news, ...uniqueNewNews] }
           : location,
       )
 
-      if (state.currentLocation) {
-        state.currentLocation.news = [
-          ...state.currentLocation.news,
-          ...action.payload,
-        ]
-      }
+      state.currentLocation.news = [
+        ...state.currentLocation.news,
+        ...uniqueNewNews,
+      ]
     },
   },
 })

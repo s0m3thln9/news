@@ -3,20 +3,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 type InitialState = {
   offset: number
   limit: number
-  query: string
-  debouncedQuery: string
-  isLoading: boolean
-  touched: boolean
+  searchQuery: string
   total: number
 }
 
 const initialState: InitialState = {
   offset: 0,
   limit: 10,
-  query: "",
-  debouncedQuery: "",
-  isLoading: false,
-  touched: false,
+  searchQuery: "",
   total: -1,
 }
 
@@ -24,17 +18,8 @@ export const searchNewsSlice = createSlice({
   name: "searchNewsSlice",
   initialState,
   reducers: {
-    setNewsQuery: (state, action: PayloadAction<string>) => {
-      state.query = action.payload
-    },
-    setDebouncedNewsQuery: (state, action: PayloadAction<string>) => {
-      state.debouncedQuery = action.payload.trim()
-    },
-    setLoading: (state, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload
-    },
-    setTouched: (state, action: PayloadAction<boolean>) => {
-      state.touched = action.payload
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.searchQuery = action.payload
     },
     setOffset: (state, action: PayloadAction<number>) => {
       state.offset = action.payload
@@ -45,12 +30,5 @@ export const searchNewsSlice = createSlice({
   },
 })
 
-export const {
-  setNewsQuery,
-  setDebouncedNewsQuery,
-  setLoading,
-  setTouched,
-  setOffset,
-  setTotal,
-} = searchNewsSlice.actions
+export const { setSearchQuery, setOffset, setTotal } = searchNewsSlice.actions
 export default searchNewsSlice.reducer

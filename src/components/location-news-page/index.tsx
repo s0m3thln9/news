@@ -7,10 +7,10 @@ import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { updateLocationWithNews } from "@/features/locations/slice"
 import { NewsDTO } from "@/types/dto/news"
 import { NewsListItem } from "@/components/news-list-item"
-import { useNewsPagination } from "@/features/news/use-news-pagination"
 import { Location } from "@/generated/prisma"
 import { Pagination } from "@/types/dto/Pagination"
 import { setTotal } from "@/features/search-news/slice"
+import { useNews } from "@/features/search-news/use-news"
 
 type LocationNewsPageProps = {
   location: Location
@@ -23,15 +23,11 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
 }) => {
   const dispatch = useAppDispatch()
 
-  const newsList =
-    useAppSelector((state) => state.locationsSlice.currentLocation?.news) ||
-    news.data
-  const isLoading = useAppSelector((state) => state.searchNewsSlice.isLoading)
   const offset = useAppSelector((state) => state.searchNewsSlice.offset)
   const total = useAppSelector((state) => state.searchNewsSlice.total)
   const limit = useAppSelector((state) => state.searchNewsSlice.limit)
 
-  const { loadMore } = useNewsPagination()
+  const { news: newsList, isLoading, loadMore } = useNews()
 
   useEffect(() => {
     dispatch(updateLocationWithNews({ ...location, news: news.data }))
@@ -51,7 +47,7 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
           "border-primary-main flex flex-col gap-2.5 border-t-[5px] py-10"
         }
       >
-        {newsList.length === 0 ? (
+        {!isLoading && newsList.length === 0 ? (
           <span>Нет новостей</span>
         ) : (
           newsList.map((n: NewsDTO) => <NewsListItem news={n} key={n.uuid} />)

@@ -7,9 +7,9 @@ import { NewsDTO } from "@/types/dto/news"
 import { NewsListItem } from "@/components/news-list-item"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { setNews } from "@/features/news/slice"
-import { useNewsPagination } from "@/features/news/use-news-pagination"
 import { Pagination } from "@/types/dto/Pagination"
 import { setTotal } from "@/features/search-news/slice"
+import { useNews } from "@/features/search-news/use-news"
 
 type NewsListPageProps = {
   news: Pagination<NewsDTO[]>
@@ -20,10 +20,9 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
   const total = useAppSelector((state) => state.searchNewsSlice.total)
   const offset = useAppSelector((state) => state.searchNewsSlice.offset)
   const limit = useAppSelector((state) => state.searchNewsSlice.limit)
-  const isLoading = useAppSelector((state) => state.searchNewsSlice.isLoading)
+  const { isLoading, loadMore } = useNews()
 
   const dispatch = useAppDispatch()
-  const { loadMore } = useNewsPagination()
 
   useEffect(() => {
     dispatch(setNews(news.data))

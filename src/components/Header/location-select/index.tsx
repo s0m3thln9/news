@@ -10,11 +10,9 @@ import { useTranslation } from "@/providers/i18n-provider"
 import { SelectBody, SelectRoot, SelectTrigger } from "@/components/ui/select"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import {
-  setDebouncedNewsQuery,
-  setNewsQuery,
   setOffset,
+  setSearchQuery,
   setTotal,
-  setTouched,
 } from "@/features/search-news/slice"
 
 export const LocationSelect = () => {
@@ -36,9 +34,7 @@ export const LocationSelect = () => {
     brothers?.uuid === uuid ? brothers : null
 
   const resetSearchParams = () => {
-    dispatch(setNewsQuery(""))
-    dispatch(setDebouncedNewsQuery(""))
-    dispatch(setTouched(false))
+    dispatch(setSearchQuery(""))
     dispatch(setOffset(0))
     dispatch(setTotal(-1))
   }

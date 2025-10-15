@@ -1,9 +1,9 @@
 import { Box, TextField } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
-import { useNewsSearch } from "@/components/header/news-search/use-search-news"
+import { useNews } from "@/features/search-news/use-news"
 
 export const NewsSearch = () => {
-  const { value, onChange } = useNewsSearch()
+  const { searchQuery, handleSearchQueryChange } = useNews()
 
   return (
     <Box className="self-stretch">
@@ -11,8 +11,8 @@ export const NewsSearch = () => {
         variant="filled"
         size="small"
         placeholder="Поиск..."
-        value={value}
-        onChange={onChange}
+        value={searchQuery}
+        onChange={handleSearchQueryChange}
         className="h-full self-stretch rounded-none text-sm"
         sx={{
           width: 300,

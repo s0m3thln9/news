@@ -17,7 +17,12 @@ export const newsSlice = createSlice({
       state.news = action.payload
     },
     loadMoreNews: (state, action: PayloadAction<NewsDTO[]>) => {
-      state.news = [...state.news, ...action.payload]
+      const existingIds = new Set(state.news.map((item) => item.uuid))
+      const uniqueNewNews = action.payload.filter(
+        (item) => !existingIds.has(item.uuid),
+      )
+
+      state.news = [...state.news, ...uniqueNewNews]
     },
   },
 })

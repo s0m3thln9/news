@@ -9,7 +9,7 @@ const newsApi = createApi({
   reducerPath: "newsApi",
   baseQuery: baseQuery("news"),
   endpoints: (builder) => ({
-    getNews: builder.mutation<
+    getNews: builder.query<
       ApiResponse<Pagination<NewsDTO[]>>,
       GetNewsQueryParams
     >({
@@ -23,4 +23,4 @@ const newsApi = createApi({
 })
 
 export default newsApi
-export const { useGetNewsMutation } = newsApi
+export const { useGetNewsQuery } = newsApi
