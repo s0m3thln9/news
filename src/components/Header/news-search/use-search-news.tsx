@@ -2,6 +2,7 @@ import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { useGetNewsMutation } from "@/api/news"
 import { addNewsToLocation } from "@/features/locations/slice"
 import React, { useEffect } from "react"
+import { useAbortableTrigger } from "@/hooks/use-abortable-trigger"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import {
   setDebouncedNewsQuery,
@@ -28,6 +29,7 @@ export const useNewsSearch = () => {
   const touched = useAppSelector((state) => state.searchNewsSlice.touched)
 
   const router = useRouter()
+  const runGetNews = useAbortableTrigger(getNews)
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -44,19 +46,21 @@ export const useNewsSearch = () => {
     const fetchNews = async () => {
       dispatch(setLoading(true))
       try {
-        const response = await getNews({
+        const response = await runGetNews({
           search: debouncedQuery,
           offset,
           limit,
           locationUuid: currentLocationUuid,
-        }).unwrap()
+        })
         if (response?.data) {
           dispatch(addNewsToLocation(response.data.data))
           dispatch(setNews(response.data.data))
           dispatch(setTotal(response.data.total))
         }
       } catch (err) {
-        console.error("Ошибка загрузки:", err)
+        if ((err as { name?: string }).name !== "AbortError") {
+          console.error("Ошибка загрузки:", err)
+        }
       } finally {
         dispatch(setLoading(false))
       }

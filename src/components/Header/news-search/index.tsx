@@ -1,6 +1,6 @@
 import { Box, TextField } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
-import { useNewsSearch } from "@/components/header/news-search/useSearchNews"
+import { useNewsSearch } from "@/components/header/news-search/use-search-news"
 
 export const NewsSearch = () => {
   const { value, onChange } = useNewsSearch()
