@@ -2,6 +2,7 @@ import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { useGetNewsMutation } from "@/api/news"
 import { loadMoreNewsToLocation } from "@/features/locations/slice"
 import { useEffect } from "react"
+import { useAbortableTrigger } from "@/hooks/use-abortable-trigger"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { setLoading, setOffset, setTotal } from "@/features/search-news/slice"
 import { loadMoreNews } from "@/features/news/slice"
@@ -18,24 +19,27 @@ export const useNewsPagination = () => {
   const offset = useAppSelector((state) => state.searchNewsSlice.offset)
   const limit = useAppSelector((state) => state.searchNewsSlice.limit)
   const touched = useAppSelector((state) => state.searchNewsSlice.touched)
+  const runGetNews = useAbortableTrigger(getNews)
 
   useEffect(() => {
     const fetchNews = async () => {
       dispatch(setLoading(true))
       try {
-        const response = await getNews({
+        const response = await runGetNews({
           search: debouncedQuery,
           offset,
           limit,
           locationUuid: currentLocationUuid,
-        }).unwrap()
+        })
         if (response?.data) {
           dispatch(loadMoreNewsToLocation(response.data.data))
           dispatch(loadMoreNews(response.data.data))
           dispatch(setTotal(response.data.total))
         }
       } catch (err) {
-        console.error("Ошибка загрузки:", err)
+        if ((err as { name?: string }).name !== "AbortError") {
+          console.error("Ошибка загрузки:", err)
+        }
       } finally {
         dispatch(setLoading(false))
       }

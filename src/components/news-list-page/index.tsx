@@ -7,7 +7,7 @@ import { NewsDTO } from "@/types/dto/news"
 import { NewsListItem } from "@/components/news-list-item"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { setNews } from "@/features/news/slice"
-import { useNewsPagination } from "@/features/news/useNewsPagination"
+import { useNewsPagination } from "@/features/news/use-news-pagination"
 import { Pagination } from "@/types/dto/Pagination"
 import { setTotal } from "@/features/search-news/slice"
 
