@@ -1,5 +1,5 @@
 import LastNews from "@/components/last-news"
-import NewsByCategoriesAndPinnedNews from "@/components/news-by-categories-and-pinned-news"
+import LocationsNewsListAndPinnedNews from "@/components/locations-news-list-and-pinned-news"
 import { getNews, getPinnedNews } from "@/server/services/news-service"
 import { getLocationsWithNews } from "@/server/services/locations-service"
 
@@ -13,7 +13,7 @@ export default async function Home() {
   return (
     <>
       <LastNews news={lastNews.data} />
-      <NewsByCategoriesAndPinnedNews
+      <LocationsNewsListAndPinnedNews
         locationsWithNews={locationsWithNews}
         pinnedNews={pinnedNews}
       />

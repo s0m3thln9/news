@@ -2,8 +2,7 @@
 
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { FC, useEffect } from "react"
-import { Box, Grid } from "@mui/material"
-import { Button } from "@/components/ui/button"
+import { Box, Grid, Button } from "@mui/material"
 import { NewsDTO } from "@/types/dto/news"
 import { NewsListItem } from "@/components/news-list-item"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
@@ -52,7 +51,14 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
         <span>Загрузка...</span>
       ) : (
         total > offset + limit && (
-          <Button onClick={loadMore}>Загрузить еще</Button>
+          <Button
+            className="w-fit self-center"
+            variant="outlined"
+            color="primary"
+            onClick={loadMore}
+          >
+            Загрузить еще
+          </Button>
         )
       )}
     </Grid>

@@ -1,13 +1,12 @@
 "use client"
 
-import { Box, Typography } from "@mui/material"
+import { Box, Typography, Button } from "@mui/material"
 import { Input } from "@/components/ui/input"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { useUpdateUserForm } from "./use-update-user-form"
 import { useUpdateUserSubmit } from "./use-update-user-submit"
 import { useTranslation } from "@/providers/i18n-provider"
 import { Translate } from "@/components/ui/translate"
-import { Button } from "@/components/ui/button"
 
 export const ProfileForm = () => {
   const t = useTranslation()
@@ -66,8 +65,10 @@ export const ProfileForm = () => {
           disabled
         />
         <Button
-          type={"submit"}
-          className={"w-full"}
+          type="submit"
+          className="w-full"
+          variant="contained"
+          color="primary"
           disabled={!isDirty || isLoading}
         >
           Сохранить изменения

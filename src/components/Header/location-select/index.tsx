@@ -1,6 +1,6 @@
 "use client"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"
 import { usePathname, useRouter } from "next/navigation"
 import { setCurrentLocation } from "@/features/locations/slice"
@@ -8,7 +8,6 @@ import { cn } from "@/utils/cn"
 import { Select } from "@base-ui-components/react/select"
 import { useTranslation } from "@/providers/i18n-provider"
 import { SelectBody, SelectRoot, SelectTrigger } from "@/components/ui/select"
-import { Button } from "@/components/ui/button"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import {
   setDebouncedNewsQuery,
@@ -86,7 +85,7 @@ export const LocationSelect = () => {
     <Box className="flex self-stretch">
       <Button
         className={cn(
-          "relative flex h-full items-center justify-center self-stretch rounded-none bg-transparent px-4 font-bold normal-case transition-all duration-300 ease-in-out hover:bg-white/10",
+          "relative flex h-full items-center justify-center self-stretch rounded-none bg-transparent px-4 font-bold normal-case transition-all duration-300 ease-in-out",
           beforeClass,
           activeTab === "home"
             ? "bg-primary-main before:opacity-100"
@@ -101,7 +100,7 @@ export const LocationSelect = () => {
           "relative flex py-1 transition-all duration-300 ease-in-out",
           beforeClass,
           activeTab === "universities"
-            ? "bg-primary-main"
+            ? "bg-primary-main before:opacity-100"
             : "bg-transparent before:bg-transparent",
         )}
       >

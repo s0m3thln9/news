@@ -45,6 +45,17 @@ const theme = createTheme({
       white: "#F8FAFF",
     },
   },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          borderRadius: "8px",
+          fontWeight: 700,
+          padding: "8px 32px",
+        },
+      },
+    },
+  },
 })
 
 export default theme
