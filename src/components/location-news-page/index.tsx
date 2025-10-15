@@ -11,6 +11,7 @@ import { Location } from "@/generated/prisma"
 import { Pagination } from "@/types/dto/Pagination"
 import { setTotal } from "@/features/search-news/slice"
 import { useNews } from "@/features/search-news/use-news"
+import { useTranslation } from "@/providers/i18n-provider"
 
 type LocationNewsPageProps = {
   location: Location
@@ -22,6 +23,7 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
   news,
 }) => {
   const dispatch = useAppDispatch()
+  const t = useTranslation()
 
   const offset = useAppSelector((state) => state.searchNewsSlice.offset)
   const total = useAppSelector((state) => state.searchNewsSlice.total)
@@ -48,13 +50,13 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
         }
       >
         {!isLoading && newsList.length === 0 ? (
-          <span>Нет новостей</span>
+          <span>{t("common.noNews")}</span>
         ) : (
           newsList.map((n: NewsDTO) => <NewsListItem news={n} key={n.uuid} />)
         )}
       </Box>
       {isLoading ? (
-        <span>Загрузка...</span>
+        <span>{t("common.loading")}</span>
       ) : (
         total > offset + limit && (
           <Button
@@ -63,7 +65,7 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
             color="primary"
             onClick={loadMore}
           >
-            Загрузить еще
+            {t("common.loadMore")}
           </Button>
         )
       )}

@@ -30,4 +30,49 @@
       "emailTaken": "Email is already taken"
     }
   }
+  ,
+  "common": {
+    "noNews": "No news",
+    "loading": "Loading...",
+    "loadMore": "Load more",
+    "back": "Back",
+    "login": "Sign in",
+    "logout": "Sign out",
+    "recentPost": "Recent post",
+    "searchPlaceholder": "Search..."
+  },
+  "images": {
+    "logoAlt": "Logo",
+    "headerAlt": "Decorative image"
+  },
+  "notFound": {
+    "title": "404",
+    "text": "Page not found",
+    "goHome": "Go to home"
+  },
+  "profile": {
+    "title": "Profile",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "email": "Email",
+    "role": "Role",
+    "firstNamePlaceholder": "First name",
+    "lastNamePlaceholder": "Last name",
+    "loading": "Loading profile...",
+    "saveChanges": "Save changes",
+    "rolePlaceholder": "Role"
+  },
+  "news": {
+    "title": "News"
+  },
+  "locations": {
+    "brothers": "Brotherly people's news"
+  },
+  "authExtra": {
+    "noAccount": "No account?",
+    "registration": "Sign up",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "telegramAria": "Telegram channel"
+  }
 }

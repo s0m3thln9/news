@@ -22,7 +22,7 @@ export const ProfileForm = () => {
   const { onSubmit, isLoading } = useUpdateUserSubmit(reset)
 
   if (!user) {
-    return <Typography>Загрузка профиля...</Typography>
+    return <Typography>{t("profile.loading")}</Typography>
   }
 
   return (
@@ -61,7 +61,7 @@ export const ProfileForm = () => {
         <Input
           value={user.role}
           label={t("profile.role")}
-          placeholder="Роль"
+          placeholder={t("profile.rolePlaceholder")}
           disabled
         />
         <Button
@@ -71,7 +71,7 @@ export const ProfileForm = () => {
           color="primary"
           disabled={!isDirty || isLoading}
         >
-          Сохранить изменения
+          {t("profile.saveChanges")}
         </Button>
       </div>
     </Box>

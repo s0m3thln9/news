@@ -10,6 +10,7 @@ import { setNews } from "@/features/news/slice"
 import { Pagination } from "@/types/dto/Pagination"
 import { setTotal } from "@/features/search-news/slice"
 import { useNews } from "@/features/search-news/use-news"
+import { useTranslation } from "@/providers/i18n-provider"
 
 type NewsListPageProps = {
   news: Pagination<NewsDTO[]>
@@ -21,6 +22,7 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
   const offset = useAppSelector((state) => state.searchNewsSlice.offset)
   const limit = useAppSelector((state) => state.searchNewsSlice.limit)
   const { isLoading, loadMore } = useNews()
+  const t = useTranslation()
 
   const dispatch = useAppDispatch()
 
@@ -34,20 +36,22 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
       container
       className="mx-auto mt-10 w-full max-w-[1440px] flex-col gap-2.5 px-6"
     >
-      <h1 className={"text-primary-main text-2xl font-bold"}>Новости</h1>
+      <h1 className={"text-primary-main text-2xl font-bold"}>
+        {t("news.title")}
+      </h1>
       <Box
         className={
           "border-primary-main flex flex-col gap-2.5 border-t-[5px] py-10"
         }
       >
         {newsList.length === 0 ? (
-          <span>Нет новостей</span>
+          <span>{t("common.noNews")}</span>
         ) : (
           newsList.map((n: NewsDTO) => <NewsListItem news={n} key={n.uuid} />)
         )}
       </Box>
       {isLoading ? (
-        <span>Загрузка...</span>
+        <span>{t("common.loading")}</span>
       ) : (
         total > offset + limit && (
           <Button
@@ -56,7 +60,7 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
             color="primary"
             onClick={loadMore}
           >
-            Загрузить еще
+            {t("common.loadMore")}
           </Button>
         )
       )}

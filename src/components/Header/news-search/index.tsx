@@ -1,16 +1,18 @@
 import { Box, TextField } from "@mui/material"
 import SearchIcon from "@mui/icons-material/Search"
 import { useNews } from "@/features/search-news/use-news"
+import { useTranslation } from "@/providers/i18n-provider"
 
 export const NewsSearch = () => {
   const { searchQuery, handleSearchQueryChange } = useNews()
+  const t = useTranslation()
 
   return (
     <Box className="self-stretch">
       <TextField
         variant="filled"
         size="small"
-        placeholder="Поиск..."
+        placeholder={t("common.searchPlaceholder")}
         value={searchQuery}
         onChange={handleSearchQueryChange}
         className="h-full self-stretch rounded-none text-sm"

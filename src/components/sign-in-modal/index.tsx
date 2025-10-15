@@ -99,14 +99,14 @@ export const SignInModal = () => {
                 {...register("email")}
                 errorMessage={errors.email?.message}
                 label={t("auth.signIn.email")}
-                placeholder={"qwerty123456@gmail.com"}
+                placeholder={t("auth.signIn.email")}
                 type="email"
               />
               <Input
                 {...register("password")}
                 errorMessage={errors.password?.message}
                 label={t("auth.signIn.password")}
-                placeholder={"qwerty123456"}
+                placeholder={t("auth.signIn.password")}
                 type="password"
               />
               <Button type={"submit"} variant={"contained"}>
@@ -115,13 +115,15 @@ export const SignInModal = () => {
             </div>
             <div className={"h-[3px] bg-[#D9D9D9]"} />
             <div className={"flex items-center justify-between px-12"}>
-              <Typography sx={{ fontSize: "14px" }}>Нет аккаунта?</Typography>
+              <Typography sx={{ fontSize: "14px" }}>
+                {t("authExtra.noAccount")}
+              </Typography>
               <Button
                 sx={{ fontSize: "14px" }}
                 variant={"contained"}
                 onClick={handleOpenSignUp}
               >
-                Регистрация
+                {t("authExtra.registration")}
               </Button>
             </div>
           </form>

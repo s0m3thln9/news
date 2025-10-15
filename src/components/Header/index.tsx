@@ -6,7 +6,7 @@ import { SignInModal } from "@/components/sign-in-modal"
 import { setSignInModalOpen } from "@/components/sign-in-modal/slice"
 import { SignUpModal } from "@/components/sign-up-modal"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { formatCurrentDate } from "@/utils/format-current-date"
+import { useFormatCurrentDate } from "@/utils/format-current-date"
 import Cookies from "js-cookie"
 import Image from "next/image"
 import {
@@ -24,6 +24,7 @@ import TelegramIcon from "@mui/icons-material/Telegram"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { logOut } from "@/features/user/slice"
 import { NewsSearch } from "@/components/header/news-search"
+import { useTranslation } from "@/providers/i18n-provider"
 
 export const Header = () => {
   const [logoutPopoverAnchor, setLogoutPopoverAnchor] =
@@ -32,6 +33,8 @@ export const Header = () => {
   const user = useAppSelector((state) => state.userSlice.user)
 
   const dispatch = useAppDispatch()
+  const t = useTranslation()
+  const currentDate = useFormatCurrentDate()
 
   const handleLogout = () => {
     Cookies.remove("jwt")
@@ -55,7 +58,7 @@ export const Header = () => {
             className="flex items-center self-stretch px-5"
           >
             <Typography variant="body2" className="font-bold">
-              {formatCurrentDate()}
+              {currentDate}
             </Typography>
           </Box>
           <Button
@@ -64,7 +67,7 @@ export const Header = () => {
             size="medium"
             className="font-bold normal-case"
           >
-            Недавний пост
+            {t("common.recentPost")}
           </Button>
         </Box>
         <Box className="flex items-center gap-4">
@@ -73,7 +76,7 @@ export const Header = () => {
             href="https://t.me/yourchannel"
             target="_blank"
             rel="noopener noreferrer"
-            aria-label="Telegram канал"
+            aria-label={t("authExtra.telegramAria")}
           >
             <IconButton className="text-text-primary" size="small">
               <TelegramIcon />
@@ -90,7 +93,7 @@ export const Header = () => {
                 : dispatch(setSignInModalOpen(true))
             }
           >
-            {user ? user.firstName : "Войти"}
+            {user ? user.firstName : t("common.login")}
           </Button>
           {!user ? (
             <>
@@ -107,7 +110,7 @@ export const Header = () => {
                 horizontal: "right",
               }}
             >
-              <Button onClick={handleLogout}>Выйти</Button>
+              <Button onClick={handleLogout}>{t("common.logout")}</Button>
             </Popover>
           )}
         </Box>
@@ -120,7 +123,7 @@ export const Header = () => {
         <Box className="flex items-center">
           <Image
             src="/logo.svg"
-            alt="Логотип"
+            alt={t("images.logoAlt")}
             width={147}
             height={74}
             priority
@@ -129,7 +132,7 @@ export const Header = () => {
         <Box className="flex items-center">
           <Image
             src="/header.svg"
-            alt="Декоративная картинка"
+            alt={t("images.headerAlt")}
             width={766}
             height={80}
           />

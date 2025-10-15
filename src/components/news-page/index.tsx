@@ -7,6 +7,7 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { useRouter } from "next/navigation"
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft"
+import { useTranslation } from "@/providers/i18n-provider"
 
 type NewsPageProps = {
   news: NewsDTO
@@ -28,6 +29,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
   )
 
   const route = useRouter()
+  const t = useTranslation()
 
   return (
     <Container className={"max-w-[860px]"}>
@@ -43,7 +45,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
           }
         >
           <ArrowLeftIcon />
-          <span>Назад</span>
+          <span>{t("common.back")}</span>
         </div>
         <h3 className={"text-[32px] font-bold"}>{news.title}</h3>
         <img

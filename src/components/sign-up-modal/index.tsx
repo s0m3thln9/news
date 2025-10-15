@@ -114,21 +114,21 @@ export const SignUpModal = () => {
                 {...register("email")}
                 errorMessage={errors.email?.message}
                 label={t("auth.signUp.email")}
-                placeholder={"qwerty123456@gmail.com"}
+                placeholder={t("auth.signUp.email")}
                 type="email"
               />
               <Input
                 {...register("password")}
                 errorMessage={errors.password?.message}
                 label={t("auth.signUp.password")}
-                placeholder={"************"}
+                placeholder={t("auth.signUp.password")}
                 type="password"
               />
               <Input
                 {...register("repeatPassword")}
                 errorMessage={errors.repeatPassword?.message}
                 label={t("auth.signUp.repeatPassword")}
-                placeholder={"************"}
+                placeholder={t("auth.signUp.repeatPassword")}
                 type="password"
               />
               <Button type={"submit"} variant={"contained"}>
@@ -138,14 +138,14 @@ export const SignUpModal = () => {
             <div className={"h-[3px] bg-[#D9D9D9]"} />
             <div className={"flex items-center justify-between px-12"}>
               <Typography sx={{ fontSize: "14px" }}>
-                Уже есть аккаунт?
+                {t("authExtra.haveAccount")}
               </Typography>
               <Button
                 sx={{ fontSize: "14px" }}
                 variant={"contained"}
                 onClick={handleOpenSignIn}
               >
-                Вход
+                {t("authExtra.signIn")}
               </Button>
             </div>
           </form>

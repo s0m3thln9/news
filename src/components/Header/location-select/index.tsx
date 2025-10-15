@@ -59,7 +59,7 @@ export const LocationSelect = () => {
 
   const activeTab = (() => {
     if (pathname === "/" || pathname === "/news") return "home"
-    if (currentLocation?.title === "Вести братского народа") return "brothers"
+    if (currentLocation?.title === t("locations.brothers")) return "brothers"
     return "universities"
   })()
 
@@ -134,7 +134,7 @@ export const LocationSelect = () => {
             : "bg-transparent before:bg-transparent",
         )}
       >
-        Вести братского народа
+        {t("locations.brothers")}
       </Button>
     </Box>
   )

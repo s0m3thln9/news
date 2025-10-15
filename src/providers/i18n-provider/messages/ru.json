@@ -32,11 +32,48 @@
       "emailTaken": "Email занят"
     }
   },
+  "common": {
+    "noNews": "Нет новостей",
+    "loading": "Загрузка...",
+    "loadMore": "Загрузить еще",
+    "back": "Назад",
+    "login": "Войти",
+    "logout": "Выйти",
+    "recentPost": "Недавний пост",
+    "searchPlaceholder": "Поиск..."
+  },
+  "images": {
+    "logoAlt": "Логотип",
+    "headerAlt": "Декоративная картинка"
+  },
+  "notFound": {
+    "title": "404",
+    "text": "Страница не найдена",
+    "goHome": "Вернуться на главную"
+  },
   "profile": {
     "title": "Профиль",
     "firstName": "Имя",
     "lastName": "Фамилия",
     "email": "Адрес электронной почты",
-    "role": "Роль"
+    "role": "Роль",
+    "firstNamePlaceholder": "Имя",
+    "lastNamePlaceholder": "Фамилия",
+    "loading": "Загрузка профиля...",
+    "saveChanges": "Сохранить изменения",
+    "rolePlaceholder": "Роль"
+  },
+  "news": {
+    "title": "Новости"
+  },
+  "locations": {
+    "brothers": "Вести братского народа"
+  },
+  "authExtra": {
+    "noAccount": "Нет аккаунта?",
+    "registration": "Регистрация",
+    "haveAccount": "Уже есть аккаунт?",
+    "signIn": "Вход",
+    "telegramAria": "Telegram канал"
   }
 }
