@@ -32,7 +32,7 @@ export function useNews() {
 
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
 
-  const { data, isLoading } = useGetNewsQuery({
+  const { data, isFetching, isLoading } = useGetNewsQuery({
     search: debouncedSearchQuery,
     offset,
     limit,
@@ -43,15 +43,11 @@ export function useNews() {
     if (data) {
       const newsData = data.data.data
       if (offset === 0) {
-        setTimeout(() => {
-          dispatch(setNews(newsData))
-          dispatch(addNewsToLocation(newsData))
-        }, 1000)
+        dispatch(addNewsToLocation(newsData))
+        dispatch(setNews(newsData))
       } else {
-        setTimeout(() => {
-          dispatch(loadMoreNewsToLocation(newsData))
-          dispatch(loadMoreNews(newsData))
-        }, 1000)
+        dispatch(loadMoreNewsToLocation(newsData))
+        dispatch(loadMoreNews(newsData))
       }
       dispatch(setTotal(data.data.total))
     }
@@ -73,6 +69,7 @@ export function useNews() {
     searchQuery,
     handleSearchQueryChange,
     news,
+    isFetching,
     isLoading,
     loadMore,
   }

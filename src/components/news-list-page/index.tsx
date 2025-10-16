@@ -21,7 +21,7 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
   const total = useAppSelector((state) => state.searchNewsSlice.total)
   const offset = useAppSelector((state) => state.searchNewsSlice.offset)
   const limit = useAppSelector((state) => state.searchNewsSlice.limit)
-  const { isLoading, loadMore } = useNews()
+  const { isFetching, loadMore } = useNews()
   const t = useTranslation()
 
   const dispatch = useAppDispatch()
@@ -44,13 +44,13 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
           "border-primary-main flex flex-col gap-2.5 border-t-[5px] py-10"
         }
       >
-        {newsList.length === 0 ? (
+        {!isFetching && newsList.length === 0 ? (
           <span>{t("common.noNews")}</span>
         ) : (
           newsList.map((n: NewsDTO) => <NewsListItem news={n} key={n.uuid} />)
         )}
       </Box>
-      {isLoading ? (
+      {isFetching ? (
         <span>{t("common.loading")}</span>
       ) : (
         total > offset + limit && (

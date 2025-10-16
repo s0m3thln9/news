@@ -22,8 +22,8 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
   location,
   news,
 }) => {
-  const dispatch = useAppDispatch()
   const t = useTranslation()
+  const dispatch = useAppDispatch()
 
   const offset = useAppSelector((state) => state.searchNewsSlice.offset)
   const total = useAppSelector((state) => state.searchNewsSlice.total)

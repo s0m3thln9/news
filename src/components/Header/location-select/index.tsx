@@ -59,7 +59,7 @@ export const LocationSelect = () => {
 
   const activeTab = (() => {
     if (pathname === "/" || pathname === "/news") return "home"
-    if (currentLocation?.title === t("locations.brothers")) return "brothers"
+    if (currentLocation?.title === "Вести братского народа") return "brothers"
     return "universities"
   })()
 
