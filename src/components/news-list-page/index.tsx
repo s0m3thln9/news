@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { FC, useEffect } from "react"
-import { Box, Grid, Button } from "@mui/material"
+import { Box, Grid, Button, Container } from "@mui/material"
 import { NewsDTO } from "@/types/dto/news"
 import { NewsListItem } from "@/components/news-list-item"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
@@ -32,38 +32,37 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
   }, [dispatch, news])
 
   return (
-    <Grid
-      container
-      className="mx-auto mt-10 w-full max-w-[1440px] flex-col gap-2.5 px-6"
-    >
-      <h1 className={"text-primary-main text-2xl font-bold"}>
-        {t("news.title")}
-      </h1>
-      <Box
-        className={
-          "border-primary-main flex flex-col gap-2.5 border-t-[5px] py-10"
-        }
-      >
-        {!isFetching && newsList.length === 0 ? (
-          <span>{t("common.noNews")}</span>
+    <Container maxWidth="xl" className="px-0">
+      <Grid container className="w-full flex-col gap-2.5">
+        <h1 className={"text-primary-main text-2xl font-bold"}>
+          {t("news.title")}
+        </h1>
+        <Box
+          className={
+            "border-primary-main flex flex-col gap-2.5 border-t-[5px] py-10"
+          }
+        >
+          {!isFetching && newsList.length === 0 ? (
+            <span>{t("common.noNews")}</span>
+          ) : (
+            newsList.map((n: NewsDTO) => <NewsListItem news={n} key={n.uuid} />)
+          )}
+        </Box>
+        {isFetching ? (
+          <span>{t("common.loading")}</span>
         ) : (
-          newsList.map((n: NewsDTO) => <NewsListItem news={n} key={n.uuid} />)
+          total > offset + limit && (
+            <Button
+              className="w-fit self-center"
+              variant="outlined"
+              color="primary"
+              onClick={loadMore}
+            >
+              {t("common.loadMore")}
+            </Button>
+          )
         )}
-      </Box>
-      {isFetching ? (
-        <span>{t("common.loading")}</span>
-      ) : (
-        total > offset + limit && (
-          <Button
-            className="w-fit self-center"
-            variant="outlined"
-            color="primary"
-            onClick={loadMore}
-          >
-            {t("common.loadMore")}
-          </Button>
-        )
-      )}
-    </Grid>
+      </Grid>
+    </Container>
   )
 }
