@@ -20,6 +20,7 @@ import {
   Container,
 } from "@mui/material"
 import { Box } from "@mui/system"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import TelegramIcon from "@mui/icons-material/Telegram"
 import { useAppSelector } from "@/hooks/use-app-selector"
@@ -28,6 +29,8 @@ import { NewsSearch } from "@/components/header/news-search"
 import { useTranslation } from "@/providers/i18n-provider"
 
 export const Header = () => {
+  const router = useRouter()
+
   const [logoutPopoverAnchor, setLogoutPopoverAnchor] =
     useState<HTMLElement | null>(null)
 
@@ -108,7 +111,12 @@ export const Header = () => {
                   horizontal: "right",
                 }}
               >
-                <Button onClick={handleLogout}>{t("common.logout")}</Button>
+                <Box display="flex" flexDirection="column">
+                  <Button onClick={handleLogout}>{t("common.logout")}</Button>
+                  <Button onClick={() => router.push("/profile")}>
+                    {t("common.profile")}
+                  </Button>
+                </Box>
               </Popover>
             )}
           </Box>
