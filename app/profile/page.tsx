@@ -3,7 +3,7 @@ import { Container, Box } from "@mui/material"
 
 export default function ProfilePage() {
   return (
-    <Container>
+    <Container maxWidth="xl" className="px-0">
       <Box>
         <ProfileForm />
       </Box>
