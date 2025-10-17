@@ -21,17 +21,12 @@ const PinnedNews: FC<PinnedNewsProps> = ({ pinnedNews }) => {
     <Box>
       <Typography
         variant="h5"
-        className="text-primary mb-3 font-bold"
+        className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
         color="primary"
       >
         Закреплённые новости
       </Typography>
-      <Grid
-        container
-        spacing={2}
-        columns={10}
-        className="border-t-[5px] border-[#5BB3EA] pt-10"
-      >
+      <Grid container spacing={2} columns={10} className="mt-10">
         {pinnedNews.map((pinnedNewsItem) => (
           <Grid
             size={{ xs: 12 }}
@@ -51,14 +46,14 @@ const PinnedNews: FC<PinnedNewsProps> = ({ pinnedNews }) => {
                   <Typography
                     variant="h5"
                     gutterBottom
-                    className="line-clamp-3 leading-tight font-bold break-words"
+                    className="line-clamp-3 break-words font-bold leading-tight"
                   >
                     {pinnedNewsItem.title}
                   </Typography>
                   <Typography
                     variant="body1"
                     gutterBottom
-                    className="line-clamp-3 leading-tight break-words"
+                    className="line-clamp-3 break-words leading-tight"
                   >
                     {pinnedNewsItem.content}
                   </Typography>

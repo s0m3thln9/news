@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { FC, useEffect } from "react"
-import { Box, Grid, Button, Container } from "@mui/material"
+import { Box, Grid, Button, Container, Typography } from "@mui/material"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { updateLocationWithNews } from "@/features/locations/slice"
 import { NewsDTO } from "@/types/dto/news"
@@ -39,14 +39,14 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
   return (
     <Container maxWidth="xl" className="px-0">
       <Grid container className="w-full flex-col gap-2.5">
-        <h1 className={"text-primary-main text-2xl font-bold"}>
-          {location.title}
-        </h1>
-        <Box
-          className={
-            "border-primary-main flex flex-col gap-2.5 border-t-[5px] py-10"
-          }
+        <Typography
+          variant="h5"
+          className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
+          color="primary"
         >
+          {location.title}
+        </Typography>
+        <Box className="mt-10 flex flex-col gap-2.5">
           {!isLoading && newsList.length === 0 ? (
             <span>{t("common.noNews")}</span>
           ) : (
