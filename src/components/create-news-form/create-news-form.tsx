@@ -1,15 +1,7 @@
 "use client"
 
 import { FC, useState, useRef } from "react"
-import { cn } from "@/utils/cn"
-import {
-  Box,
-  Button,
-  TextField,
-  MenuItem,
-  Typography,
-  Select,
-} from "@mui/material"
+import { Box, Button, TextField, MenuItem, Typography } from "@mui/material"
 import { Input } from "@/components/ui/input"
 import { useEditor, EditorContent } from "@tiptap/react"
 import StarterKit from "@tiptap/starter-kit"

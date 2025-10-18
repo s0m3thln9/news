@@ -4,7 +4,10 @@ import { useAppSelector } from "@/hooks/use-app-selector"
 import { FC, useEffect } from "react"
 import { Box, Grid, Button, Container, Typography } from "@mui/material"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { updateLocationWithNews } from "@/features/locations/slice"
+import {
+  setCurrentLocation,
+  updateLocationWithNews,
+} from "@/features/locations/slice"
 import { NewsDTO } from "@/types/dto/news"
 import { NewsListItem } from "@/components/news-list-item"
 import { Location } from "@/generated/prisma"
@@ -32,6 +35,7 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
   const { news: newsList, isLoading, loadMore } = useNews()
 
   useEffect(() => {
+    dispatch(setCurrentLocation({ ...location, news: news.data }))
     dispatch(updateLocationWithNews({ ...location, news: news.data }))
     dispatch(setTotal(news.total))
   }, [dispatch, location, news.data, news.total])
@@ -44,7 +48,7 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
           className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
           color="primary"
         >
-          {location.title}
+          {location?.title}
         </Typography>
         <Box className="mt-10 flex flex-col gap-2.5">
           {!isLoading && newsList.length === 0 ? (
