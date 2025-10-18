@@ -76,7 +76,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                     color: "common.black",
                   }}
                 >
-                  {featuredNews.content}
+                  {featuredNews.description}
                 </Typography>
               </CardContent>
             </Box>
@@ -121,7 +121,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                     className="mt-1 line-clamp-3 min-h-[3.5rem] leading-tight break-words"
                     sx={{ color: "common.black" }}
                   >
-                    {news.content}
+                    {news.description}
                   </Typography>
                 </CardContent>
               </Grid>

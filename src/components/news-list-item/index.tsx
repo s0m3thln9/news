@@ -29,7 +29,7 @@ export const NewsListItem: FC<NewsListItemProps> = ({ news }) => {
       <div className={"flex flex-col justify-between"}>
         <div className={"flex flex-col gap-10"}>
           <h3 className={"text-[32px] font-bold"}>{news.title}</h3>
-          <p>{news.content}</p>
+          <p>{news.description}</p>
         </div>
         <div className={"flex items-center justify-between"}>
           <div className={"flex items-center gap-2.5"}>

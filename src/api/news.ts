@@ -2,7 +2,10 @@ import { createApi } from "@reduxjs/toolkit/query/react"
 import { baseQuery } from "@/api/index"
 import { ApiResponse } from "@/types/api-response"
 import { NewsDTO } from "@/types/dto/news"
-import { GetNewsQueryParams } from "@/server/services/news-service"
+import {
+  CreateNewsRequestBody,
+  GetNewsQueryParams,
+} from "@/server/services/news-service"
 import { Pagination } from "@/types/dto/Pagination"
 
 const newsApi = createApi({
@@ -19,6 +22,15 @@ const newsApi = createApi({
         params,
       }),
     }),
+    createNews: builder.mutation<ApiResponse<NewsDTO[]>, CreateNewsRequestBody>(
+      {
+        query: (body) => ({
+          url: "",
+          method: "POST",
+          body,
+        }),
+      },
+    ),
   }),
 })
 

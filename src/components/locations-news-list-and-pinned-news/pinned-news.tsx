@@ -55,7 +55,7 @@ const PinnedNews: FC<PinnedNewsProps> = ({ pinnedNews }) => {
                     gutterBottom
                     className="line-clamp-3 leading-tight break-words"
                   >
-                    {pinnedNewsItem.content}
+                    {pinnedNewsItem.description}
                   </Typography>
                   <Box className="flex items-center gap-2">
                     <CalendarMonthIcon />

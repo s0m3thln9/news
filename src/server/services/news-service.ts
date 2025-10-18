@@ -9,6 +9,7 @@ export const createNewsSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
   images: z.array(z.string()),
   content: z.string(),
+  description: z.string(),
   locationUuid: z.string().min(1, "Локация обязательно"),
 })
 
@@ -24,6 +25,7 @@ export const createNews = async (
       images: body.images,
       content: body.content,
       title: body.title,
+      description: body.description,
       locationUuid: body.locationUuid,
     },
     omit: {
