@@ -1,61 +1,25 @@
 "use client"
-import { useAppDispatch } from "@/hooks/use-app-dispatch"
+
 import { Box, Button } from "@mui/material"
 import HomeRoundedIcon from "@mui/icons-material/HomeRounded"
-import { usePathname, useRouter } from "next/navigation"
-import { setCurrentLocation } from "@/features/locations/slice"
+import { usePathname } from "next/navigation"
 import { cn } from "@/utils/cn"
 import { Select } from "@base-ui-components/react/select"
 import { useTranslation } from "@/providers/i18n-provider"
 import { SelectBody, SelectRoot, SelectTrigger } from "@/components/ui/select"
-import { useAppSelector } from "@/hooks/use-app-selector"
-import {
-  setOffset,
-  setSearchQuery,
-  setTotal,
-} from "@/features/search-news/slice"
+import { useLocationHandlers } from "@/hooks/use-location-handlers"
 
 export const LocationSelect = () => {
-  const locations = useAppSelector((state) => state.locationsSlice.locations)
-  const brothers = useAppSelector((state) => state.locationsSlice.brothers)
-  const currentLocation = useAppSelector(
-    (state) => state.locationsSlice.currentLocation,
-  )
+  const {
+    locations,
+    brothers,
+    currentLocation,
+    handleLocationSelect,
+    handleHomeClick,
+  } = useLocationHandlers()
 
   const t = useTranslation()
-  const router = useRouter()
-  const dispatch = useAppDispatch()
   const pathname = usePathname()
-
-  const findLocation = (uuid: string) =>
-    locations.find((location) => location.uuid === uuid) || null
-
-  const isBrothers = (uuid: string) =>
-    brothers?.uuid === uuid ? brothers : null
-
-  const resetSearchParams = () => {
-    dispatch(setSearchQuery(""))
-    dispatch(setOffset(0))
-    dispatch(setTotal(-1))
-  }
-
-  const handleLocationSelect = (uuid: string) => {
-    if (
-      currentLocation?.uuid === uuid &&
-      currentLocation?.uuid !== brothers?.uuid
-    )
-      return null
-    const newLocation = findLocation(uuid) || isBrothers(uuid)
-    dispatch(setCurrentLocation(newLocation))
-    resetSearchParams()
-    router.push(`/locations/${uuid}`)
-  }
-
-  const handleHomeClick = () => {
-    dispatch(setCurrentLocation(null))
-    resetSearchParams()
-    router.push("/")
-  }
 
   const activeTab = (() => {
     if (pathname === "/" || pathname === "/news") return "home"
@@ -71,7 +35,7 @@ export const LocationSelect = () => {
   const placeholder = t("header.universityList")
 
   const getSelectValue = () => {
-    if (isBrothers(currentLocation?.uuid || "")) {
+    if (currentLocation?.uuid && brothers?.uuid === currentLocation.uuid) {
       return placeholder
     }
     return currentLocation?.title || placeholder
@@ -101,33 +65,37 @@ export const LocationSelect = () => {
         )}
       >
         <SelectRoot
-          items={locations.map((location) => ({
-            label: location.title,
-            value: location.uuid,
-          }))}
+          items={locations
+            .filter((location) => location.uuid !== brothers?.uuid)
+            .map((location) => ({
+              label: location.title,
+              value: location.uuid,
+            }))}
           value={getSelectValue()}
           onValueChange={handleLocationSelect}
         >
           <SelectTrigger />
           <SelectBody>
-            {locations.map(({ uuid, title }) => (
-              <Select.Item
-                key={uuid}
-                value={uuid}
-                className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
-              >
-                <Select.ItemText className="font-normal">
-                  {title}
-                </Select.ItemText>
-              </Select.Item>
-            ))}
+            {locations
+              .filter((location) => location.uuid !== brothers?.uuid)
+              .map(({ uuid, title }) => (
+                <Select.Item
+                  key={uuid}
+                  value={uuid}
+                  className="hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
+                >
+                  <Select.ItemText className="font-normal">
+                    {title}
+                  </Select.ItemText>
+                </Select.Item>
+              ))}
           </SelectBody>
         </SelectRoot>
       </Box>
       <Button
         onClick={() => handleLocationSelect(brothers?.uuid || "")}
         className={cn(
-          `relative flex h-full items-center self-stretch rounded-none px-5 font-bold text-white normal-case transition-all duration-300 ease-in-out`,
+          `relative flex h-full items-center self-stretch rounded-none px-5 font-bold normal-case text-white transition-all duration-300 ease-in-out`,
           beforeClass,
           activeTab === "brothers"
             ? "bg-primary-main before:opacity-100"

@@ -7,7 +7,7 @@ export const SelectRoot = Select.Root
 export const SelectTrigger = () => {
   return (
     <Select.Trigger className="flex h-full min-w-[250px] cursor-pointer items-center justify-between self-stretch rounded-none px-4 text-sm font-bold duration-200 [&_svg]:fill-white [&_svg]:transition-transform data-[state=open]:[&_svg]:rotate-180">
-      <Select.Value className={"text-base font-bold text-white normal-case"} />
+      <Select.Value className="text-base font-bold normal-case text-white" />
       <ExpandMoreIcon />
     </Select.Trigger>
   )
