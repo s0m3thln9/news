@@ -152,6 +152,7 @@ export const CreateNewsForm: FC = () => {
           <TipTapEditor
             value={getValues("content")}
             onChange={(value) => setValue("content", value)}
+            upload={upload}
           />
         </Box>
         <Box className="flex justify-end gap-4">

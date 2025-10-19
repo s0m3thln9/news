@@ -27,19 +27,21 @@ import ImageIcon from "@mui/icons-material/Image"
 interface TipTapEditorProps {
   value?: string
   onChange?: (html: string) => void
+  upload?: (data: { image: File }) => Promise<{ public_id: string } | undefined>
 }
 
 const buttonBaseClass =
   "bg-transparent border border-gray-300 px-2.5 py-2 !text-black hover:bg-gray-50 transition-colors rounded-none min-w-[50px] disabled:opacity-50 disabled:cursor-not-allowed"
 
 const maxFileSize = 5 * 1024 * 1024
+const UPLOADS_URL = process.env.NEXT_PUBLIC_UPLOADS || ""
 
 export const TipTapEditor: FC<TipTapEditorProps> = ({
   value = "",
   onChange,
+  upload,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const blobUrlsRef = useRef<string[]>([])
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -61,13 +63,6 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
   })
 
   useEffect(() => {
-    return () => {
-      blobUrlsRef.current.forEach((url) => URL.revokeObjectURL(url))
-      blobUrlsRef.current = []
-    }
-  }, [])
-
-  useEffect(() => {
     if (editor && value !== undefined) {
       const currentHtml = editor.getHTML()
       if (currentHtml !== value) {
@@ -80,7 +75,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
     fileInputRef.current?.click()
   }
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
 
@@ -94,17 +89,30 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
       return
     }
 
-    const blobUrl = URL.createObjectURL(file)
-    blobUrlsRef.current.push(blobUrl)
+    if (!upload) {
+      alert("Функция загрузки недоступна")
+      return
+    }
 
-    editor
-      ?.chain()
-      .focus()
-      .setImage({
-        src: blobUrl,
-        alt: file.name,
-      })
-      .run()
+    try {
+      const data = await upload({ image: file })
+      if (data?.public_id) {
+        const src = `${UPLOADS_URL}${data.public_id}`
+        editor
+          ?.chain()
+          .focus()
+          .setImage({
+            src,
+            alt: file.name,
+          })
+          .run()
+      } else {
+        alert("Ошибка загрузки изображения")
+      }
+    } catch (error) {
+      console.log(error)
+      alert("Ошибка при загрузке изображения на сервер")
+    }
 
     e.target.value = ""
   }
