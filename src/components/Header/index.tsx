@@ -157,8 +157,9 @@ export const Header = () => {
                   </Link>
                 </MenuItem>
                 {user ? (
-                  <>
+                  [
                     <MenuItem
+                      key="profile"
                       className="text-common-black"
                       onClick={() => {
                         handleCloseNavMenu()
@@ -166,8 +167,9 @@ export const Header = () => {
                       }}
                     >
                       {t("common.profile")}
-                    </MenuItem>
+                    </MenuItem>,
                     <MenuItem
+                      key="logout"
                       className="text-common-black"
                       onClick={() => {
                         handleCloseNavMenu()
@@ -175,8 +177,8 @@ export const Header = () => {
                       }}
                     >
                       {t("common.logout")}
-                    </MenuItem>
-                  </>
+                    </MenuItem>,
+                  ]
                 ) : (
                   <MenuItem
                     className="text-common-black"

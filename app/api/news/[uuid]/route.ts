@@ -8,6 +8,7 @@ import {
 import { handleResponse } from "@/server/utils/handle-response"
 import { UserRole } from "@/generated/prisma"
 import {
+  deleteNews,
   updateNews,
   UpdateNewsRequestBody,
 } from "@/server/services/news-service"
@@ -45,9 +46,34 @@ export const PATCH = createRoute(
     await checkEditorAllowedToNews(userUuid || "", params?.uuid || "")
 
     const createdNews = await updateNews(
-      userUuid as string,
+      params?.uuid as string,
       body as UpdateNewsRequestBody,
     )
     return handleResponse("Новость успешно обновлена", 200, createdNews)
+  },
+)
+
+/**
+ * @swagger
+ * /api/news/{uuid}:
+ *   patch:
+ *     summary: Удаление новости
+ *     tags:
+ *       - News
+ *     responses:
+ *       200:
+ *         description: Новость успешно удалена
+ *       400:
+ *         description: Некорректные данные
+ *       500:
+ *         description: Внутренняя ошибка сервера
+ */
+export const DELETE = createRoute(
+  [errorBoundary(), auth(), requireRole([UserRole.ADMIN, UserRole.EDITOR])],
+  async ({ params, userUuid }) => {
+    await checkEditorAllowedToNews(userUuid || "", params?.uuid || "")
+
+    const createdNews = await deleteNews(params?.uuid || "")
+    return handleResponse("Новость успешно удалена", 200, createdNews)
   },
 )

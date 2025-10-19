@@ -5,8 +5,11 @@ import { NewsDTO } from "@/types/dto/news"
 import {
   CreateNewsRequestBody,
   GetNewsQueryParams,
+  GetNewsWithLocationQueryParams,
+  UpdateNewsRequestBody,
 } from "@/server/services/news-service"
 import { Pagination } from "@/types/dto/Pagination"
+import { NewsWithLocation } from "@/types/dto/news-with-location"
 
 const newsApi = createApi({
   reducerPath: "newsApi",
@@ -18,6 +21,16 @@ const newsApi = createApi({
     >({
       query: (params) => ({
         url: "",
+        method: "GET",
+        params,
+      }),
+    }),
+    getNewsWithLocation: builder.query<
+      ApiResponse<Pagination<NewsWithLocation[]>>,
+      GetNewsWithLocationQueryParams
+    >({
+      query: (params) => ({
+        url: "with-location",
         method: "GET",
         params,
       }),
@@ -37,6 +50,22 @@ const newsApi = createApi({
         method: "GET",
       }),
     }),
+    deleteNews: builder.mutation<ApiResponse<NewsDTO>, string>({
+      query: (uuid) => ({
+        url: `${uuid}`,
+        method: "DELETE",
+      }),
+    }),
+    updateNews: builder.mutation<
+      ApiResponse<NewsDTO>,
+      { uuid: string; body: UpdateNewsRequestBody }
+    >({
+      query: ({ uuid, body }) => ({
+        url: `${uuid}`,
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 })
 
@@ -45,4 +74,7 @@ export const {
   useGetNewsQuery,
   useCreateNewsMutation,
   useGetResentPostUuidMutation,
+  useGetNewsWithLocationQuery,
+  useDeleteNewsMutation,
+  useUpdateNewsMutation,
 } = newsApi

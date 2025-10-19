@@ -1,14 +1,36 @@
 import { Select } from "@base-ui-components/react/select"
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
-import { ReactNode } from "react"
+import { ComponentProps, FC, ReactNode } from "react"
+import { cn } from "@/utils/cn"
 
 export const SelectRoot = Select.Root
 
-export const SelectTrigger = () => {
+type SelectTriggerProps = ComponentProps<typeof Select.Trigger> & {
+  valueClassName?: string
+  iconClassName?: string
+}
+
+export const SelectTrigger: FC<SelectTriggerProps> = ({
+  className,
+  valueClassName,
+  iconClassName,
+  ...props
+}) => {
   return (
-    <Select.Trigger className="flex h-full min-w-[250px] cursor-pointer items-center justify-between self-stretch rounded-none px-4 text-sm font-bold duration-200 [&_svg]:fill-white [&_svg]:transition-transform data-[state=open]:[&_svg]:rotate-180">
-      <Select.Value className="text-base font-bold text-white normal-case" />
-      <ExpandMoreIcon />
+    <Select.Trigger
+      className={cn(
+        "flex h-10 min-w-[250px] cursor-pointer items-center justify-between self-stretch rounded-none px-4 text-sm font-bold duration-200 [&_svg]:fill-white [&_svg]:transition-transform data-[state=open]:[&_svg]:rotate-180",
+        className,
+      )}
+      {...props}
+    >
+      <Select.Value
+        className={cn(
+          "text-base font-bold text-white normal-case",
+          valueClassName,
+        )}
+      />
+      <ExpandMoreIcon className={iconClassName} />
     </Select.Trigger>
   )
 }

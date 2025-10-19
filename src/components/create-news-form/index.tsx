@@ -15,7 +15,9 @@ import { TipTapEditor } from "./tip-tap-editor"
 export const CreateNewsForm: FC = () => {
   const t = useTranslation()
 
-  const locations = useAppSelector((state) => state.locationsSlice.locations)
+  const locs = useAppSelector((state) => state.locationsSlice.locations)
+  const brothers = useAppSelector((state) => state.locationsSlice.brothers)
+  const locations = brothers ? [...locs, brothers] : locs
 
   const {
     control,

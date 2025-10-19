@@ -64,6 +64,7 @@
   },
   "news": {
     "createNews": "Create news",
+    "updateNews": "Update news",
     "mainImage": "Main image",
     "section": "Section",
     "selectSection": "Select section",
@@ -72,6 +73,7 @@
     "fullDescription": "Full description",
     "clear": "Clear",
     "create": "Create",
+    "update": "Update",
     "validation": {
       "titleRequired": "Title is required",
       "imagesRequired": "At least one image is required",

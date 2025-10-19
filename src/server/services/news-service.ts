@@ -1,9 +1,11 @@
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
-import { NewsDTO } from "@/types/dto/news"
+import type { NewsDTO } from "@/types/dto/news"
 import { Prisma } from "@/generated/prisma"
 import { Pagination } from "@/types/dto/Pagination"
 import { ApiError } from "@/types/api-response"
+import { DefaultArgs } from "@/generated/prisma/runtime/library"
+import { NewsWithLocation } from "@/types/dto/news-with-location"
 
 export const createNewsSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -150,3 +152,64 @@ export const getLatestNewsUuid = async () => {
 
   return latestNews?.uuid || null
 }
+
+type GetNewsWithLocation = (
+  queryParams: GetNewsWithLocationQueryParams,
+) => Promise<Pagination<NewsWithLocation[]>>
+
+export type GetNewsWithLocationQueryParams = {
+  offset?: number
+  limit?: number
+  search?: string
+  locationUuid?: string
+  orderBy?: "asc" | "desc"
+  omit?: Prisma.NewsOmit<DefaultArgs>
+}
+
+export const getNewsWithLocationQueryOptions = (
+  queryParams: GetNewsWithLocationQueryParams,
+): Prisma.NewsFindManyArgs => ({
+  where: {
+    title: {
+      contains: queryParams.search,
+      mode: "insensitive",
+    },
+    locationUuid: queryParams.locationUuid,
+  },
+  take: queryParams.limit || 10,
+  skip: queryParams.offset || 0,
+  orderBy: {
+    createdAt: queryParams.orderBy || "desc",
+  },
+  omit: queryParams.omit
+    ? queryParams.omit
+    : {
+        userUuid: true,
+      },
+})
+
+export const getNewsWithLocation: GetNewsWithLocation = async (
+  queryParams,
+) => ({
+  data: await prisma.news.findMany(
+    getNewsWithLocationQueryOptions(queryParams),
+  ),
+  limit: queryParams.limit || 10,
+  offset: queryParams.offset || 0,
+  total: await prisma.news.count({
+    where: {
+      title: {
+        contains: queryParams.search,
+        mode: "insensitive",
+      },
+      locationUuid: queryParams.locationUuid,
+    },
+  }),
+})
+
+export const deleteNews = (uuid: string) =>
+  prisma.news.delete({
+    where: {
+      uuid,
+    },
+  })

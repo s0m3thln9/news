@@ -8,6 +8,8 @@ import signUpReducer from "@/components/sign-up-modal/slice"
 import newsApi from "@/api/news"
 import searchNewsReducer from "@/features/search-news/slice"
 import newsReducer from "@/features/news/slice"
+import newsTableReducer from "@/components/news-table/slice"
+import editNewsModalReducer from "@/components/news-table/update-news-modal/slice"
 
 const rootReducer = {
   signInSlice: signInReducer,
@@ -16,6 +18,8 @@ const rootReducer = {
   locationsSlice: locationsReducer,
   searchNewsSlice: searchNewsReducer,
   newsSlice: newsReducer,
+  newsTableSlice: newsTableReducer,
+  editNewsModalSlice: editNewsModalReducer,
   [userApi.reducerPath]: userApi.reducer,
   [newsApi.reducerPath]: newsApi.reducer,
   [uploadApi.reducerPath]: uploadApi.reducer,
