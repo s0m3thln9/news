@@ -35,4 +35,4 @@ const newsApi = createApi({
 })
 
 export default newsApi
-export const { useGetNewsQuery } = newsApi
+export const { useGetNewsQuery, useCreateNewsMutation } = newsApi

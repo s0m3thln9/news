@@ -34,3 +34,29 @@
 	font-size: 18px;
 	font-weight: bold;
 }
+
+.tiptap p {
+	min-height: 1em;
+	margin: 0;
+}
+
+.tiptap img {
+	max-width: 100%;
+	height: auto;
+	user-select: none;
+}
+
+.resizable-image-wrapper {
+	position: relative;
+}
+
+.resize-handle {
+	border-radius: 50%;
+}
+
+.resize-handle:hover {
+	opacity: 1 !important;
+}
+
+
+.tiptap p:after { content: ""; display: table; clear: both; }

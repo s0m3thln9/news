@@ -7,9 +7,9 @@ import { ApiError } from "@/types/api-response"
 
 export const createNewsSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
-  images: z.array(z.string()),
-  content: z.string(),
-  description: z.string(),
+  images: z.array(z.string()).min(1, "Картинка обязательна"),
+  content: z.string().min(1, "Контент обязателен"),
+  description: z.string().min(1, "Описание обязательно"),
   locationUuid: z.string().min(1, "Локация обязательно"),
 })
 

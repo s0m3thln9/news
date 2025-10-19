@@ -1,5 +1,7 @@
 "use client"
 
+import "./style.css"
+import DOMPurify from "dompurify"
 import { FC } from "react"
 import { NewsDTO } from "@/types/dto/news"
 import { Box, Container } from "@mui/material"
@@ -32,7 +34,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
   const t = useTranslation()
 
   return (
-    <Container maxWidth="xl" className="px-0">
+    <Container maxWidth="md" className="px-0">
       <Box key={news.uuid} className={"flex flex-col gap-4"}>
         <div
           onClick={() =>
@@ -57,9 +59,10 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
           <CalendarMonthIcon />
           <span>{dateKey}</span>
         </div>
-        <div className={"flex flex-col gap-10"}>
-          <p>{news.content}</p>
-        </div>
+        <div
+          className={"tiptap flex flex-col gap-10"}
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(news.content) }}
+        />
       </Box>
     </Container>
   )

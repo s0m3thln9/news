@@ -1,3 +1,4 @@
+import uploadApi from "@/api/upload"
 import { combineReducers, configureStore } from "@reduxjs/toolkit"
 import userReducer from "@/features/user/slice"
 import userApi from "@/api/user"
@@ -17,6 +18,7 @@ const rootReducer = {
   newsSlice: newsReducer,
   [userApi.reducerPath]: userApi.reducer,
   [newsApi.reducerPath]: newsApi.reducer,
+  [uploadApi.reducerPath]: uploadApi.reducer,
 }
 
 const mainReducer = combineReducers(rootReducer)
@@ -31,7 +33,8 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
         serializableCheck: false,
       })
         .concat(userApi.middleware)
-        .concat(newsApi.middleware),
+        .concat(newsApi.middleware)
+        .concat(uploadApi.middleware),
     preloadedState,
   })
 }

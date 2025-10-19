@@ -1,6 +1,7 @@
 "use client"
 
 import "./style.css"
+import { ExtendedImage } from "@/components/create-news-form/tip-tap-editor/extensions"
 import { Box } from "@mui/system"
 import { type ChangeEvent, FC } from "react"
 import { useRef } from "react"
@@ -45,8 +46,9 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
     extensions: [
       StarterKit,
       Image,
+      ExtendedImage,
       TextAlign.configure({
-        types: ["heading", "paragraph"],
+        types: ["heading", "paragraph", "image"],
       }),
     ],
     content: value,
@@ -133,7 +135,6 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               <FormatItalicIcon fontSize="small" />
             </Button>
           </Box>
-
           <Box className="flex gap-1">
             <Button
               type="button"
@@ -160,7 +161,6 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               H2
             </Button>
           </Box>
-
           <Box className="flex gap-1">
             <Button
               type="button"
@@ -183,7 +183,6 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               <FormatListNumberedIcon fontSize="small" />
             </Button>
           </Box>
-
           <Box className="flex gap-1">
             <Button
               type="button"
@@ -208,13 +207,25 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               <RedoIcon fontSize="small" />
             </Button>
           </Box>
-
           <Box className="flex gap-1">
             <Button
               type="button"
               variant="outlined"
               size="small"
-              onClick={() => editor?.chain().focus().setTextAlign("left").run()}
+              onClick={() => {
+                const { state } = editor!
+                const { selection } = state
+                const node = state.doc.nodeAt(selection.from)
+                if (node?.type.name === "image") {
+                  editor
+                    ?.chain()
+                    .focus()
+                    .updateAttributes("image", { alignment: "left" })
+                    .run()
+                } else {
+                  editor?.chain().focus().setTextAlign("left").run()
+                }
+              }}
               className={buttonBaseClass}
               aria-label="Выравнивание по левому краю"
             >
@@ -224,9 +235,20 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               type="button"
               variant="outlined"
               size="small"
-              onClick={() =>
-                editor?.chain().focus().setTextAlign("center").run()
-              }
+              onClick={() => {
+                const { state } = editor!
+                const { selection } = state
+                const node = state.doc.nodeAt(selection.from)
+                if (node?.type.name === "image") {
+                  editor
+                    ?.chain()
+                    .focus()
+                    .updateAttributes("image", { alignment: "center" })
+                    .run()
+                } else {
+                  editor?.chain().focus().setTextAlign("center").run()
+                }
+              }}
               className={buttonBaseClass}
               aria-label="Выравнивание по центру"
             >
@@ -236,9 +258,20 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               type="button"
               variant="outlined"
               size="small"
-              onClick={() =>
-                editor?.chain().focus().setTextAlign("right").run()
-              }
+              onClick={() => {
+                const { state } = editor!
+                const { selection } = state
+                const node = state.doc.nodeAt(selection.from)
+                if (node?.type.name === "image") {
+                  editor
+                    ?.chain()
+                    .focus()
+                    .updateAttributes("image", { alignment: "right" })
+                    .run()
+                } else {
+                  editor?.chain().focus().setTextAlign("right").run()
+                }
+              }}
               className={buttonBaseClass}
               aria-label="Выравнивание по правому краю"
             >
@@ -248,16 +281,26 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               type="button"
               variant="outlined"
               size="small"
-              onClick={() =>
-                editor?.chain().focus().setTextAlign("justify").run()
-              }
+              onClick={() => {
+                const { state } = editor!
+                const { selection } = state
+                const node = state.doc.nodeAt(selection.from)
+                if (node?.type.name === "image") {
+                  editor
+                    ?.chain()
+                    .focus()
+                    .updateAttributes("image", { alignment: "justify" })
+                    .run()
+                } else {
+                  editor?.chain().focus().setTextAlign("justify").run()
+                }
+              }}
               className={buttonBaseClass}
               aria-label="Выравнивание по ширине"
             >
               <FormatAlignJustifyIcon fontSize="small" />
             </Button>
           </Box>
-
           <Box className="flex gap-1">
             <Button
               type="button"
@@ -272,7 +315,6 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
           </Box>
         </Box>
       </Box>
-
       <input
         ref={fileInputRef}
         type="file"
@@ -280,7 +322,6 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
         onChange={handleImageChange}
         style={{ display: "none" }}
       />
-
       <EditorContent
         className="border-secondary-main border p-4"
         editor={editor}

@@ -65,7 +65,22 @@
     "rolePlaceholder": "Роль"
   },
   "news": {
-    "title": "Новости"
+    "createNews": "Создать новость",
+    "mainImage": "Основное изображение",
+    "section": "Раздел",
+    "selectSection": "Выберите раздел",
+    "title": "Заголовок",
+    "shortDescription": "Краткое описание",
+    "fullDescription": "Полное описание",
+    "clear": "Очистить",
+    "create": "Создать",
+    "validation": {
+      "titleRequired": "Название обязательно",
+      "imagesRequired": "Картинка обязательна",
+      "contentRequired": "Контент обязателен",
+      "descriptionRequired": "Описание обязательно",
+      "locationRequired": "Локация обязательна"
+    }
   },
   "locations": {
     "brothers": "Вести братского народа"

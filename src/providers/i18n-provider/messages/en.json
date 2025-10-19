@@ -29,8 +29,7 @@
       "lastNameRequired": "Last name is required",
       "emailTaken": "Email is already taken"
     }
-  }
-  ,
+  },
   "common": {
     "noNews": "No news",
     "loading": "Loading...",
@@ -64,7 +63,22 @@
     "rolePlaceholder": "Role"
   },
   "news": {
-    "title": "News"
+    "createNews": "Create news",
+    "mainImage": "Main image",
+    "section": "Section",
+    "selectSection": "Select section",
+    "title": "Title",
+    "shortDescription": "Short description",
+    "fullDescription": "Full description",
+    "clear": "Clear",
+    "create": "Create",
+    "validation": {
+      "titleRequired": "Title is required",
+      "imagesRequired": "At least one image is required",
+      "contentRequired": "Content is required",
+      "descriptionRequired": "Description is required",
+      "locationRequired": "Location is required"
+    }
   },
   "locations": {
     "brothers": "Brotherly people's news"
