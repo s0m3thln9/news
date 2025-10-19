@@ -32,7 +32,7 @@ const LastNews: FC<LastNewsProps> = ({ news }) => {
         <Card className="relative flex aspect-[4/3] h-full flex-col overflow-hidden rounded-none">
           <Image
             src={process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.images[0]}
-            alt={featuredNews.title}
+            alt={featuredNews?.title}
             fill
             className="absolute object-cover"
           />
@@ -43,12 +43,12 @@ const LastNews: FC<LastNewsProps> = ({ news }) => {
                 gutterBottom
                 className="line-clamp-3 leading-tight font-bold break-words"
               >
-                {featuredNews.title}
+                {featuredNews?.title}
               </Typography>
               <Box className="flex items-center gap-2">
                 <CalendarMonthIcon />
                 <Chip
-                  label={getDateKey(featuredNews.createdAt)}
+                  label={getDateKey(featuredNews?.createdAt)}
                   color="primary"
                   variant="outlined"
                   sx={{ color: "common.white" }}
@@ -64,7 +64,7 @@ const LastNews: FC<LastNewsProps> = ({ news }) => {
           <LastNewsItem
             className="2xl:hidden"
             news={featuredNews}
-            key={featuredNews.uuid}
+            key={featuredNews?.uuid}
           />
           {otherNews.map((news, index) => {
             const isLast = index === otherNews.length - 1

@@ -88,7 +88,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
               className={"flex cursor-pointer"}
               size={{ xs: 12 }}
               key={featuredNews?.uuid}
-              onClick={() => router.push(`/${featuredNews.uuid}`)}
+              onClick={() => router.push(`/${featuredNews?.uuid}`)}
             >
               <CardMedia
                 className="aspect-[3/2] w-[45%]"

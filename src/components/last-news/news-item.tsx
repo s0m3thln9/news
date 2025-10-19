@@ -20,12 +20,12 @@ export const LastNewsItem: FC<LastNewsItemProps> = ({ news, className }) => {
       size={{ xs: 12, sm: 6 }}
       key={news.uuid}
       className={"cursor-pointer " + className}
-      onClick={() => router.push(`/${news.uuid}`)}
+      onClick={() => router.push(`/${news?.uuid}`)}
     >
       <Card className="relative flex aspect-[4/3] h-full flex-col overflow-hidden rounded-none">
         <Image
-          src={process.env.NEXT_PUBLIC_UPLOADS + news.images[0]}
-          alt={news.title}
+          src={process.env.NEXT_PUBLIC_UPLOADS + news?.images[0]}
+          alt={news?.title}
           fill
           className="absolute object-cover"
         />
@@ -36,13 +36,13 @@ export const LastNewsItem: FC<LastNewsItemProps> = ({ news, className }) => {
               gutterBottom
               className="line-clamp-2 leading-tight font-bold break-words"
             >
-              {news.title}
+              {news?.title}
             </Typography>
             <Box className="flex items-center gap-1">
               <CalendarMonthIcon fontSize="small" />
               <Chip
                 size="small"
-                label={getDateKey(news.createdAt)}
+                label={getDateKey(news?.createdAt)}
                 color="primary"
                 variant="outlined"
                 sx={{ color: "common.white" }}
