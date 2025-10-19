@@ -5,7 +5,7 @@ import { useCreateNewsSubmit } from "@/components/create-news-form/create-news-s
 import { useUploadFile } from "@/components/create-news-form/upload-file"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { useTranslation } from "@/providers/i18n-provider"
-import { FC, useState, useRef, type ChangeEvent } from "react"
+import { FC, useState, useRef, type ChangeEvent, useCallback } from "react"
 import { flushSync } from "react-dom"
 import { Controller } from "react-hook-form"
 import { Box, Button, TextField, MenuItem, Typography } from "@mui/material"
@@ -26,7 +26,6 @@ export const CreateNewsForm: FC = () => {
     formState: { errors },
     reset,
     setValue,
-    getValues,
     clearErrors,
   } = useCreateNewsForm()
 
@@ -90,6 +89,13 @@ export const CreateNewsForm: FC = () => {
     void formOnChange(e)
     handleImageChange(e)
   }
+
+  const handleContentChange = useCallback(
+    (value: string) => {
+      setValue("content", value, { shouldValidate: true })
+    },
+    [setValue],
+  )
 
   return (
     <>
@@ -207,13 +213,16 @@ export const CreateNewsForm: FC = () => {
               </Typography>
             )}
           </div>
-          <TipTapEditor
-            key={getValues("content")}
-            value={getValues("content")}
-            onChange={(value) =>
-              setValue("content", value, { shouldValidate: true })
-            }
-            upload={upload}
+          <Controller
+            name="content"
+            control={control}
+            render={({ field: { value } }) => (
+              <TipTapEditor
+                value={value}
+                onChange={handleContentChange}
+                upload={upload}
+              />
+            )}
           />
         </Box>
         <Box className="flex justify-end gap-4">
