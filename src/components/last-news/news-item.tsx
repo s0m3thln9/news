@@ -8,9 +8,10 @@ import { useRouter } from "next/navigation"
 
 type LastNewsItemProps = {
   news: NewsDTO
+  className?: string
 }
 
-export const LastNewsItem: FC<LastNewsItemProps> = ({ news }) => {
+export const LastNewsItem: FC<LastNewsItemProps> = ({ news, className }) => {
   const getDateKey = useGetDateKey()
   const router = useRouter()
 
@@ -18,7 +19,7 @@ export const LastNewsItem: FC<LastNewsItemProps> = ({ news }) => {
     <Grid
       size={{ xs: 12, sm: 6 }}
       key={news.uuid}
-      className={"cursor-pointer"}
+      className={"cursor-pointer " + className}
       onClick={() => router.push(`/${news.uuid}`)}
     >
       <Card className="relative flex aspect-[4/3] h-full flex-col overflow-hidden rounded-none">
@@ -33,7 +34,7 @@ export const LastNewsItem: FC<LastNewsItemProps> = ({ news }) => {
             <Typography
               variant="h5"
               gutterBottom
-              className="line-clamp-2 break-words font-bold leading-tight"
+              className="line-clamp-2 leading-tight font-bold break-words"
             >
               {news.title}
             </Typography>

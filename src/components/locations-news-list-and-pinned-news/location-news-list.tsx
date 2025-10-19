@@ -45,7 +45,9 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
             >
               <CardMedia
                 className="aspect-[3/2]"
-                image={process.env.NEXT_PUBLIC_UPLOADS + featuredNews.images[0]}
+                image={
+                  process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.images[0]
+                }
                 title={featuredNews.title}
               />
               <CardContent className="relative z-[1] flex flex-1 flex-col overflow-hidden px-2 py-0">
@@ -62,7 +64,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                 <Typography
                   variant="h5"
                   gutterBottom
-                  className="line-clamp-2 min-h-[3.6rem] break-words font-bold leading-tight"
+                  className="line-clamp-2 min-h-[3.6rem] leading-tight font-bold break-words"
                   sx={{
                     color: "common.black",
                   }}
@@ -85,13 +87,15 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
             <Grid
               className={"flex cursor-pointer"}
               size={{ xs: 12 }}
-              key={featuredNews.uuid}
+              key={featuredNews?.uuid}
               onClick={() => router.push(`/${featuredNews.uuid}`)}
             >
               <CardMedia
                 className="aspect-[3/2] w-[45%]"
-                image={process.env.NEXT_PUBLIC_UPLOADS + featuredNews.images[0]}
-                title={featuredNews.title}
+                image={
+                  process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.images[0]
+                }
+                title={featuredNews?.title}
               />
               <CardContent className="flex-grow overflow-hidden px-2 py-0">
                 <Box className="flex items-center gap-1">
@@ -110,17 +114,17 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                 </Box>
                 <Typography
                   variant="subtitle1"
-                  className="mt-1 line-clamp-2 min-h-[2.5rem] break-words font-bold leading-tight"
+                  className="mt-1 line-clamp-2 min-h-[2.5rem] leading-tight font-bold break-words"
                   sx={{ color: "common.black" }}
                 >
-                  {featuredNews.title}
+                  {featuredNews?.title}
                 </Typography>
                 <Typography
                   variant="body2"
-                  className="mt-1 line-clamp-3 min-h-[3.5rem] break-words leading-tight"
+                  className="mt-1 line-clamp-3 min-h-[3.5rem] leading-tight break-words"
                   sx={{ color: "common.black" }}
                 >
-                  {featuredNews.description}
+                  {featuredNews?.description}
                 </Typography>
               </CardContent>
             </Grid>
@@ -153,14 +157,14 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                   </Box>
                   <Typography
                     variant="subtitle1"
-                    className="mt-1 line-clamp-2 min-h-[2.5rem] break-words font-bold leading-tight"
+                    className="mt-1 line-clamp-2 min-h-[2.5rem] leading-tight font-bold break-words"
                     sx={{ color: "common.black" }}
                   >
                     {news.title}
                   </Typography>
                   <Typography
                     variant="body2"
-                    className="mt-1 line-clamp-3 min-h-[3.5rem] break-words leading-tight"
+                    className="mt-1 line-clamp-3 min-h-[3.5rem] leading-tight break-words"
                     sx={{ color: "common.black" }}
                   >
                     {news.description}

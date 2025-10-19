@@ -156,38 +156,41 @@ export const Header = () => {
                     </IconButton>
                   </Link>
                 </MenuItem>
-                {user ? (
-                  <>
-                    <MenuItem
-                      className="text-common-black"
-                      onClick={() => {
-                        handleCloseNavMenu()
-                        router.push("/profile")
-                      }}
-                    >
-                      {t("common.profile")}
-                    </MenuItem>
-                    <MenuItem
-                      className="text-common-black"
-                      onClick={() => {
-                        handleCloseNavMenu()
-                        handleLogout()
-                      }}
-                    >
-                      {t("common.logout")}
-                    </MenuItem>
-                  </>
-                ) : (
-                  <MenuItem
-                    className="text-common-black"
-                    onClick={() => {
-                      handleCloseNavMenu()
-                      dispatch(setSignInModalOpen(true))
-                    }}
-                  >
-                    {t("common.login")}
-                  </MenuItem>
-                )}
+                {user
+                  ? [
+                      <MenuItem
+                        key="profile"
+                        className="text-common-black"
+                        onClick={() => {
+                          handleCloseNavMenu()
+                          router.push("/profile")
+                        }}
+                      >
+                        {t("common.profile")}
+                      </MenuItem>,
+                      <MenuItem
+                        key="logout"
+                        className="text-common-black"
+                        onClick={() => {
+                          handleCloseNavMenu()
+                          handleLogout()
+                        }}
+                      >
+                        {t("common.logout")}
+                      </MenuItem>,
+                    ]
+                  : [
+                      <MenuItem
+                        key="login"
+                        className="text-common-black"
+                        onClick={() => {
+                          handleCloseNavMenu()
+                          dispatch(setSignInModalOpen(true))
+                        }}
+                      >
+                        {t("common.login")}
+                      </MenuItem>,
+                    ]}
               </Menu>
             </Box>
           </Box>

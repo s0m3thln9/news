@@ -25,13 +25,13 @@ const LastNews: FC<LastNewsProps> = ({ news }) => {
   return (
     <Grid container spacing={3} className="mb-10 w-full">
       <Grid
-        size={{ xs: 12, sm: 6 }}
-        className={"cursor-pointer"}
+        size={{ lg: 12, xl: 6 }}
+        className={"cursor-pointer max-2xl:hidden"}
         onClick={() => router.push(`/${featuredNews.uuid}`)}
       >
         <Card className="relative flex aspect-[4/3] h-full flex-col overflow-hidden rounded-none">
           <Image
-            src={process.env.NEXT_PUBLIC_UPLOADS + featuredNews.images[0]}
+            src={process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.images[0]}
             alt={featuredNews.title}
             fill
             className="absolute object-cover"
@@ -41,7 +41,7 @@ const LastNews: FC<LastNewsProps> = ({ news }) => {
               <Typography
                 variant="h4"
                 gutterBottom
-                className="line-clamp-3 break-words font-bold leading-tight"
+                className="line-clamp-3 leading-tight font-bold break-words"
               >
                 {featuredNews.title}
               </Typography>
@@ -59,11 +59,23 @@ const LastNews: FC<LastNewsProps> = ({ news }) => {
           </CardContent>
         </Card>
       </Grid>
-      <Grid size={{ xs: 12, sm: 6 }}>
+      <Grid size={{ lg: 12, xl: 6 }}>
         <Grid container spacing={2} className="h-full items-stretch">
-          {otherNews.map((news) => (
-            <LastNewsItem news={news} key={news.uuid} />
-          ))}
+          <LastNewsItem
+            className="2xl:hidden"
+            news={featuredNews}
+            key={featuredNews.uuid}
+          />
+          {otherNews.map((news, index) => {
+            const isLast = index === otherNews.length - 1
+            return (
+              <LastNewsItem
+                news={news}
+                key={news.uuid}
+                className={isLast ? "max-2xl:hidden" : ""}
+              />
+            )
+          })}
         </Grid>
       </Grid>
     </Grid>
