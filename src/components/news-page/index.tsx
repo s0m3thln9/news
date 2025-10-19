@@ -28,32 +28,32 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
 
   return (
     <Container maxWidth="md" className="px-2">
-      <Box key={news.uuid} className={"flex flex-col gap-4"}>
+      <Box key={news.uuid} className="flex flex-col gap-4">
         <div
           onClick={() =>
             route.replace(
               currentLocationUuid ? `locations/${currentLocationUuid}` : "/",
             )
           }
-          className={
-            "text-secondary-main flex w-fit cursor-pointer items-center text-base"
-          }
+          className="text-secondary-main flex w-fit cursor-pointer items-center text-base"
         >
           <ArrowLeftIcon />
           <span>{t("common.back")}</span>
         </div>
-        <h3 className={"text-[32px] font-bold"}>{news.title}</h3>
+        <h3 className="line-clamp-2 text-[32px] font-bold max-lg:text-xl">
+          {news.title}
+        </h3>
         <img
           src={process.env.NEXT_PUBLIC_UPLOADS + news.images[0]}
           alt={news.title}
-          className={"w-full object-cover"}
+          className="w-full object-cover"
         />
-        <div className={"flex items-center gap-2.5 border-b-4 pb-4"}>
+        <div className="flex items-center gap-2.5 border-b-4 pb-4">
           <CalendarMonthIcon />
           <span>{getDateKey(news.createdAt)}</span>
         </div>
         <div
-          className={"tiptap flex flex-col gap-10"}
+          className="tiptap flex flex-col gap-10"
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(news.content) }}
         />
       </Box>

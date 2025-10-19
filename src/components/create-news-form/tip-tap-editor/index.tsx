@@ -122,7 +122,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
   return (
     <Box className="flex flex-col gap-4">
       <Box className="border-secondary-main flex border p-4">
-        <Box className="flex gap-4">
+        <Box className="flex flex-wrap gap-4">
           <Box className="flex gap-1">
             <Button
               type="button"
