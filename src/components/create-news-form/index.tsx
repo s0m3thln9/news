@@ -113,7 +113,7 @@ export const CreateNewsForm: FC = () => {
           )}
           <label
             htmlFor="file-upload"
-            className="file:border-primary-main text-secondary-main file:text-primary-main border-primary-main inline-flex min-w-96 cursor-pointer items-center justify-center rounded border bg-white px-8 py-2 font-[Inter] text-sm font-bold uppercase transition-colors hover:bg-gray-50"
+            className="file:border-primary-main text-secondary-main file:text-primary-main border-primary-main inline-flex w-full max-w-96 cursor-pointer items-center justify-center rounded border bg-white px-8 py-2 font-[Inter] text-sm font-bold uppercase transition-colors hover:bg-gray-50"
           >
             {t("editor.labels.selectImage")}{" "}
           </label>

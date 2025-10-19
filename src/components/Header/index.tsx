@@ -156,40 +156,41 @@ export const Header = () => {
                     </IconButton>
                   </Link>
                 </MenuItem>
-                {user ? (
-                  [
-                    <MenuItem
-                      key="profile"
-                      className="text-common-black"
-                      onClick={() => {
-                        handleCloseNavMenu()
-                        router.push("/profile")
-                      }}
-                    >
-                      {t("common.profile")}
-                    </MenuItem>,
-                    <MenuItem
-                      key="logout"
-                      className="text-common-black"
-                      onClick={() => {
-                        handleCloseNavMenu()
-                        handleLogout()
-                      }}
-                    >
-                      {t("common.logout")}
-                    </MenuItem>,
-                  ]
-                ) : (
-                  <MenuItem
-                    className="text-common-black"
-                    onClick={() => {
-                      handleCloseNavMenu()
-                      dispatch(setSignInModalOpen(true))
-                    }}
-                  >
-                    {t("common.login")}
-                  </MenuItem>
-                )}
+                {user
+                  ? [
+                      <MenuItem
+                        key="profile"
+                        className="text-common-black"
+                        onClick={() => {
+                          handleCloseNavMenu()
+                          router.push("/profile")
+                        }}
+                      >
+                        {t("common.profile")}
+                      </MenuItem>,
+                      <MenuItem
+                        key="logout"
+                        className="text-common-black"
+                        onClick={() => {
+                          handleCloseNavMenu()
+                          handleLogout()
+                        }}
+                      >
+                        {t("common.logout")}
+                      </MenuItem>,
+                    ]
+                  : [
+                      <MenuItem
+                        key="login"
+                        className="text-common-black"
+                        onClick={() => {
+                          handleCloseNavMenu()
+                          dispatch(setSignInModalOpen(true))
+                        }}
+                      >
+                        {t("common.login")}
+                      </MenuItem>,
+                    ]}
               </Menu>
             </Box>
           </Box>
@@ -206,7 +207,7 @@ export const Header = () => {
             onClose={() => setLogoutPopoverAnchor(null)}
             anchorOrigin={{
               vertical: "bottom",
-              horizontal: "right",
+              horizontal: "center",
             }}
           >
             <Box display="flex" flexDirection="column">
@@ -223,7 +224,7 @@ export const Header = () => {
       >
         <Container
           maxWidth="xl"
-          className="flex items-center justify-between gap-2 px-0"
+          className="flex items-center justify-between gap-2 px-2"
         >
           <Box className="flex items-center">
             <Image

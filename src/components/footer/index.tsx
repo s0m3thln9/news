@@ -39,7 +39,7 @@ export const Footer = () => {
 
   return (
     <Box className="bg-secondary-main py-8">
-      <Container maxWidth="xl" className="px-0">
+      <Container maxWidth="xl" className="px-2">
         <Grid container spacing={4} columns={12} className="px-6">
           <Grid size={{ xs: 12, md: 4 }}>
             <Image
@@ -110,10 +110,14 @@ export const Footer = () => {
               </ListItem>
             </List>
           </Grid>
-          <Grid size={{ xs: 12, md: 4 }} className="flex flex-col items-end">
+          <Grid
+            size={{ xs: 12, md: 4 }}
+            className="flex flex-col [900px]:items-end"
+            sx={{}}
+          >
             <Typography
               variant="subtitle1"
-              className="text-primary-main mb-2 text-right font-bold"
+              className="text-primary-main mb-2 font-bold [900px]:text-right"
             >
               {t("footer.socialNetworks")}
             </Typography>

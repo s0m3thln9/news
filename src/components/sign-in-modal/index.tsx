@@ -39,14 +39,13 @@ export const SignInModal = () => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
+        className="h-[100dvh] w-full overflow-y-auto sm:h-auto sm:w-[480px]"
         sx={{
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 480,
           bgcolor: "background.paper",
-          borderRadius: "5px",
           boxShadow: 24,
         }}
       >
@@ -114,7 +113,7 @@ export const SignInModal = () => {
               </Button>
             </div>
             <div className={"h-[3px] bg-[#D9D9D9]"} />
-            <div className={"flex items-center justify-between px-12"}>
+            <div className={"flex items-center justify-between sm:px-12"}>
               <Typography sx={{ fontSize: "14px" }}>
                 {t("authExtra.noAccount")}
               </Typography>

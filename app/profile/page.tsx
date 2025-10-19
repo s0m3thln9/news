@@ -7,8 +7,8 @@ import { NewsTable } from "@/components/news-table"
 
 export default function ProfilePage() {
   return (
-    <Container maxWidth="xl" className="px-0">
-      <Box className="flex gap-10">
+    <Container maxWidth="xl" className="px-2">
+      <Box className="flex gap-5 max-lg:flex-col lg:gap-10">
         <Box>
           <ProfileForm />
         </Box>

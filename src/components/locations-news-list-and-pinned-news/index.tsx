@@ -14,13 +14,13 @@ const LocationsNewsListAndPinnedNews: FC<
   LocationsNewsListAndPinnedNewsProps
 > = ({ locationsWithNews, pinnedNews }) => {
   return (
-    <Box className="grid w-full grid-cols-10 gap-8">
-      <Box className={"col-span-6"}>
+    <Box className="flex w-full gap-8 max-lg:flex-col-reverse lg:grid lg:grid-cols-10">
+      <Box className="lg:col-span-6">
         {locationsWithNews.map((location) => (
           <LocationNewsList location={location} key={location.uuid} />
         ))}
       </Box>
-      <Box className={"col-span-4"}>
+      <Box className="lg:col-span-4">
         <PinnedNews pinnedNews={pinnedNews} />
       </Box>
     </Box>
