@@ -1,13 +1,14 @@
 "use client"
 
+import { Language } from "@/generated/prisma"
 import { useAppSelector } from "@/hooks/use-app-selector"
 
-export const formatCurrentDate = (language?: string): string => {
+export const formatCurrentDate = (language: Language): string => {
   const now = new Date()
-  const lang = (language || "ru").toLowerCase()
+  const lang = language
 
   const formatter = new Intl.DateTimeFormat(
-    `${lang}-${lang.toUpperCase()}` as Intl.LocalesArgument,
+    `${lang.toLowerCase()}-${lang}` as Intl.LocalesArgument,
     {
       weekday: "long",
       day: "numeric",
@@ -20,7 +21,6 @@ export const formatCurrentDate = (language?: string): string => {
 }
 
 export const useFormatCurrentDate = (): string => {
-  const userLanguage =
-    useAppSelector((state) => state.userSlice.user?.language) || "ru"
+  const userLanguage = useAppSelector((state) => state.userSlice.language)
   return formatCurrentDate(userLanguage)
 }

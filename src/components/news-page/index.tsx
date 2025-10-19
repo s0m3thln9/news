@@ -10,25 +10,18 @@ import { useAppSelector } from "@/hooks/use-app-selector"
 import { useRouter } from "next/navigation"
 import ArrowLeftIcon from "@mui/icons-material/ArrowLeft"
 import { useTranslation } from "@/providers/i18n-provider"
+import { useGetDateKey } from "@/utils/use-get-date-key"
 
 type NewsPageProps = {
   news: NewsDTO
 }
 
 export const NewsPage: FC<NewsPageProps> = ({ news }) => {
-  const userLanguage =
-    useAppSelector((state) => state.userSlice.user?.language) || "ru"
   const currentLocationUuid = useAppSelector(
     (state) => state.locationsSlice.currentLocation?.uuid,
   )
 
-  const dateKey = new Date(news.createdAt).toLocaleDateString(
-    `${userLanguage}-${userLanguage?.toUpperCase()}`,
-    {
-      day: "numeric",
-      month: "long",
-    },
-  )
+  const getDateKey = useGetDateKey()
 
   const route = useRouter()
   const t = useTranslation()
@@ -57,7 +50,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
         />
         <div className={"flex items-center gap-2.5 border-b-4 pb-4"}>
           <CalendarMonthIcon />
-          <span>{dateKey}</span>
+          <span>{getDateKey(news.createdAt)}</span>
         </div>
         <div
           className={"tiptap flex flex-col gap-10"}

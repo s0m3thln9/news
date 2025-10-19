@@ -8,10 +8,7 @@ export const useCreateNewsSubmit = () => {
 
   return async (data: CreateNewsFormData) => {
     try {
-      const res = await createNews(data).unwrap()
-      if (res && res.data) {
-        console.log(res.data)
-      }
+      await createNews(data).unwrap()
     } catch (error) {
       console.log(error)
     }

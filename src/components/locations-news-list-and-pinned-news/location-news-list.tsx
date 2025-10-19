@@ -102,7 +102,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                     />
                     <Chip
                       size="small"
-                      label={"14 октября"}
+                      label={getDateKey(news.createdAt)}
                       color="primary"
                       variant="outlined"
                       sx={{ color: "common.black" }}
