@@ -39,7 +39,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
           {featuredNews && (
             <Box
               className={
-                "col-span-5 flex h-full cursor-pointer flex-col overflow-hidden rounded-none max-xl:hidden"
+                "col-span-5 flex h-full cursor-pointer flex-col overflow-hidden rounded-none max-2xl:hidden"
               }
               onClick={() => router.push(`/${featuredNews.uuid}`)}
             >
@@ -83,10 +83,10 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
               </CardContent>
             </Box>
           )}
-          <Box className="col-span-5 grid h-full grid-rows-3 gap-4 max-xl:col-span-10">
+          <Box className="col-span-5 grid h-full gap-4 max-xl:col-span-10">
             <Grid
-              className={"flex cursor-pointer"}
-              size={{ xs: 12 }}
+              className={"flex cursor-pointer 2xl:hidden"}
+              size={{ xl: 12 }}
               key={featuredNews?.uuid}
               onClick={() => router.push(`/${featuredNews?.uuid}`)}
             >
@@ -131,7 +131,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
             {news.map((news) => (
               <Grid
                 className={"flex cursor-pointer"}
-                size={{ xs: 12 }}
+                size={{ xl: 12 }}
                 key={news.uuid}
                 onClick={() => router.push(`/${news.uuid}`)}
               >

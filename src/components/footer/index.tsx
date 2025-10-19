@@ -110,10 +110,14 @@ export const Footer = () => {
               </ListItem>
             </List>
           </Grid>
-          <Grid size={{ xs: 12, md: 4 }} className="flex flex-col items-end">
+          <Grid
+            size={{ xs: 12, md: 4 }}
+            className="flex flex-col [900px]:items-end"
+            sx={{}}
+          >
             <Typography
               variant="subtitle1"
-              className="text-primary-main mb-2 text-right font-bold"
+              className="text-primary-main mb-2 font-bold [900px]:text-right"
             >
               {t("footer.socialNetworks")}
             </Typography>
