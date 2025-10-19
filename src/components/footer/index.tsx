@@ -39,7 +39,7 @@ export const Footer = () => {
 
   return (
     <Box className="bg-secondary-main py-8">
-      <Container maxWidth="xl" className="px-0">
+      <Container maxWidth="xl" className="px-2">
         <Grid container spacing={4} columns={12} className="px-6">
           <Grid size={{ xs: 12, md: 4 }}>
             <Image

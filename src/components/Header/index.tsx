@@ -70,7 +70,7 @@ export const Header = () => {
       className="border-b-[5px] border-[#5BB3EA]"
     >
       <Toolbar variant="dense" color="secondary" className="min-h-fit px-0">
-        <Container maxWidth="xl" className="flex justify-between px-0">
+        <Container maxWidth="xl" className="flex justify-between px-2">
           <Box className="flex gap-4 max-lg:gap-2">
             <Box
               sx={{ bgcolor: "primary.main" }}
@@ -227,7 +227,7 @@ export const Header = () => {
       >
         <Container
           maxWidth="xl"
-          className="flex items-center justify-between gap-2 px-0"
+          className="flex items-center justify-between gap-2 px-2"
         >
           <Box className="flex items-center">
             <Image
@@ -251,7 +251,7 @@ export const Header = () => {
       <Toolbar variant="dense" className="px-0" color="secondary">
         <Container
           maxWidth="xl"
-          className="flex items-center justify-between px-0 max-lg:flex-col"
+          className="flex items-center justify-between px-2 max-lg:flex-col"
         >
           <LocationSelect />
           <NewsSearch />

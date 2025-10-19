@@ -4,7 +4,7 @@ import { Container, Box } from "@mui/material"
 
 export default function ProfilePage() {
   return (
-    <Container maxWidth="xl" className="px-0">
+    <Container maxWidth="xl" className="px-2">
       <Box className="flex gap-10">
         <Box>
           <ProfileForm />

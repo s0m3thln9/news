@@ -39,12 +39,12 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
           {featuredNews && (
             <Box
               className={
-                "col-span-6 flex h-full cursor-pointer flex-col overflow-hidden rounded-none"
+                "col-span-5 flex h-full cursor-pointer flex-col overflow-hidden rounded-none max-xl:hidden"
               }
               onClick={() => router.push(`/${featuredNews.uuid}`)}
             >
               <CardMedia
-                className="aspect-[2/1]"
+                className="aspect-[3/2]"
                 image={process.env.NEXT_PUBLIC_UPLOADS + featuredNews.images[0]}
                 title={featuredNews.title}
               />
@@ -62,7 +62,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                 <Typography
                   variant="h5"
                   gutterBottom
-                  className="line-clamp-2 min-h-[3.6rem] leading-tight font-bold break-words"
+                  className="line-clamp-2 min-h-[3.6rem] break-words font-bold leading-tight"
                   sx={{
                     color: "common.black",
                   }}
@@ -81,7 +81,49 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
               </CardContent>
             </Box>
           )}
-          <Box className="col-span-4 grid h-full grid-rows-3 gap-4">
+          <Box className="col-span-5 grid h-full grid-rows-3 gap-4 max-xl:col-span-10">
+            <Grid
+              className={"flex cursor-pointer"}
+              size={{ xs: 12 }}
+              key={featuredNews.uuid}
+              onClick={() => router.push(`/${featuredNews.uuid}`)}
+            >
+              <CardMedia
+                className="aspect-[3/2] w-[45%]"
+                image={process.env.NEXT_PUBLIC_UPLOADS + featuredNews.images[0]}
+                title={featuredNews.title}
+              />
+              <CardContent className="flex-grow overflow-hidden px-2 py-0">
+                <Box className="flex items-center gap-1">
+                  <CalendarMonthIcon
+                    fontSize="small"
+                    sx={{ color: "common.black" }}
+                  />
+                  <Chip
+                    size="small"
+                    label={"14 октября"}
+                    color="primary"
+                    variant="outlined"
+                    sx={{ color: "common.black" }}
+                    className="font-bold"
+                  />
+                </Box>
+                <Typography
+                  variant="subtitle1"
+                  className="mt-1 line-clamp-2 min-h-[2.5rem] break-words font-bold leading-tight"
+                  sx={{ color: "common.black" }}
+                >
+                  {featuredNews.title}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  className="mt-1 line-clamp-3 min-h-[3.5rem] break-words leading-tight"
+                  sx={{ color: "common.black" }}
+                >
+                  {featuredNews.description}
+                </Typography>
+              </CardContent>
+            </Grid>
             {news.map((news) => (
               <Grid
                 className={"flex cursor-pointer"}
@@ -90,7 +132,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                 onClick={() => router.push(`/${news.uuid}`)}
               >
                 <CardMedia
-                  className="aspect-[2/1] w-[45%]"
+                  className="aspect-[3/2] w-[45%]"
                   image={process.env.NEXT_PUBLIC_UPLOADS + news.images[0]}
                   title={featuredNews.title}
                 />
@@ -111,14 +153,14 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                   </Box>
                   <Typography
                     variant="subtitle1"
-                    className="mt-1 line-clamp-2 min-h-[2.5rem] leading-tight font-bold break-words"
+                    className="mt-1 line-clamp-2 min-h-[2.5rem] break-words font-bold leading-tight"
                     sx={{ color: "common.black" }}
                   >
                     {news.title}
                   </Typography>
                   <Typography
                     variant="body2"
-                    className="mt-1 line-clamp-3 min-h-[3.5rem] leading-tight break-words"
+                    className="mt-1 line-clamp-3 min-h-[3.5rem] break-words leading-tight"
                     sx={{ color: "common.black" }}
                   >
                     {news.description}
