@@ -41,8 +41,14 @@ export const Header = () => {
   const currentDate = useFormatCurrentDate()
 
   const handleLogout = () => {
+    setLogoutPopoverAnchor(null)
     Cookies.remove("jwt")
     dispatch(logOut())
+  }
+
+  const handleProfile = () => {
+    setLogoutPopoverAnchor(null)
+    router.push("/profile")
   }
 
   return (
@@ -112,10 +118,8 @@ export const Header = () => {
                 }}
               >
                 <Box display="flex" flexDirection="column">
+                  <Button onClick={handleProfile}>{t("common.profile")}</Button>
                   <Button onClick={handleLogout}>{t("common.logout")}</Button>
-                  <Button onClick={() => router.push("/profile")}>
-                    {t("common.profile")}
-                  </Button>
                 </Box>
               </Popover>
             )}
