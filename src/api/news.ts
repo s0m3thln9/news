@@ -31,8 +31,18 @@ const newsApi = createApi({
         }),
       },
     ),
+    getResentPostUuid: builder.mutation<ApiResponse<string>, void>({
+      query: () => ({
+        url: "latest",
+        method: "GET",
+      }),
+    }),
   }),
 })
 
 export default newsApi
-export const { useGetNewsQuery, useCreateNewsMutation } = newsApi
+export const {
+  useGetNewsQuery,
+  useCreateNewsMutation,
+  useGetResentPostUuidMutation,
+} = newsApi

@@ -30,6 +30,7 @@ import { useAppSelector } from "@/hooks/use-app-selector"
 import { logOut } from "@/features/user/slice"
 import { NewsSearch } from "@/components/header/news-search"
 import { useTranslation } from "@/providers/i18n-provider"
+import { ResentPost } from "@/components/header/resent-post"
 
 export const Header = () => {
   const router = useRouter()
@@ -80,14 +81,7 @@ export const Header = () => {
                 {currentDate}
               </Typography>
             </Box>
-            <Button
-              variant="text"
-              sx={{ color: "common.white" }}
-              size="medium"
-              className="font-bold normal-case max-lg:px-4"
-            >
-              {t("common.recentPost")}
-            </Button>
+            <ResentPost />
           </Box>
           <Box className="flex h-full items-stretch gap-4">
             <Box className="hidden items-center gap-4 lg:flex">
