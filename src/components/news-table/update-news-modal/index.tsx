@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input"
 import { useTranslation } from "@/providers/i18n-provider"
 import { Controller } from "react-hook-form"
 import { TipTapEditor } from "@/components/create-news-form/tip-tap-editor"
-import { ChangeEvent, useEffect, useRef, useState } from "react"
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react"
 import { useUploadFile } from "@/components/create-news-form/upload-file"
 import { flushSync } from "react-dom"
 
@@ -43,7 +43,6 @@ export const UpdateNewsModal = () => {
     formState: { errors },
     setValue,
     control,
-    getValues,
     clearErrors,
   } = useUpdateNewsForm()
 
@@ -119,6 +118,13 @@ export const UpdateNewsModal = () => {
     void formOnChange(e)
     handleImageChange(e)
   }
+
+  const handleContentChange = useCallback(
+    (value: string) => {
+      setValue("content", value, { shouldValidate: true })
+    },
+    [setValue],
+  )
 
   return (
     <Modal open={open} onClose={handleClose}>
@@ -254,13 +260,16 @@ export const UpdateNewsModal = () => {
                   </Typography>
                 )}
               </div>
-              <TipTapEditor
-                key={getValues("content")}
-                value={getValues("content")}
-                onChange={(value) =>
-                  setValue("content", value, { shouldValidate: true })
-                }
-                upload={upload}
+              <Controller
+                name="content"
+                control={control}
+                render={({ field: { value } }) => (
+                  <TipTapEditor
+                    value={value}
+                    onChange={handleContentChange}
+                    upload={upload}
+                  />
+                )}
               />
             </Box>
             <Box className="flex justify-end gap-4">

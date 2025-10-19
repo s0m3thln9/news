@@ -147,7 +147,10 @@ export const NewsTable = () => {
             value={orderBy}
             onValueChange={handleOrderByChange}
           >
-            <SelectTrigger />
+            <SelectTrigger
+              iconClassName={"fill-primary-main"}
+              className={"border-primary-main h-full border"}
+            />
             <SelectBody>
               {[
                 { label: "Новые", value: "desc" },
