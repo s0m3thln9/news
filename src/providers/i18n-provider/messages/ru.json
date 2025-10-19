@@ -91,5 +91,44 @@
     "haveAccount": "Уже есть аккаунт?",
     "signIn": "Вход",
     "telegramAria": "Telegram канал"
+  },
+  "editor": {
+    "alerts": {
+      "selectImageFile": "Выберите файл изображения (jpg, png, gif, webp)",
+      "fileSizeExceeded": "Размер файла не должен превышать 5 МБ",
+      "uploadUnavailable": "Функция загрузки недоступна",
+      "uploadError": "Ошибка загрузки изображения",
+      "serverUploadError": "Ошибка при загрузке изображения на сервер"
+    },
+    "ariaLabels": {
+      "bold": "Жирный",
+      "italic": "Курсив",
+      "headingH2": "Заголовок H2",
+      "headingH3": "Подзаголовок H3",
+      "bulletList": "Маркированный список",
+      "orderedList": "Нумерованный список",
+      "undo": "Отменить",
+      "redo": "Повторить",
+      "alignLeft": "Выравнивание по левому краю",
+      "alignCenter": "Выравнивание по центру",
+      "alignRight": "Выравнивание по правому краю",
+      "alignJustify": "Выравнивание по ширине",
+      "insertImage": "Вставить изображение из файла"
+    },
+    "labels": {
+      "selectImage": "Выберите изображение",
+      "changeImage": "Изменить изображение",
+      "removePreview": "Удалить превью"
+    }
+  },
+  "footer": {
+    "navigation": "Навигация",
+    "socialNetworks": "Мы в соцсетях",
+    "home": "Главная",
+    "universityFallback": "Название университета",
+    "copyright": "© 2025 Союз Вестей. Все права защищены."
+  },
+  "pinnedNews": {
+    "title": "Закреплённые новости"
   }
 }

@@ -2,6 +2,7 @@
 
 import "./style.css"
 import { ExtendedImage } from "@/components/create-news-form/tip-tap-editor/extensions"
+import { useTranslation } from "@/providers/i18n-provider"
 import { Box } from "@mui/system"
 import { type ChangeEvent, FC } from "react"
 import { useRef } from "react"
@@ -41,6 +42,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
   onChange,
   upload,
 }) => {
+  const t = useTranslation()
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   const editor = useEditor({
@@ -80,17 +82,17 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
     if (!file) return
 
     if (!file.type.startsWith("image/")) {
-      alert("Выберите файл изображения (jpg, png, gif, webp)")
+      alert(t("editor.alerts.selectImageFile"))
       return
     }
 
     if (file.size > maxFileSize) {
-      alert("Размер файла не должен превышать 5 МБ")
+      alert(t("editor.alerts.fileSizeExceeded"))
       return
     }
 
     if (!upload) {
-      alert("Функция загрузки недоступна")
+      alert(t("editor.alerts.uploadUnavailable"))
       return
     }
 
@@ -107,11 +109,11 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
           })
           .run()
       } else {
-        alert("Ошибка загрузки изображения")
+        alert(t("editor.alerts.uploadError"))
       }
     } catch (error) {
       console.log(error)
-      alert("Ошибка при загрузке изображения на сервер")
+      alert(t("editor.alerts.serverUploadError"))
     }
 
     e.target.value = ""
@@ -128,7 +130,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               size="small"
               onClick={() => editor?.chain().focus().toggleBold().run()}
               className={buttonBaseClass}
-              aria-label="Жирный"
+              aria-label={t("editor.ariaLabels.bold")}
             >
               <FormatBoldIcon fontSize="small" />
             </Button>
@@ -138,7 +140,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               size="small"
               onClick={() => editor?.chain().focus().toggleItalic().run()}
               className={buttonBaseClass}
-              aria-label="Курсив"
+              aria-label={t("editor.ariaLabels.italic")}
             >
               <FormatItalicIcon fontSize="small" />
             </Button>
@@ -152,7 +154,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
                 editor?.chain().focus().toggleHeading({ level: 2 }).run()
               }
               className={buttonBaseClass}
-              aria-label="Заголовок H2"
+              aria-label={t("editor.ariaLabels.headingH2")}
             >
               H1
             </Button>
@@ -164,7 +166,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
                 editor?.chain().focus().toggleHeading({ level: 3 }).run()
               }
               className={buttonBaseClass}
-              aria-label="Подзаголовок H3"
+              aria-label={t("editor.ariaLabels.headingH3")}
             >
               H2
             </Button>
@@ -176,7 +178,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               size="small"
               onClick={() => editor?.chain().focus().toggleBulletList().run()}
               className={buttonBaseClass}
-              aria-label="Маркированный список"
+              aria-label={t("editor.ariaLabels.bulletList")}
             >
               <FormatListBulletedIcon fontSize="small" />
             </Button>
@@ -186,7 +188,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               size="small"
               onClick={() => editor?.chain().focus().toggleOrderedList().run()}
               className={buttonBaseClass}
-              aria-label="Нумерованный список"
+              aria-label={t("editor.ariaLabels.orderedList")}
             >
               <FormatListNumberedIcon fontSize="small" />
             </Button>
@@ -198,7 +200,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               size="small"
               onClick={() => editor?.chain().focus().undo().run()}
               className={buttonBaseClass}
-              aria-label="Отменить"
+              aria-label={t("editor.ariaLabels.undo")}
               disabled={!editor?.can().undo()}
             >
               <UndoIcon fontSize="small" />
@@ -209,7 +211,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               size="small"
               onClick={() => editor?.chain().focus().redo().run()}
               className={buttonBaseClass}
-              aria-label="Повторить"
+              aria-label={t("editor.ariaLabels.redo")}
               disabled={!editor?.can().redo()}
             >
               <RedoIcon fontSize="small" />
@@ -235,7 +237,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
                 }
               }}
               className={buttonBaseClass}
-              aria-label="Выравнивание по левому краю"
+              aria-label={t("editor.ariaLabels.alignLeft")}
             >
               <FormatAlignLeftIcon fontSize="small" />
             </Button>
@@ -258,7 +260,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
                 }
               }}
               className={buttonBaseClass}
-              aria-label="Выравнивание по центру"
+              aria-label={t("editor.ariaLabels.alignCenter")}
             >
               <FormatAlignCenterIcon fontSize="small" />
             </Button>
@@ -281,7 +283,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
                 }
               }}
               className={buttonBaseClass}
-              aria-label="Выравнивание по правому краю"
+              aria-label={t("editor.ariaLabels.alignRight")}
             >
               <FormatAlignRightIcon fontSize="small" />
             </Button>
@@ -304,7 +306,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
                 }
               }}
               className={buttonBaseClass}
-              aria-label="Выравнивание по ширине"
+              aria-label={t("editor.ariaLabels.alignJustify")}
             >
               <FormatAlignJustifyIcon fontSize="small" />
             </Button>
@@ -316,7 +318,7 @@ export const TipTapEditor: FC<TipTapEditorProps> = ({
               size="small"
               onClick={handleAddImage}
               className={buttonBaseClass}
-              aria-label="Вставить изображение из файла"
+              aria-label={t("editor.ariaLabels.insertImage")}
             >
               <ImageIcon fontSize="small" />
             </Button>

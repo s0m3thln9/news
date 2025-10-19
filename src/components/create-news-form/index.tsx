@@ -6,6 +6,8 @@ import { useUploadFile } from "@/components/create-news-form/upload-file"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { useTranslation } from "@/providers/i18n-provider"
 import { FC, useState, useRef, type ChangeEvent } from "react"
+import { flushSync } from "react-dom"
+import { Controller } from "react-hook-form"
 import { Box, Button, TextField, MenuItem, Typography } from "@mui/material"
 import { Input } from "@/components/ui/input"
 import { TipTapEditor } from "./tip-tap-editor"
@@ -16,12 +18,14 @@ export const CreateNewsForm: FC = () => {
   const locations = useAppSelector((state) => state.locationsSlice.locations)
 
   const {
+    control,
     register,
     handleSubmit,
     formState: { errors },
     reset,
     setValue,
     getValues,
+    clearErrors,
   } = useCreateNewsForm()
 
   const onSubmit = useCreateNewsSubmit()
@@ -40,18 +44,49 @@ export const CreateNewsForm: FC = () => {
       const url = URL.createObjectURL(file)
       setPreviewUrl(url)
       upload({ image: file }).then((data) => {
-        setValue("images", [data?.public_id || ""])
+        setValue("images", [data?.public_id || ""], { shouldValidate: true })
       })
     }
   }
 
   const handleClear = () => {
-    reset()
+    const defaultValues = {
+      locationUuid: "",
+      content: "",
+      title: "",
+      description: "",
+      images: [],
+    }
+    reset(defaultValues, { keepErrors: false, keepDirty: false })
+    flushSync(() => {
+      setValue("locationUuid", "")
+      setValue("content", "")
+      setValue("title", "")
+      setValue("description", "")
+      setValue("images", [])
+    })
+    clearErrors()
     if (previewUrl) {
       URL.revokeObjectURL(previewUrl)
     }
     setPreviewUrl(null)
     if (fileInputRef.current) fileInputRef.current.value = ""
+  }
+
+  const {
+    ref: formRef,
+    onChange: formOnChange,
+    ...rest
+  } = register("images", { required: t("news.validation.imagesRequired") })
+
+  const mergedRef = (node: HTMLInputElement | null) => {
+    fileInputRef.current = node
+    formRef(node)
+  }
+
+  const mergedOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    void formOnChange(e)
+    handleImageChange(e)
   }
 
   return (
@@ -69,17 +104,30 @@ export const CreateNewsForm: FC = () => {
       >
         <div className="mb-4">
           <Typography className="mb-2">{t("news.mainImage")}</Typography>
+          {errors.images?.message && (
+            <Typography className="text-error-main">
+              {errors.images.message}
+            </Typography>
+          )}
+          <label
+            htmlFor="file-upload"
+            className="file:border-primary-main text-secondary-main file:text-primary-main border-primary-main inline-flex min-w-96 cursor-pointer items-center justify-center rounded border bg-white px-8 py-2 font-[Inter] text-sm font-bold uppercase transition-colors hover:bg-gray-50"
+          >
+            {t("editor.labels.selectImage")}{" "}
+          </label>
           <input
-            ref={fileInputRef}
+            id="file-upload"
+            ref={mergedRef}
             type="file"
             accept="image/*"
-            onChange={handleImageChange}
-            className="file:border-primary-main text-secondary-main file:text-primary-main block min-w-96 file:mr-2 file:cursor-pointer file:border file:px-8 file:py-2 file:font-[Inter] file:text-sm file:font-bold file:uppercase"
+            onChange={mergedOnChange}
+            className="hidden"
+            {...rest}
           />
           {previewUrl && (
             <img
               src={previewUrl}
-              alt="Preview"
+              alt={t("images.previewAlt")}
               className="mt-2 max-h-64 object-cover"
             />
           )}
@@ -93,36 +141,44 @@ export const CreateNewsForm: FC = () => {
               </Typography>
             )}
           </div>
-          <TextField
-            select
-            {...register("locationUuid")}
-            variant="standard"
-            fullWidth
-            placeholder={t("news.selectSection")}
-            className="border px-2.5 py-2 !text-black"
-            slotProps={{
-              input: {
-                disableUnderline: true,
-                classes: {
-                  root: "p-0 m-0",
-                  input: "p-0 m-0 bg-transparent !text-black",
-                },
-              },
-              select: {
-                displayEmpty: true,
-              },
-            }}
-          >
-            {locations.map((location) => (
-              <MenuItem
-                key={location.uuid}
-                value={location.uuid}
-                className="bg-white text-black hover:bg-gray-100"
+          <Controller
+            name="locationUuid"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <TextField
+                select
+                onChange={onChange}
+                value={value}
+                variant="standard"
+                fullWidth
+                placeholder={t("news.selectSection")}
+                className="border px-2.5 py-2 !text-black"
+                error={!!errors.locationUuid}
+                slotProps={{
+                  input: {
+                    disableUnderline: true,
+                    classes: {
+                      root: "p-0 m-0",
+                      input: "p-0 m-0 bg-transparent !text-black",
+                    },
+                  },
+                  select: {
+                    displayEmpty: true,
+                  },
+                }}
               >
-                {location.title}
-              </MenuItem>
-            ))}
-          </TextField>
+                {locations.map((location) => (
+                  <MenuItem
+                    key={location.uuid}
+                    value={location.uuid}
+                    className="bg-white text-black hover:bg-gray-100"
+                  >
+                    {location.title}
+                  </MenuItem>
+                ))}
+              </TextField>
+            )}
+          />
         </Box>
         <Input
           {...register("title")}
@@ -150,8 +206,11 @@ export const CreateNewsForm: FC = () => {
             )}
           </div>
           <TipTapEditor
+            key={getValues("content")}
             value={getValues("content")}
-            onChange={(value) => setValue("content", value)}
+            onChange={(value) =>
+              setValue("content", value, { shouldValidate: true })
+            }
             upload={upload}
           />
         </Box>

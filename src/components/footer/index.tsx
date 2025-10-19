@@ -1,6 +1,7 @@
 "use client"
 
 import { useLocationHandlers } from "@/hooks/use-location-handlers"
+import { useTranslation } from "@/providers/i18n-provider"
 import TelegramIcon from "@mui/icons-material/Telegram"
 import {
   Box,
@@ -20,6 +21,7 @@ import Image from "next/image"
 import { useState, MouseEvent } from "react"
 
 export const Footer = () => {
+  const t = useTranslation()
   const { locations, brothers, handleLocationSelect, handleHomeClick } =
     useLocationHandlers()
 
@@ -42,7 +44,7 @@ export const Footer = () => {
           <Grid size={{ xs: 12, md: 4 }}>
             <Image
               src="/logo2.svg"
-              alt="Логотип"
+              alt={t("images.logoAlt")}
               width={147}
               height={74}
               priority
@@ -53,7 +55,7 @@ export const Footer = () => {
               variant="subtitle1"
               className="text-primary-main mb-2 font-bold"
             >
-              Навигация
+              {t("footer.navigation")}
             </Typography>
             <List disablePadding>
               <ListItem disablePadding>
@@ -63,7 +65,7 @@ export const Footer = () => {
                   className="p-0 hover:bg-transparent"
                 >
                   <ListItemText
-                    primary="Главная"
+                    primary={t("footer.home")}
                     slotProps={{
                       primary: {
                         variant: "body2",
@@ -79,7 +81,7 @@ export const Footer = () => {
                   className="p-0 hover:bg-transparent"
                 >
                   <ListItemText
-                    primary="Список университетов"
+                    primary={t("header.universityList")}
                     slotProps={{
                       primary: {
                         variant: "body2",
@@ -96,7 +98,7 @@ export const Footer = () => {
                   className="p-0 hover:bg-transparent"
                 >
                   <ListItemText
-                    primary="Вести братского народа"
+                    primary={t("locations.brothers")}
                     slotProps={{
                       primary: {
                         variant: "body2",
@@ -113,14 +115,14 @@ export const Footer = () => {
               variant="subtitle1"
               className="text-primary-main mb-2 text-right font-bold"
             >
-              Мы в соцсетях
+              {t("footer.socialNetworks")}
             </Typography>
             <Box className="flex items-center gap-2">
               <Link
                 href="https://t.me/yourchannel"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Telegram канал"
+                aria-label={t("authExtra.telegramAria")}
               >
                 <IconButton className="text-text-primary" size="small">
                   <TelegramIcon />
@@ -161,14 +163,14 @@ export const Footer = () => {
                 }}
                 className="text-text-secondary hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
               >
-                {location.title || "Название университета"}
+                {location.title || t("footer.universityFallback")}
               </MenuItem>
             ))}
         </Box>
       </Popover>
       <Box className="border-primary-main mt-6 border-t pt-4 text-center">
         <Typography variant="body2" className="text-text-primary">
-          © 2025 Союз Вестей. Все права защищены.
+          {t("footer.copyright")}
         </Typography>
       </Box>
     </Box>

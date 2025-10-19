@@ -1,5 +1,6 @@
 "use client"
 
+import { useTranslation } from "@/providers/i18n-provider"
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth"
 import { Card, CardContent, Chip, Grid, Typography } from "@mui/material"
 import { Box } from "@mui/system"
@@ -14,6 +15,7 @@ type PinnedNewsProps = {
 }
 
 const PinnedNews: FC<PinnedNewsProps> = ({ pinnedNews }) => {
+  const t = useTranslation()
   const getDateKey = useGetDateKey()
   const router = useRouter()
 
@@ -24,7 +26,7 @@ const PinnedNews: FC<PinnedNewsProps> = ({ pinnedNews }) => {
         className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
         color="primary"
       >
-        Закреплённые новости
+        {t("pinnedNews.title")}
       </Typography>
       <Grid container spacing={2} columns={10} className="mt-10">
         {pinnedNews.map((pinnedNewsItem) => (
@@ -46,14 +48,14 @@ const PinnedNews: FC<PinnedNewsProps> = ({ pinnedNews }) => {
                   <Typography
                     variant="h5"
                     gutterBottom
-                    className="line-clamp-3 leading-tight font-bold break-words"
+                    className="line-clamp-3 break-words font-bold leading-tight"
                   >
                     {pinnedNewsItem.title}
                   </Typography>
                   <Typography
                     variant="body1"
                     gutterBottom
-                    className="line-clamp-3 leading-tight break-words"
+                    className="line-clamp-3 break-words leading-tight"
                   >
                     {pinnedNewsItem.description}
                   </Typography>

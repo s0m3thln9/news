@@ -89,5 +89,44 @@
     "haveAccount": "Already have an account?",
     "signIn": "Sign in",
     "telegramAria": "Telegram channel"
+  },
+  "editor": {
+    "alerts": {
+      "selectImageFile": "Select an image file (jpg, png, gif, webp)",
+      "fileSizeExceeded": "File size must not exceed 5 MB",
+      "uploadUnavailable": "Upload function is unavailable",
+      "uploadError": "Image upload error",
+      "serverUploadError": "Error uploading image to server"
+    },
+    "ariaLabels": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "headingH2": "Heading H2",
+      "headingH3": "Subheading H3",
+      "bulletList": "Bulleted list",
+      "orderedList": "Numbered list",
+      "undo": "Undo",
+      "redo": "Redo",
+      "alignLeft": "Align left",
+      "alignCenter": "Align center",
+      "alignRight": "Align right",
+      "alignJustify": "Align justify",
+      "insertImage": "Insert image from file"
+    },
+    "labels": {
+      "selectImage": "Select image",
+      "changeImage": "Change image",
+      "removePreview": "Remove preview"
+    }
+  },
+  "footer": {
+    "navigation": "Navigation",
+    "socialNetworks": "We in social networks",
+    "home": "Home",
+    "universityFallback": "University name",
+    "copyright": "© 2025 Союз Вестей. All rights reserved."
+  },
+  "pinnedNews": {
+    "title": "Pinned News"
   }
 }
