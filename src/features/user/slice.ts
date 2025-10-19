@@ -1,12 +1,15 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { UserDTO } from "@/types/dto/user"
+import { Language } from "@/generated/prisma"
 
 type InitialState = {
   user: UserDTO | null
+  language: Language
 }
 
 const initialState: InitialState = {
   user: null,
+  language: "RU",
 }
 
 export const userSlice = createSlice({
@@ -15,6 +18,8 @@ export const userSlice = createSlice({
   reducers: {
     signIn: (state, action: PayloadAction<UserDTO>) => {
       state.user = action.payload
+
+      state.language = action.payload.language || state.language
     },
     logOut: (state) => {
       state.user = null
@@ -22,8 +27,11 @@ export const userSlice = createSlice({
     updateUser: (state, action: PayloadAction<UserDTO>) => {
       state.user = action.payload
     },
+    updateLanguage: (state, action: PayloadAction<Language>) => {
+      state.language = action.payload
+    },
   },
 })
 
-export const { signIn, logOut, updateUser } = userSlice.actions
+export const { signIn, logOut, updateUser, updateLanguage } = userSlice.actions
 export default userSlice.reducer

@@ -137,3 +137,16 @@ export const getPinnedNews = (): Promise<NewsDTO[]> =>
       locationUuid: true,
     },
   })
+
+export const getLatestNewsUuid = async () => {
+  const latestNews = await prisma.news.findFirst({
+    orderBy: {
+      createdAt: "desc",
+    },
+    select: {
+      uuid: true,
+    },
+  })
+
+  return latestNews?.uuid || null
+}

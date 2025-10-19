@@ -2,18 +2,22 @@
 
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { FormControl, MenuItem, Select } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Language } from "@/generated/prisma"
 import { useUpdateLanguage } from "@/components/header/update-language-select/use-update-language"
 
 export const UpdateLanguageSelect = ({ color }: { color?: string }) => {
-  const user = useAppSelector((state) => state.userSlice.user)
+  const initialLanguage = useAppSelector((state) => state.userSlice.language)
 
-  const [language, setLanguage] = useState<Language>(
-    (user?.language as Language) || "RU",
-  )
+  const [language, setLanguage] = useState<Language>(initialLanguage)
 
   const updateLanguage = useUpdateLanguage()
+
+  useEffect(() => {
+    if (initialLanguage) {
+      setLanguage(initialLanguage)
+    }
+  }, [initialLanguage])
 
   return (
     <FormControl variant="standard" size="small">

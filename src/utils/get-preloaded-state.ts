@@ -6,6 +6,7 @@ import { getLocations } from "@/server/services/locations-service"
 import type { Location } from "@/generated/prisma"
 import { RootState } from "@/app/store"
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
+import { Language } from "@/generated/prisma"
 
 const jwtModule = await import("jsonwebtoken")
 
@@ -24,7 +25,7 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
 
   if (!userUuid) {
     return {
-      userSlice: { user: null },
+      userSlice: { user: null, language: "RU" },
       locationsSlice,
     }
   }
@@ -36,14 +37,14 @@ export const getPreloadedState = async (): Promise<PreloadedState> => {
   }
 
   return {
-    userSlice: { user },
+    userSlice: { user, language: user.language || "RU" },
     locationsSlice,
   }
 }
 
 export const getLanguageFromRequest = async (
   acceptLanguage: string | null,
-): Promise<"EN" | "RU"> => {
+): Promise<Language> => {
   const language =
     acceptLanguage?.split(",")[0].split("-")[0].toUpperCase() || "EN"
 

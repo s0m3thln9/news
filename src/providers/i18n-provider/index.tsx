@@ -10,19 +10,20 @@ import {
   useEffect,
   useState,
 } from "react"
-import en from "./messages/en.json"
-import ru from "./messages/ru.json"
+import EN from "./messages/en.json"
+import RU from "./messages/ru.json"
+import { updateLanguage } from "@/features/user/slice"
+import { useAppDispatch } from "@/hooks/use-app-dispatch"
+import { Language } from "@/generated/prisma"
 
 export const languagesMap = {
-  en,
-  ru,
+  EN,
+  RU,
 } as const
 
 type NestedStringObject = {
   [key: string]: string | NestedStringObject
 }
-
-type Language = keyof typeof languagesMap
 
 type I18nContextType = {
   language: Language
@@ -33,28 +34,43 @@ export const I18nContext = createContext<I18nContextType | undefined>(undefined)
 
 type I18nProviderProps = {
   children: ReactNode
-  language: Language
+  language?: Language
 }
 
 export const I18nProvider: FC<I18nProviderProps> = ({
   children,
   language: initialLanguage,
 }) => {
-  const [currentLanguage, setCurrentLanguage] =
-    useState<Language>(initialLanguage)
-
   const userSettingsLanguage = useAppSelector(
-    (state) => state.userSlice.user?.language,
+    (state) => state.userSlice.language,
+  )
+  const user = useAppSelector((state) => state.userSlice.user)
+
+  const [currentLanguage, setCurrentLanguage] = useState<Language>(
+    initialLanguage || userSettingsLanguage,
   )
 
+  const dispatch = useAppDispatch()
+
   useEffect(() => {
-    if (userSettingsLanguage) {
-      const normalizedLanguage = userSettingsLanguage.toLowerCase() as Language
-      if (normalizedLanguage !== currentLanguage) {
-        setCurrentLanguage(normalizedLanguage)
+    if (!user) {
+      const initialLanguage = localStorage.getItem("language")
+      if (
+        initialLanguage &&
+        (initialLanguage === "EN" || initialLanguage === "RU")
+      ) {
+        setCurrentLanguage(initialLanguage)
+        dispatch(updateLanguage(initialLanguage))
       }
+      return
     }
-  }, [userSettingsLanguage, currentLanguage])
+
+    const normalizedLanguage = userSettingsLanguage
+    if (normalizedLanguage !== currentLanguage) {
+      setCurrentLanguage(normalizedLanguage)
+      dispatch(updateLanguage(normalizedLanguage))
+    }
+  }, [userSettingsLanguage, currentLanguage, dispatch, user])
 
   return (
     <I18nContext.Provider
