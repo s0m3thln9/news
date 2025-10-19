@@ -6,7 +6,7 @@ import { useState } from "react"
 import { Language } from "@/generated/prisma"
 import { useUpdateLanguage } from "@/components/header/update-language-select/use-update-language"
 
-export const UpdateLanguageSelect = () => {
+export const UpdateLanguageSelect = ({ color }: { color?: string }) => {
   const user = useAppSelector((state) => state.userSlice.user)
 
   const [language, setLanguage] = useState<Language>(
@@ -26,9 +26,9 @@ export const UpdateLanguageSelect = () => {
         label="Язык"
         autoWidth
         sx={{
-          color: "common.white",
+          color: color ? color : "common.white",
           "& .MuiSvgIcon-root": {
-            color: "common.white",
+            color: color ? color : "common.white",
           },
           "& .MuiSelect-select": {
             padding: "4px 0",

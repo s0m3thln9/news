@@ -45,7 +45,7 @@ export const LocationSelect = () => {
     <Box className="flex self-stretch">
       <Button
         className={cn(
-          "relative flex h-full items-center justify-center self-stretch rounded-none bg-transparent px-4 font-bold normal-case transition-all duration-300 ease-in-out",
+          "relative flex h-full items-center justify-center self-stretch rounded-none bg-transparent px-4 font-bold normal-case transition-all duration-300 ease-in-out max-lg:min-w-fit max-lg:px-2",
           beforeClass,
           activeTab === "home"
             ? "bg-primary-main before:opacity-100"
@@ -95,7 +95,7 @@ export const LocationSelect = () => {
       <Button
         onClick={() => handleLocationSelect(brothers?.uuid || "")}
         className={cn(
-          `relative flex h-full items-center self-stretch rounded-none px-5 font-bold normal-case text-white transition-all duration-300 ease-in-out`,
+          `relative flex items-center rounded-none px-5 font-bold normal-case text-white transition-all duration-300 ease-in-out max-lg:px-2`,
           beforeClass,
           activeTab === "brothers"
             ? "bg-primary-main before:opacity-100"
