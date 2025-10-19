@@ -161,7 +161,7 @@ export const Footer = () => {
                   handleLocationSelect(location.uuid)
                   handleClose()
                 }}
-                className="text-text-secondary hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
+                className="text-text-secondary hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
               >
                 {location.title || t("footer.universityFallback")}
               </MenuItem>

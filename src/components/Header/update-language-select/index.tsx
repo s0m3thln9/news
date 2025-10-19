@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import { Language } from "@/generated/prisma"
 import { useUpdateLanguage } from "@/components/header/update-language-select/use-update-language"
 
-export const UpdateLanguageSelect = () => {
+export const UpdateLanguageSelect = ({ color }: { color?: string }) => {
   const initialLanguage = useAppSelector((state) => state.userSlice.language)
 
   const [language, setLanguage] = useState<Language>(initialLanguage)
@@ -19,13 +19,10 @@ export const UpdateLanguageSelect = () => {
     }
   }, [initialLanguage])
 
-  console.log("language", language)
-  console.log("initialLanguage", initialLanguage)
-
   return (
     <FormControl variant="standard" size="small">
       <Select
-        value={language || "RU"}
+        value={language}
         onChange={(e) => {
           setLanguage(e.target.value as Language)
           void updateLanguage({ language: e.target.value as Language })
@@ -33,9 +30,9 @@ export const UpdateLanguageSelect = () => {
         label="Язык"
         autoWidth
         sx={{
-          color: "common.white",
+          color: color ? color : "common.white",
           "& .MuiSvgIcon-root": {
-            color: "common.white",
+            color: color ? color : "common.white",
           },
           "& .MuiSelect-select": {
             padding: "4px 0",

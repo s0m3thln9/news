@@ -18,11 +18,14 @@ import {
   Toolbar,
   Typography,
   Container,
+  Menu,
+  MenuItem,
 } from "@mui/material"
 import { Box } from "@mui/system"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import TelegramIcon from "@mui/icons-material/Telegram"
+import MenuIcon from "@mui/icons-material/Menu"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { logOut } from "@/features/user/slice"
 import { NewsSearch } from "@/components/header/news-search"
@@ -33,6 +36,7 @@ export const Header = () => {
 
   const [logoutPopoverAnchor, setLogoutPopoverAnchor] =
     useState<HTMLElement | null>(null)
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
 
   const user = useAppSelector((state) => state.userSlice.user)
 
@@ -51,18 +55,26 @@ export const Header = () => {
     router.push("/profile")
   }
 
+  const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorElNav(event.currentTarget)
+  }
+
+  const handleCloseNavMenu = () => {
+    setAnchorElNav(null)
+  }
+
   return (
     <AppBar
       color="secondary"
       position="static"
       className="border-b-[5px] border-[#5BB3EA]"
     >
-      <Toolbar variant="dense" color="secondary" className="px-0">
+      <Toolbar variant="dense" color="secondary" className="min-h-fit px-0">
         <Container maxWidth="xl" className="flex justify-between px-0">
-          <Box className="flex gap-4">
+          <Box className="flex gap-4 max-lg:gap-2">
             <Box
               sx={{ bgcolor: "primary.main" }}
-              className="flex items-center self-stretch px-5"
+              className="flex items-center self-stretch px-5 max-lg:px-3"
             >
               <Typography variant="body2" className="font-bold">
                 {currentDate}
@@ -72,68 +84,150 @@ export const Header = () => {
               variant="text"
               sx={{ color: "common.white" }}
               size="medium"
-              className="font-bold normal-case"
+              className="font-bold normal-case max-lg:px-4"
             >
               {t("common.recentPost")}
             </Button>
           </Box>
-          <Box className="flex items-center gap-4">
-            <UpdateLanguageSelect />
-            <Link
-              href="https://t.me/yourchannel"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={t("authExtra.telegramAria")}
-            >
-              <IconButton className="text-text-primary" size="small">
-                <TelegramIcon />
+          <Box className="flex h-full items-stretch gap-4">
+            <Box className="hidden items-center gap-4 lg:flex">
+              <UpdateLanguageSelect />
+              <Link
+                href="https://t.me/yourchannel"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={t("authExtra.telegramAria")}
+              >
+                <IconButton className="text-text-primary" size="small">
+                  <TelegramIcon />
+                </IconButton>
+              </Link>
+              <Button
+                variant="text"
+                sx={{ color: "common.white" }}
+                size="medium"
+                className="font-bold normal-case"
+                onClick={(e) =>
+                  user
+                    ? setLogoutPopoverAnchor(e.currentTarget)
+                    : dispatch(setSignInModalOpen(true))
+                }
+              >
+                {user ? user.firstName : t("common.login")}
+              </Button>
+            </Box>
+            <Box className="lg:hidden">
+              <IconButton
+                size="large"
+                aria-label="navigation menu"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleOpenNavMenu}
+                color="inherit"
+              >
+                <MenuIcon />
               </IconButton>
-            </Link>
-            <Button
-              variant="text"
-              sx={{ color: "common.white" }}
-              size="medium"
-              className="font-bold normal-case"
-              onClick={(e) =>
-                user
-                  ? setLogoutPopoverAnchor(e.currentTarget)
-                  : dispatch(setSignInModalOpen(true))
-              }
-            >
-              {user ? user.firstName : t("common.login")}
-            </Button>
-            {!user ? (
-              <>
-                <SignInModal />
-                <SignUpModal />
-              </>
-            ) : (
-              <Popover
-                open={Boolean(logoutPopoverAnchor)}
-                anchorEl={logoutPopoverAnchor}
-                onClose={() => setLogoutPopoverAnchor(null)}
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorElNav}
                 anchorOrigin={{
-                  vertical: "bottom",
+                  vertical: "top",
                   horizontal: "right",
                 }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={Boolean(anchorElNav)}
+                onClose={handleCloseNavMenu}
               >
-                <Box display="flex" flexDirection="column">
-                  <Button onClick={handleProfile}>{t("common.profile")}</Button>
-                  <Button onClick={handleLogout}>{t("common.logout")}</Button>
-                </Box>
-              </Popover>
-            )}
+                <MenuItem>
+                  <UpdateLanguageSelect color="text.secondary" />
+                </MenuItem>
+                <MenuItem onClick={handleCloseNavMenu}>
+                  <Link
+                    href="https://t.me/yourchannel"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      textDecoration: "none",
+                    }}
+                    className="flex items-center"
+                  >
+                    <IconButton size="small" className="pl-0">
+                      <TelegramIcon className="text-common-black" />
+                    </IconButton>
+                  </Link>
+                </MenuItem>
+                {user ? (
+                  <>
+                    <MenuItem
+                      className="text-common-black"
+                      onClick={() => {
+                        handleCloseNavMenu()
+                        router.push("/profile")
+                      }}
+                    >
+                      {t("common.profile")}
+                    </MenuItem>
+                    <MenuItem
+                      className="text-common-black"
+                      onClick={() => {
+                        handleCloseNavMenu()
+                        handleLogout()
+                      }}
+                    >
+                      {t("common.logout")}
+                    </MenuItem>
+                  </>
+                ) : (
+                  <MenuItem
+                    className="text-common-black"
+                    onClick={() => {
+                      handleCloseNavMenu()
+                      dispatch(setSignInModalOpen(true))
+                    }}
+                  >
+                    {t("common.login")}
+                  </MenuItem>
+                )}
+              </Menu>
+            </Box>
           </Box>
         </Container>
+        {!user ? (
+          <>
+            <SignInModal />
+            <SignUpModal />
+          </>
+        ) : (
+          <Popover
+            open={Boolean(logoutPopoverAnchor)}
+            anchorEl={logoutPopoverAnchor}
+            onClose={() => setLogoutPopoverAnchor(null)}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+          >
+            <Box display="flex" flexDirection="column">
+              <Button onClick={handleProfile}>{t("common.profile")}</Button>
+              <Button onClick={handleLogout}>{t("common.logout")}</Button>
+            </Box>
+          </Popover>
+        )}
       </Toolbar>
       <Toolbar
         variant="dense"
-        className="px-0 py-5"
+        className="px-0 py-5 max-lg:pt-2"
         sx={{ bgcolor: "background.default" }}
       >
         <Container
           maxWidth="xl"
-          className="flex items-center justify-between px-0"
+          className="flex items-center justify-between gap-2 px-0"
         >
           <Box className="flex items-center">
             <Image
@@ -144,7 +238,7 @@ export const Header = () => {
               priority
             />
           </Box>
-          <Box className="flex items-center">
+          <Box className="flex max-w-2/3 items-center max-sm:hidden">
             <Image
               src="/header.svg"
               alt={t("images.headerAlt")}
@@ -157,7 +251,7 @@ export const Header = () => {
       <Toolbar variant="dense" className="px-0" color="secondary">
         <Container
           maxWidth="xl"
-          className="flex items-center justify-between px-0"
+          className="flex items-center justify-between px-0 max-lg:flex-col"
         >
           <LocationSelect />
           <NewsSearch />

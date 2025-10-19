@@ -8,14 +8,14 @@ export const NewsSearch = () => {
   const t = useTranslation()
 
   return (
-    <Box className="self-stretch">
+    <Box className="self-stretch max-lg:w-full">
       <TextField
         variant="filled"
         size="small"
         placeholder={t("common.searchPlaceholder")}
         value={searchQuery}
         onChange={handleSearchQueryChange}
-        className="h-full self-stretch rounded-none text-sm"
+        className="h-full self-stretch rounded-none text-sm max-lg:w-full"
         sx={{
           width: 300,
           bgcolor: "#585858",
