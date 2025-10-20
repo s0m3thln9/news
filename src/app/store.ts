@@ -10,6 +10,10 @@ import searchNewsReducer from "@/features/search-news/slice"
 import newsReducer from "@/features/news/slice"
 import newsTableReducer from "@/components/news-table/slice"
 import editNewsModalReducer from "@/components/news-table/update-news-modal/slice"
+import locationTableReducer from "@/components/locations-table/slice"
+import locationsApi from "@/api/locations"
+import editLocationModalReducer from "@/components/locations-table/update-locations-modal/slice"
+import createLocationModalReducer from "@/components/locations-table/create-locations-modal/slice"
 
 const rootReducer = {
   signInSlice: signInReducer,
@@ -20,9 +24,13 @@ const rootReducer = {
   newsSlice: newsReducer,
   newsTableSlice: newsTableReducer,
   editNewsModalSlice: editNewsModalReducer,
+  locationTableSlice: locationTableReducer,
+  editLocationModalSlice: editLocationModalReducer,
+  createLocationModalSlice: createLocationModalReducer,
   [userApi.reducerPath]: userApi.reducer,
   [newsApi.reducerPath]: newsApi.reducer,
   [uploadApi.reducerPath]: uploadApi.reducer,
+  [locationsApi.reducerPath]: locationsApi.reducer,
 }
 
 const mainReducer = combineReducers(rootReducer)
@@ -38,7 +46,8 @@ export const makeStore = (preloadedState?: Partial<RootState>) => {
       })
         .concat(userApi.middleware)
         .concat(newsApi.middleware)
-        .concat(uploadApi.middleware),
+        .concat(uploadApi.middleware)
+        .concat(locationsApi.middleware),
     preloadedState,
   })
 }

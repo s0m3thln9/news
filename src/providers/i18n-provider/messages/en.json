@@ -83,7 +83,16 @@
     }
   },
   "locations": {
-    "brothers": "Brotherly people's news"
+    "createLocation": "Create location",
+    "updateLocation": "Update location",
+    "brothers": "Brotherly people's news",
+    "title": "Title",
+    "clear": "Clear",
+    "create": "Create",
+    "update": "Update",
+    "validation": {
+      "titleRequired": "Title is required"
+    }
   },
   "authExtra": {
     "noAccount": "No account?",

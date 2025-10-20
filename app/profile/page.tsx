@@ -4,6 +4,7 @@ import { CreateNewsForm } from "@/components/create-news-form"
 import { ProfileForm } from "@/components/profile-form"
 import { Container, Box } from "@mui/material"
 import { NewsTable } from "@/components/news-table"
+import { LocationsTable } from "@/components/locations-table"
 
 export default function ProfilePage() {
   return (
@@ -15,6 +16,7 @@ export default function ProfilePage() {
         <Box className="flex grow flex-col gap-8">
           <CreateNewsForm />
           <NewsTable />
+          <LocationsTable />
         </Box>
       </Box>
     </Container>

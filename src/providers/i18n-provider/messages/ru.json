@@ -85,7 +85,16 @@
     }
   },
   "locations": {
-    "brothers": "Вести братского народа"
+    "createLocation": "Создать локацию",
+    "updateLocation": "Обновить локацию",
+    "brothers": "Вести братского народа",
+    "title": "Название",
+    "clear": "Очистить",
+    "create": "Создать",
+    "update": "Обновить",
+    "validation": {
+      "titleRequired": "Название обязательно"
+    }
   },
   "authExtra": {
     "noAccount": "Нет аккаунта?",

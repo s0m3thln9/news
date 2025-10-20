@@ -1,7 +1,8 @@
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
-import type { Location, PrismaPromise } from "@/generated/prisma"
+import type { Location, Prisma, PrismaPromise } from "@/generated/prisma"
 import { LocationWithNews } from "@/types/dto/location-with-news"
+import { Pagination } from "@/types/dto/Pagination"
 
 const createLocationSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
@@ -18,8 +19,45 @@ export const createLocation = async (body: CreateLocationRequestBody) => {
   })
 }
 
-export const getLocations = async (): Promise<Location[]> =>
-  prisma.location.findMany()
+export type GetLocationsQueryParams = {
+  offset?: number
+  limit?: number
+  search?: string
+}
+
+type GetLocations = (
+  queryParams: GetLocationsQueryParams,
+) => Promise<Pagination<Location[]>>
+
+export const geLocationsQueryOptions = (
+  queryParams: GetLocationsQueryParams,
+): Prisma.LocationFindManyArgs => ({
+  where: {
+    title: {
+      contains: queryParams.search,
+      mode: "insensitive",
+    },
+  },
+  take: queryParams.limit || 10,
+  skip: queryParams.offset || 0,
+  orderBy: {
+    createdAt: "asc",
+  },
+})
+
+export const getLocations: GetLocations = async (queryParams) => ({
+  data: await prisma.location.findMany(geLocationsQueryOptions(queryParams)),
+  limit: queryParams.limit || 10,
+  offset: queryParams.offset || 0,
+  total: await prisma.location.count({
+    where: {
+      title: {
+        contains: queryParams.search,
+        mode: "insensitive",
+      },
+    },
+  }),
+})
 
 const updateLocationSchema = createLocationSchema.partial()
 

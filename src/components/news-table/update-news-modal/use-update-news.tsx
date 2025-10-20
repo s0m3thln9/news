@@ -1,6 +1,6 @@
 import { useUpdateNewsMutation } from "@/api/news"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { UpdateNewsRequestBody } from "@/server/services/news-service"
+import { UpdateLocationRequestBodyy } from "@/server/services/news-service"
 import { updateNews } from "@/components/news-table/slice"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { setEditNewsModalOpen } from "@/components/news-table/update-news-modal/slice"
@@ -13,7 +13,7 @@ export const useUpdateNews = () => {
   )
 
   return [
-    async (data: UpdateNewsRequestBody) => {
+    async (data: UpdateLocationRequestBodyy) => {
       try {
         const res = await updateNewsMutation({
           body: data,

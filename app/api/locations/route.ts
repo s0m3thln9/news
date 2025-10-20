@@ -64,7 +64,14 @@ export const POST = createRoute(
  *       500:
  *         description: Внутренняя ошибка сервера
  */
-export const GET = createRoute([errorBoundary()], async () => {
-  const createdLocation = await getLocations()
+export const GET = createRoute([errorBoundary()], async ({ queryParams }) => {
+  const offset = Number(queryParams?.offset) || undefined
+  const limit = Number(queryParams?.limit) || undefined
+
+  const createdLocation = await getLocations({
+    offset,
+    limit,
+    search: queryParams?.search,
+  })
   return handleResponse("Локации успешно получены", 200, createdLocation)
 })

@@ -10,7 +10,7 @@ import { UserRole } from "@/generated/prisma"
 import {
   deleteNews,
   updateNews,
-  UpdateNewsRequestBody,
+  UpdateLocationRequestBodyy,
 } from "@/server/services/news-service"
 import { checkEditorAllowedToNews } from "@/server/utils/check-editor-allowed-to-news"
 
@@ -39,7 +39,7 @@ export const PATCH = createRoute(
   [
     errorBoundary(),
     auth(),
-    jsonBody<UpdateNewsRequestBody>(),
+    jsonBody<UpdateLocationRequestBodyy>(),
     requireRole([UserRole.ADMIN, UserRole.EDITOR]),
   ],
   async ({ params, userUuid, body }) => {
@@ -47,7 +47,7 @@ export const PATCH = createRoute(
 
     const createdNews = await updateNews(
       params?.uuid as string,
-      body as UpdateNewsRequestBody,
+      body as UpdateLocationRequestBodyy,
     )
     return handleResponse("Новость успешно обновлена", 200, createdNews)
   },

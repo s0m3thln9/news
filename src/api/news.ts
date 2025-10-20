@@ -6,7 +6,7 @@ import {
   CreateNewsRequestBody,
   GetNewsQueryParams,
   GetNewsWithLocationQueryParams,
-  UpdateNewsRequestBody,
+  UpdateLocationRequestBodyy,
 } from "@/server/services/news-service"
 import { Pagination } from "@/types/dto/Pagination"
 import { NewsWithLocation } from "@/types/dto/news-with-location"
@@ -58,7 +58,7 @@ const newsApi = createApi({
     }),
     updateNews: builder.mutation<
       ApiResponse<NewsDTO>,
-      { uuid: string; body: UpdateNewsRequestBody }
+      { uuid: string; body: UpdateLocationRequestBodyy }
     >({
       query: ({ uuid, body }) => ({
         url: `${uuid}`,

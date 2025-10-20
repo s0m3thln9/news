@@ -83,9 +83,14 @@ export const getNews: GetNews = async (queryParams) => ({
   }),
 })
 
-export type UpdateNewsRequestBody = Partial<z.infer<typeof createNewsSchema>>
+export type UpdateLocationRequestBodyy = Partial<
+  z.infer<typeof createNewsSchema>
+>
 
-export const updateNews = async (uuid: string, body: UpdateNewsRequestBody) =>
+export const updateNews = async (
+  uuid: string,
+  body: UpdateLocationRequestBodyy,
+) =>
   prisma.news.update({
     where: {
       uuid,

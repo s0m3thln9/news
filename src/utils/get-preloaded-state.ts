@@ -7,6 +7,7 @@ import type { Location } from "@/generated/prisma"
 import { RootState } from "@/app/store"
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 import { Language } from "@/generated/prisma"
+import { Pagination } from "@/types/dto/Pagination"
 
 const jwtModule = await import("jsonwebtoken")
 
@@ -68,17 +69,18 @@ const getLocationsData = async (pathname: string | null) => {
     }
   }
 
-  const locations: Location[] = await getLocations()
+  const locations: Pagination<Location[]> = await getLocations({})
 
   const brothersLocation: Location | null =
-    locations.find((location) => location.title === "Вести братского народа") ||
-    null
+    locations.data.find(
+      (location) => location.title === "Вести братского народа",
+    ) || null
 
   const currentLocation: Location | null =
-    locations.find((location) => location.uuid === locationUuid) || null
+    locations.data.find((location) => location.uuid === locationUuid) || null
 
   return {
-    locations: locations
+    locations: locations.data
       .filter((location) => location.uuid !== brothersLocation?.uuid)
       .map((location) => ({ ...location, news: [] })),
     brothers: brothersLocation ? { ...brothersLocation, news: [] } : null,
