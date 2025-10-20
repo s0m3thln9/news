@@ -7,7 +7,7 @@ import type { Location } from "@/generated/prisma"
 import { RootState } from "@/app/store"
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 import { Language } from "@/generated/prisma"
-import { Pagination } from "@/types/dto/Pagination"
+import { Pagination } from "@/types/dto/pagination"
 
 const jwtModule = await import("jsonwebtoken")
 

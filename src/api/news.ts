@@ -8,7 +8,7 @@ import {
   GetNewsWithLocationQueryParams,
   UpdateLocationRequestBodyy,
 } from "@/server/services/news-service"
-import { Pagination } from "@/types/dto/Pagination"
+import { Pagination } from "@/types/dto/pagination"
 import { NewsWithLocation } from "@/types/dto/news-with-location"
 
 const newsApi = createApi({

@@ -1,18 +1,11 @@
 import bcrypt from "bcrypt"
-import {
-  Language,
-  Prisma,
-  User,
-  UserEmailVerification,
-} from "@/generated/prisma"
+import { Language, Prisma, User, UserRole } from "@/generated/prisma"
 import { ApiError } from "@/types/api-response"
 import { UserDTO } from "@/types/dto/user"
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
 import { omit } from "@/server/utils/omit"
-import { generateVerificationCode } from "@/server/utils/generate-verification-code"
-import { sendVerificationEmail } from "@/server/utils/send-verification-email"
-import { sendResetPasswordEmail } from "@/server/utils/send-reset-password-email"
+import { Pagination } from "@/types/dto/pagination"
 
 const signUpUserSchema = z.object({
   firstName: z.string().min(1, "Имя обязательно"),
@@ -37,28 +30,17 @@ export const signUpUser = async (body: SignUpRequestBody): Promise<UserDTO> => {
   const hashedPassword = await bcrypt.hash(body.password, 12)
 
   try {
-    const code = generateVerificationCode()
-
-    const user: UserDTO = await prisma.user.create({
+    return prisma.user.create({
       data: {
         email: body.email,
         firstName: body.firstName,
         lastName: body.lastName,
         password: hashedPassword,
-        userEmailVerification: {
-          create: {
-            code,
-          },
-        },
       },
       omit: {
         password: true,
       },
     })
-
-    void sendVerificationEmail(user.email, code)
-
-    return user
   } catch (e) {
     if (
       e instanceof Prisma.PrismaClientKnownRequestError &&
@@ -132,134 +114,6 @@ export const getMe = async (uuid: string): Promise<UserDTO> => {
   return user
 }
 
-const confirmEmailSchema = z.object({
-  code: z
-    .string()
-    .min(6, "Email обязателен")
-    .max(6, "Код должен быть 6-ти значным"),
-})
-
-export type ConfirmEmailRequestBody = z.infer<typeof confirmEmailSchema>
-
-export const confirmEmail = async (
-  uuid: string,
-  { code }: ConfirmEmailRequestBody,
-) => {
-  confirmEmailSchema.parse({ code })
-
-  const emailVerification: UserEmailVerification | null =
-    await prisma.userEmailVerification.findFirst({
-      where: {
-        userUuid: uuid,
-        code,
-        status: "PENDING",
-      },
-    })
-
-  if (!emailVerification) {
-    throw new ApiError({ status: 400, message: "Неверный код" })
-  }
-
-  await prisma.userEmailVerification.update({
-    where: {
-      uuid: emailVerification.uuid,
-    },
-    data: {
-      status: "FULLFILLED",
-    },
-  })
-  return prisma.user.update({
-    where: {
-      uuid,
-    },
-    data: {
-      emailVerificationAt: new Date().toISOString(),
-    },
-    omit: {
-      password: true,
-    },
-  })
-}
-
-export const requestPasswordReset = async (uuid: string) => {
-  const code = generateVerificationCode()
-
-  const user: User | null = await prisma.user.findFirst({
-    where: {
-      uuid,
-    },
-  })
-
-  if (!user) {
-    throw new ApiError({ status: 401, message: "Не авторизован" })
-  }
-
-  await prisma.userEmailVerification.create({
-    data: {
-      code,
-      userUuid: uuid,
-    },
-  })
-
-  await sendResetPasswordEmail(user.email, code)
-}
-
-const resetPasswordSchema = z.object({
-  code: z
-    .string()
-    .min(6, "Email обязателен")
-    .max(6, "Код должен быть 6-ти значным"),
-  password: z
-    .string()
-    .min(8, "Пароль слишком короткий")
-    .max(64, "Пароль слишком длинный"),
-})
-
-export type ResetPasswordRequestBody = z.infer<typeof resetPasswordSchema>
-
-export const resetPassword = async (
-  body: ResetPasswordRequestBody,
-  uuid?: string,
-) => {
-  resetPasswordSchema.parse(body)
-
-  const emailVerification: UserEmailVerification | null =
-    await prisma.userEmailVerification.findFirst({
-      where: {
-        userUuid: uuid,
-        code: body.code,
-        status: "PENDING",
-      },
-    })
-
-  if (!emailVerification) {
-    throw new ApiError({ status: 400, message: "Неверный код" })
-  }
-
-  await prisma.userEmailVerification.update({
-    where: {
-      uuid: emailVerification.uuid,
-    },
-    data: {
-      status: "FULLFILLED",
-    },
-  })
-  const hashedPassword = await bcrypt.hash(body.password, 12)
-
-  return prisma.user.update({
-    where: {
-      uuid,
-    },
-    data: {
-      emailVerificationAt: new Date().toISOString(),
-      password: hashedPassword,
-    },
-    omit: {
-      password: true,
-    },
-  })
-}
-
 export const updateLanguageSchema = z.object({
   language: z.enum(Language),
 })
@@ -283,14 +137,132 @@ export const updateLanguage = async (
   return user
 }
 
-const updateUserSchema = z.object({
+const updateUserProfileSchema = z.object({
   firstName: z.string(),
   lastName: z.string(),
 })
 
+export type UpdateUserProfileRequestBody = z.infer<
+  typeof updateUserProfileSchema
+>
+
+export const updateUser = async (
+  uuid: string,
+  body: UpdateUserProfileRequestBody,
+) => {
+  updateUserProfileSchema.parse(body)
+
+  return prisma.user.update({
+    where: {
+      uuid,
+    },
+    data: {
+      ...body,
+    },
+  })
+}
+
+export type GetUsersQueryParams = {
+  offset?: number
+  limit?: number
+  search?: string
+}
+
+type GetUsers = (
+  queryParams: GetUsersQueryParams,
+) => Promise<Pagination<UserDTO[]>>
+
+export const getUsersQueryOptions = (
+  queryParams: GetUsersQueryParams,
+): Prisma.UserFindManyArgs => {
+  const search = queryParams.search || ""
+  return {
+    where: {
+      OR: [
+        {
+          email: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+        {
+          firstName: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+        {
+          lastName: {
+            contains: search,
+            mode: "insensitive",
+          },
+        },
+      ],
+    },
+    take: queryParams.limit || 10,
+    skip: queryParams.offset || 0,
+    orderBy: {
+      createdAt: "asc",
+    },
+  }
+}
+
+export const getUsers: GetUsers = async (queryParams) => {
+  const search = queryParams.search || ""
+
+  return {
+    data: await prisma.user.findMany(getUsersQueryOptions(queryParams)),
+    limit: queryParams.limit || 10,
+    offset: queryParams.offset || 0,
+    total: await prisma.user.count({
+      where: {
+        OR: [
+          {
+            email: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+          {
+            firstName: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+          {
+            lastName: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
+        ],
+      },
+    }),
+  }
+}
+
+export const deleteUser = (uuid: string) =>
+  prisma.user.delete({
+    where: {
+      uuid,
+    },
+  })
+
+const updateUserSchema = z.object({
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string(),
+  role: z.enum(UserRole),
+  language: z.enum(Language),
+  locationUuid: z.string(),
+})
+
 export type UpdateUserRequestBody = z.infer<typeof updateUserSchema>
 
-export const updateUser = async (uuid: string, body: UpdateUserRequestBody) => {
+export const updateUserAdmin = async (
+  uuid: string,
+  body: UpdateUserRequestBody,
+) => {
   updateUserSchema.parse(body)
 
   return prisma.user.update({

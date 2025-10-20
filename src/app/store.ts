@@ -14,6 +14,8 @@ import locationTableReducer from "@/components/locations-table/slice"
 import locationsApi from "@/api/locations"
 import editLocationModalReducer from "@/components/locations-table/update-locations-modal/slice"
 import createLocationModalReducer from "@/components/locations-table/create-locations-modal/slice"
+import usersTableReducer from "@/components/users-table/slice"
+import editUserAdminModalReducer from "@/components/users-table/update-user-modal/slice"
 
 const rootReducer = {
   signInSlice: signInReducer,
@@ -27,6 +29,8 @@ const rootReducer = {
   locationTableSlice: locationTableReducer,
   editLocationModalSlice: editLocationModalReducer,
   createLocationModalSlice: createLocationModalReducer,
+  usersTableSlice: usersTableReducer,
+  editUserAdminModalSlice: editUserAdminModalReducer,
   [userApi.reducerPath]: userApi.reducer,
   [newsApi.reducerPath]: newsApi.reducer,
   [uploadApi.reducerPath]: uploadApi.reducer,

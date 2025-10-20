@@ -2,55 +2,43 @@
 
 import Box from "@mui/material/Box"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
-import { useAdminNews } from "@/components/news-table/use-admin-news"
 import { useState } from "react"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { setOffsetToTable, setOrderBy } from "@/components/news-table/slice"
 import { IconButton, TextField, Tooltip } from "@mui/material"
-import { useAppSelector } from "@/hooks/use-app-selector"
 import DeleteIcon from "@mui/icons-material/Delete"
 import EditIcon from "@mui/icons-material/Edit"
-import { useDeleteNews } from "@/components/news-table/use-delete-news"
 import { useGetDateKey } from "@/utils/use-get-date-key"
 import SearchIcon from "@mui/icons-material/Search"
 import { useTranslation } from "@/providers/i18n-provider"
-import { SelectBody, SelectRoot, SelectTrigger } from "@/components/ui/select"
-import { Select } from "@base-ui-components/react/select"
+import { useUsers } from "@/components/users-table/use-users"
+import { setOffsetToTable } from "@/components/users-table/slice"
+import { useDeleteUser } from "@/components/users-table/use-delete-user"
 import {
-  setEditNewsCurrent,
-  setEditNewsModalOpen,
-} from "@/components/news-table/update-news-modal/slice"
-import { UpdateNewsModal } from "@/components/news-table/update-news-modal"
+  setEditUserAdminCurrent,
+  setEditUserAdminModalOpen,
+} from "@/components/users-table/update-user-modal/slice"
+import { UpdateUserAdminModal } from "@/components/users-table/update-user-modal"
 
-export const NewsTable = () => {
+export const UsersTable = () => {
   const dispatch = useAppDispatch()
   const t = useTranslation()
 
-  const locs = useAppSelector((state) => state.locationsSlice.locations)
-  const brothers = useAppSelector((state) => state.locationsSlice.brothers)
-  const locations = brothers ? [...locs, brothers] : locs
-
   const {
-    news,
+    users,
     total,
     limit,
     isFetching,
     refetch,
     handleSearchQueryChange,
     searchQuery,
-    orderBy,
-  } = useAdminNews()
-  const deleteNews = useDeleteNews()
+  } = useUsers()
+  const deleteUser = useDeleteUser()
   const getDateKey = useGetDateKey()
 
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: limit,
   })
-
-  const handleOrderByChange = (newValue: string) => {
-    dispatch(setOrderBy(newValue as "asc" | "desc"))
-  }
 
   const handlePaginationChange = (pagination: {
     page: number
@@ -60,35 +48,43 @@ export const NewsTable = () => {
     dispatch(setOffsetToTable(pagination.page * pagination.pageSize))
   }
 
-  const rows = news.map((news) => ({
-    id: news.uuid,
-    title: news.title,
-    location: locations.find((location) => location.uuid === news.locationUuid)
-      ?.title,
-    date: getDateKey(news.createdAt),
-  }))
-
   const handleEditClicked = (uuid: string) => {
-    dispatch(setEditNewsModalOpen(true))
-    dispatch(setEditNewsCurrent(news.find((n) => n.uuid === uuid) || null))
+    dispatch(setEditUserAdminModalOpen(true))
+    dispatch(
+      setEditUserAdminCurrent(users.find((user) => user.uuid === uuid) || null),
+    )
   }
+
+  const rows = users.map((user) => ({
+    id: user.uuid,
+    fullName: `${user.firstName} ${user.lastName}`,
+    email: user.email,
+    role: user.role,
+    date: getDateKey(user.createdAt),
+  }))
 
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
-      field: "title",
-      headerName: "Title",
+      field: "fullName",
+      headerName: "Full Name",
       flex: 1,
       editable: true,
     },
     {
-      field: "location",
-      headerName: "Location",
-      flex: 1,
+      field: "email",
+      headerName: "Email",
+      width: 250,
       editable: true,
     },
     {
       field: "date",
       headerName: "Date",
+      width: 180,
+      editable: true,
+    },
+    {
+      field: "role",
+      headerName: "Role",
       width: 180,
       editable: true,
     },
@@ -125,7 +121,7 @@ export const NewsTable = () => {
           <Tooltip title="Delete">
             <IconButton
               size="small"
-              onClick={() => deleteNews({ uuid: params.row.id }, refetch)}
+              onClick={() => deleteUser({ uuid: params.row.id }, refetch)}
               sx={{ color: "rgba(0, 0, 0, 0.87)" }}
             >
               <DeleteIcon className={"fill-primary-main"} />
@@ -140,35 +136,6 @@ export const NewsTable = () => {
     <>
       <Box className={"flex flex-col gap-6 [&_*]:!text-black"}>
         <Box className={"flex gap-4"}>
-          <SelectRoot
-            items={[
-              { label: "Новые", value: "desc" },
-              { label: "Старые", value: "asc" },
-            ]}
-            value={orderBy}
-            onValueChange={handleOrderByChange}
-          >
-            <SelectTrigger
-              iconClassName={"fill-primary-main"}
-              className={"border-primary-main h-full border"}
-            />
-            <SelectBody>
-              {[
-                { label: "Новые", value: "desc" },
-                { label: "Старые", value: "asc" },
-              ].map(({ value, label }) => (
-                <Select.Item
-                  key={value}
-                  value={value}
-                  className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
-                >
-                  <Select.ItemText className="font-normal">
-                    {label}
-                  </Select.ItemText>
-                </Select.Item>
-              ))}
-            </SelectBody>
-          </SelectRoot>
           <TextField
             variant="filled"
             size="small"
@@ -237,7 +204,7 @@ export const NewsTable = () => {
           }}
         />
       </Box>
-      <UpdateNewsModal />
+      <UpdateUserAdminModal />
     </>
   )
 }

@@ -1,44 +1,38 @@
 import { ChangeEvent, useEffect } from "react"
 import { useDebounce } from "@/hooks/use-debounce"
 import { useAppSelector } from "@/hooks/use-app-selector"
-import { useGetNewsWithLocationQuery } from "@/api/news"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
+import { useGetUsersQuery } from "@/api/user"
 import {
-  setNewsToTable,
   setOffsetToTable,
   setSearchQueryToTable,
   setTotalToTable,
-} from "@/components/news-table/slice"
-import { UserRole } from "@/generated/prisma"
+  setUsersToTable,
+} from "@/components/users-table/slice"
 
-export function useAdminNews() {
+export function useUsers() {
   const dispatch = useAppDispatch()
 
-  const news = useAppSelector((state) => state.newsTableSlice.news) || []
-  const offset = useAppSelector((state) => state.newsTableSlice.offset)
-  const limit = useAppSelector((state) => state.newsTableSlice.limit)
-  const orderBy = useAppSelector((state) => state.newsTableSlice.orderBy)
-  const total = useAppSelector((state) => state.newsTableSlice.total)
+  const users = useAppSelector((state) => state.usersTableSlice.users) || []
+  const offset = useAppSelector((state) => state.usersTableSlice.offset)
+  const limit = useAppSelector((state) => state.usersTableSlice.limit)
+  const total = useAppSelector((state) => state.usersTableSlice.total)
   const searchQuery = useAppSelector(
-    (state) => state.newsTableSlice.searchQuery,
+    (state) => state.usersTableSlice.searchQuery,
   )
-  const user = useAppSelector((state) => state.userSlice.user)
 
   const debouncedSearchQuery = useDebounce(searchQuery, 500)
 
-  const { data, isFetching, isLoading, refetch } = useGetNewsWithLocationQuery({
+  const { data, isFetching, isLoading, refetch } = useGetUsersQuery({
     search: debouncedSearchQuery,
     offset,
     limit,
-    orderBy,
-    locationUuid:
-      (user?.role === UserRole.EDITOR && user?.locationUuid) || undefined,
   })
 
   useEffect(() => {
     if (data) {
-      const newsData = data.data.data
-      dispatch(setNewsToTable(newsData))
+      const usersData = data.data.data
+      dispatch(setUsersToTable(usersData))
       dispatch(setTotalToTable(data.data.total))
     }
   }, [data, dispatch, offset])
@@ -53,15 +47,14 @@ export function useAdminNews() {
   }
 
   return {
+    users,
     searchQuery,
     handleSearchQueryChange,
-    news,
     isFetching,
     isLoading,
     loadMore,
     total,
     limit,
     refetch,
-    orderBy,
   }
 }

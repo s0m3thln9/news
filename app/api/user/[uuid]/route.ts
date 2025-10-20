@@ -3,38 +3,47 @@ import {
   createRoute,
   errorBoundary,
   jsonBody,
+  requireRole,
 } from "@/server/utils/middleware/compose"
+import { UserRole } from "@/generated/prisma"
 import { handleResponse } from "@/server/utils/handle-response"
 import {
-  getUsers,
+  deleteUser,
   updateUser,
+  updateUserAdmin,
   UpdateUserProfileRequestBody,
+  UpdateUserRequestBody,
 } from "@/server/services/user-service"
 
 /**
  * @swagger
- * /api/user:
- *   get:
- *     summary: Получение пользователей
+ * /api/locations/{uuid}:
+ *   delete:
+ *     summary: Удаление пользователя
  *     tags:
- *       - Auth
+ *       - Locations
+ *     parameters:
+ *       - in: path
+ *         name: uuid
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: UUID пользователя
  *     responses:
  *       200:
- *         description: Пользователи успешно получены
+ *         description: Пользователь успешно удален
+ *       400:
+ *         description: Некорректные данные
  *       500:
  *         description: Внутренняя ошибка сервера
  */
-export const GET = createRoute([errorBoundary()], async ({ queryParams }) => {
-  const offset = Number(queryParams?.offset) || undefined
-  const limit = Number(queryParams?.limit) || undefined
-
-  const users = await getUsers({
-    offset,
-    limit,
-    search: queryParams?.search,
-  })
-  return handleResponse("Пользователи успешно получены", 200, users)
-})
+export const DELETE = createRoute(
+  [errorBoundary(), auth(), requireRole(UserRole.ADMIN)],
+  async ({ params }) => {
+    const deletedUser = await deleteUser(params?.uuid || "")
+    return handleResponse("Пользователь успешно удален", 200, deletedUser)
+  },
+)
 
 /**
  * @swagger
@@ -42,7 +51,7 @@ export const GET = createRoute([errorBoundary()], async ({ queryParams }) => {
  *   patch:
  *     summary: Обновление данных пользователя
  *     tags:
- *       - News
+ *       - Auth
  *     requestBody:
  *       required: true
  *       content:
@@ -58,11 +67,16 @@ export const GET = createRoute([errorBoundary()], async ({ queryParams }) => {
  *         description: Внутренняя ошибка сервера
  */
 export const PATCH = createRoute(
-  [errorBoundary(), auth(), jsonBody<UpdateUserProfileRequestBody>()],
-  async ({ userUuid, body }) => {
-    const updatedUser = await updateUser(
-      userUuid as string,
-      body as UpdateUserProfileRequestBody,
+  [
+    errorBoundary(),
+    auth(),
+    requireRole(UserRole.ADMIN),
+    jsonBody<UpdateUserRequestBody>(),
+  ],
+  async ({ body, params }) => {
+    const updatedUser = await updateUserAdmin(
+      params?.uuid as string,
+      body as UpdateUserRequestBody,
     )
     return handleResponse(
       "Данные пользователя успешно обновлены",

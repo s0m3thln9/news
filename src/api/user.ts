@@ -3,12 +3,15 @@ import { baseQuery } from "@/api/index"
 import { ApiResponse } from "@/types/api-response"
 import { UserDTO } from "@/types/dto/user"
 import {
+  GetUsersQueryParams,
   SignInUserRequestBody,
   SignUpRequestBody,
+  UpdateUserProfileRequestBody,
   UpdateUserRequestBody,
 } from "@/server/services/user-service"
 import { $Enums } from "@/generated/prisma"
 import Language = $Enums.Language
+import { Pagination } from "@/types/dto/pagination"
 
 const userApi = createApi({
   reducerPath: "userApi",
@@ -38,9 +41,38 @@ const userApi = createApi({
         body,
       }),
     }),
-    updateUser: builder.mutation<ApiResponse<UserDTO>, UpdateUserRequestBody>({
+    updateUser: builder.mutation<
+      ApiResponse<UserDTO>,
+      UpdateUserProfileRequestBody
+    >({
       query: (body) => ({
         url: "",
+        method: "PATCH",
+        body,
+      }),
+    }),
+    getUsers: builder.query<
+      ApiResponse<Pagination<UserDTO[]>>,
+      GetUsersQueryParams
+    >({
+      query: (params) => ({
+        url: "",
+        method: "GET",
+        params,
+      }),
+    }),
+    deleteUser: builder.mutation<ApiResponse<UserDTO>, string>({
+      query: (uuid) => ({
+        url: `${uuid}`,
+        method: "DELETE",
+      }),
+    }),
+    updateUserAdmin: builder.mutation<
+      ApiResponse<UserDTO>,
+      { uuid: string; body: UpdateUserRequestBody }
+    >({
+      query: ({ uuid, body }) => ({
+        url: `${uuid}`,
         method: "PATCH",
         body,
       }),
@@ -54,4 +86,7 @@ export const {
   useSignInUserMutation,
   useUpdateLanguageMutation,
   useUpdateUserMutation,
+  useGetUsersQuery,
+  useDeleteUserMutation,
+  useUpdateUserAdminMutation,
 } = userApi

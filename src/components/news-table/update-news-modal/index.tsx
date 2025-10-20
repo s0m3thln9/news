@@ -18,6 +18,7 @@ import { TipTapEditor } from "@/components/create-news-form/tip-tap-editor"
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react"
 import { useUploadFile } from "@/components/create-news-form/upload-file"
 import { flushSync } from "react-dom"
+import { UserRole } from "@/generated/prisma"
 
 export const UpdateNewsModal = () => {
   const dispatch = useAppDispatch()
@@ -29,6 +30,8 @@ export const UpdateNewsModal = () => {
   const currentNews = useAppSelector(
     (state) => state.editNewsModalSlice.currentNews,
   )
+
+  const user = useAppSelector((state) => state.userSlice.user)
 
   const fileInputRef = useRef<HTMLInputElement>(null)
 
@@ -222,15 +225,22 @@ export const UpdateNewsModal = () => {
                       },
                     }}
                   >
-                    {locations.map((location) => (
-                      <MenuItem
-                        key={location.uuid}
-                        value={location.uuid}
-                        className="bg-white text-black hover:bg-gray-100"
-                      >
-                        {location.title}
-                      </MenuItem>
-                    ))}
+                    {locations
+                      .filter(
+                        (location) =>
+                          user?.role === UserRole.ADMIN ||
+                          (user?.role === UserRole.EDITOR &&
+                            location.uuid === user.locationUuid),
+                      )
+                      .map((location) => (
+                        <MenuItem
+                          key={location.uuid}
+                          value={location.uuid}
+                          className="bg-white text-black hover:bg-gray-100"
+                        >
+                          {location.title}
+                        </MenuItem>
+                      ))}
                   </TextField>
                 )}
               />

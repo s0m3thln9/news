@@ -2,7 +2,7 @@ import z from "zod"
 import { prisma } from "@/server/prisma-client"
 import type { Location, Prisma, PrismaPromise } from "@/generated/prisma"
 import { LocationWithNews } from "@/types/dto/location-with-news"
-import { Pagination } from "@/types/dto/Pagination"
+import { Pagination } from "@/types/dto/pagination"
 
 const createLocationSchema = z.object({
   title: z.string().min(1, "Название обязательно"),

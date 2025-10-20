@@ -8,9 +8,10 @@ import { useTranslation } from "@/providers/i18n-provider"
 import { FC, useState, useRef, type ChangeEvent, useCallback } from "react"
 import { flushSync } from "react-dom"
 import { Controller } from "react-hook-form"
-import { Box, Button, TextField, MenuItem, Typography } from "@mui/material"
+import { Box, Button, MenuItem, TextField, Typography } from "@mui/material"
 import { Input } from "@/components/ui/input"
 import { TipTapEditor } from "./tip-tap-editor"
+import { UserRole } from "@/generated/prisma"
 
 export const CreateNewsForm: FC = () => {
   const t = useTranslation()
@@ -18,6 +19,8 @@ export const CreateNewsForm: FC = () => {
   const locs = useAppSelector((state) => state.locationsSlice.locations)
   const brothers = useAppSelector((state) => state.locationsSlice.brothers)
   const locations = brothers ? [...locs, brothers] : locs
+
+  const user = useAppSelector((state) => state.userSlice.user)
 
   const {
     control,
@@ -175,15 +178,22 @@ export const CreateNewsForm: FC = () => {
                   },
                 }}
               >
-                {locations.map((location) => (
-                  <MenuItem
-                    key={location.uuid}
-                    value={location.uuid}
-                    className="bg-white text-black hover:bg-gray-100"
-                  >
-                    {location.title}
-                  </MenuItem>
-                ))}
+                {locations
+                  .filter(
+                    (location) =>
+                      user?.role === UserRole.ADMIN ||
+                      (user?.role === UserRole.EDITOR &&
+                        location.uuid === user.locationUuid),
+                  )
+                  .map((location) => (
+                    <MenuItem
+                      key={location.uuid}
+                      value={location.uuid}
+                      className="bg-white text-black hover:bg-gray-100"
+                    >
+                      {location.title}
+                    </MenuItem>
+                  ))}
               </TextField>
             )}
           />
