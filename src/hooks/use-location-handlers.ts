@@ -33,6 +33,10 @@ export const useLocationHandlers = () => {
   }
 
   const handleLocationSelect = (uuid: string) => {
+    if (uuid === null) {
+      return
+    }
+
     if (
       currentLocation?.uuid === uuid &&
       currentLocation?.uuid !== brothers?.uuid

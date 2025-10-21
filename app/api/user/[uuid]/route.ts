@@ -9,9 +9,7 @@ import { UserRole } from "@/generated/prisma"
 import { handleResponse } from "@/server/utils/handle-response"
 import {
   deleteUser,
-  updateUser,
   updateUserAdmin,
-  UpdateUserProfileRequestBody,
   UpdateUserRequestBody,
 } from "@/server/services/user-service"
 

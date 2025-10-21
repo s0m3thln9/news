@@ -8,6 +8,7 @@ import { Select } from "@base-ui-components/react/select"
 import { useTranslation } from "@/providers/i18n-provider"
 import { SelectBody, SelectRoot, SelectTrigger } from "@/components/ui/select"
 import { useLocationHandlers } from "@/hooks/use-location-handlers"
+import useMediaQuery from "@/hooks/use-media-query"
 
 export const LocationSelect = () => {
   const {
@@ -20,6 +21,8 @@ export const LocationSelect = () => {
 
   const t = useTranslation()
   const pathname = usePathname()
+
+  const isPhone = useMediaQuery("(max-width: 640px)")
 
   const activeTab = (() => {
     if (pathname === "/" || pathname === "/news") return "home"
@@ -40,6 +43,13 @@ export const LocationSelect = () => {
     }
     return currentLocation?.title || placeholder
   }
+
+  const filteredLocations = locations.filter(
+    (location) => location.uuid !== brothers?.uuid,
+  )
+
+  const displayLocations =
+    isPhone && brothers ? [brothers, ...filteredLocations] : filteredLocations
 
   return (
     <Box className="flex self-stretch">
@@ -65,37 +75,33 @@ export const LocationSelect = () => {
         )}
       >
         <SelectRoot
-          items={locations
-            .filter((location) => location.uuid !== brothers?.uuid)
-            .map((location) => ({
-              label: location.title,
-              value: location.uuid,
-            }))}
+          items={filteredLocations.map((location) => ({
+            label: location.title,
+            value: location.uuid,
+          }))}
           value={getSelectValue()}
           onValueChange={handleLocationSelect}
         >
           <SelectTrigger />
           <SelectBody>
-            {locations
-              .filter((location) => location.uuid !== brothers?.uuid)
-              .map(({ uuid, title }) => (
-                <Select.Item
-                  key={uuid}
-                  value={uuid}
-                  className="hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
-                >
-                  <Select.ItemText className="font-normal">
-                    {title}
-                  </Select.ItemText>
-                </Select.Item>
-              ))}
+            {displayLocations.map(({ uuid, title }) => (
+              <Select.Item
+                key={uuid}
+                value={uuid}
+                className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
+              >
+                <Select.ItemText className="font-normal">
+                  {title}
+                </Select.ItemText>
+              </Select.Item>
+            ))}
           </SelectBody>
         </SelectRoot>
       </Box>
       <Button
         onClick={() => handleLocationSelect(brothers?.uuid || "")}
         className={cn(
-          `relative flex items-center rounded-none px-5 font-bold normal-case text-white transition-all duration-300 ease-in-out max-lg:px-2`,
+          `relative flex items-center rounded-none px-5 font-bold text-white normal-case transition-all duration-300 ease-in-out max-lg:px-2 max-sm:hidden`,
           beforeClass,
           activeTab === "brothers"
             ? "bg-primary-main before:opacity-100"

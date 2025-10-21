@@ -235,7 +235,7 @@ export const Header = () => {
               priority
             />
           </Box>
-          <Box className="max-w-2/3 flex items-center max-sm:hidden">
+          <Box className="flex max-w-2/3 items-center max-sm:hidden">
             <Image
               src="/header.svg"
               alt={t("images.headerAlt")}
