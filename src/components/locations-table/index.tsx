@@ -78,26 +78,26 @@ export const LocationsTable = () => {
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: "title",
-      headerName: "Title",
+      headerName: t("locations.title"),
       flex: 1,
       editable: true,
     },
     {
       field: "date",
-      headerName: "Date",
+      headerName: t("common.date"),
       width: 180,
       editable: true,
     },
     {
       field: "edit",
-      headerName: "Edit",
+      headerName: t("common.edit"),
       type: "actions",
       width: 80,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
         <Box sx={{ display: "flex", gap: 1 }}>
-          <Tooltip title="Edit">
+          <Tooltip title={t("common.edit")}>
             <IconButton
               size="small"
               onClick={() => handleEditClicked(params.row.id)}
@@ -111,14 +111,14 @@ export const LocationsTable = () => {
     },
     {
       field: "delete",
-      headerName: "Delete",
+      headerName: t("common.delete"),
       type: "actions",
       width: 80,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
         <Box sx={{ display: "flex", gap: 1 }}>
-          <Tooltip title="Delete">
+          <Tooltip title={t("common.delete")}>
             <IconButton
               size="small"
               onClick={() => deleteLocation({ uuid: params.row.id }, refetch)}
@@ -139,7 +139,7 @@ export const LocationsTable = () => {
         className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
         color="primary"
       >
-        Все разделы
+        {t("locations.allSections")}
       </Typography>
       <Box className={"flex flex-col gap-6 [&_*]:!text-black"}>
         <Box className={"flex gap-4"}>
@@ -199,24 +199,19 @@ export const LocationsTable = () => {
           paginationModel={paginationModel}
           onPaginationModelChange={handlePaginationChange}
           sx={{
-            // Тёмный текст для ячеек
             "& .MuiDataGrid-cell": {
-              color: "rgba(0, 0, 0, 0.87)", // Основной тёмный цвет MUI, или просто 'black'
+              color: "rgba(0, 0, 0, 0.87)",
             },
-            // Тёмный текст для заголовков колонок
             "& .MuiDataGrid-columnHeader": {
               color: "rgba(0, 0, 0, 0.87)",
             },
-            // Тёмный текст для пагинации (нижняя панель)
             "& .MuiDataGrid-toolbarContainer, & .MuiDataGrid-footerContainer": {
               color: "rgba(0, 0, 0, 0.87)",
             },
-            // Если нужно для чекбоксов или других элементов
             "& .MuiCheckbox-root": {
               color: "rgba(0, 0, 0, 0.87)",
             },
-            // Общий корень, если нужно переопределить фон (для светлой таблицы)
-            backgroundColor: "white", // Убедись, что фон светлый
+            backgroundColor: "white",
           }}
         />
       </Box>

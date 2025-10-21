@@ -284,7 +284,7 @@ export const UpdateNewsModal = () => {
             </Box>
             <Box className="flex justify-end gap-4">
               <Button type="button" variant="outlined" onClick={handleClear}>
-                {t("news.clear")}
+                {t("common.clear")}
               </Button>
               <Button type="submit" variant="contained" disabled={!!isLoading}>
                 {t("news.update")}

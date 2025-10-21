@@ -41,11 +41,16 @@
     "logout": "Выйти",
     "profile": "Профиль",
     "recentPost": "Недавний пост",
-    "searchPlaceholder": "Поиск..."
+    "searchPlaceholder": "Поиск...",
+    "date": "Дата",
+    "edit": "Редактировать",
+    "delete": "Удалить",
+    "clear": "Очистить"
   },
   "images": {
     "logoAlt": "Логотип",
-    "headerAlt": "Декоративная картинка"
+    "headerAlt": "Декоративная картинка",
+    "previewAlt": "Превью изображения"
   },
   "notFound": {
     "title": "404",
@@ -67,14 +72,18 @@
   "news": {
     "createNews": "Создать новость",
     "updateNews": "Редактировать новость",
+    "allNews": "Все новости",
     "mainImage": "Основное изображение",
     "section": "Раздел",
+    "location": "Раздел",
     "selectSection": "Выберите раздел",
     "title": "Заголовок",
     "shortDescription": "Краткое описание",
     "fullDescription": "Полное описание",
-    "clear": "Очистить",
+    "sortNewest": "Новые",
+    "sortOldest": "Старые",
     "create": "Создать",
+    "clear": "Очистить",
     "update": "Редактировать",
     "validation": {
       "titleRequired": "Название обязательно",
@@ -89,12 +98,25 @@
     "updateLocation": "Обновить локацию",
     "brothers": "Вести братского народа",
     "title": "Название",
-    "clear": "Очистить",
+    "allSections": "Все разделы",
     "create": "Создать",
+    "clear": "Очистить",
     "update": "Обновить",
     "validation": {
       "titleRequired": "Название обязательно"
     }
+  },
+  "users": {
+    "allUsers": "Все пользователи",
+    "fullName": "Полное имя",
+    "updateUser": "Обновить пользователя",
+    "update": "Обновить",
+    "roleLabel": "Роль",
+    "locationLabel": "Локация",
+    "languageLabel": "Язык",
+    "selectRole": "Выберите роль",
+    "selectLocation": "Выберите локацию",
+    "selectLanguage": "Выберите язык"
   },
   "authExtra": {
     "noAccount": "Нет аккаунта?",

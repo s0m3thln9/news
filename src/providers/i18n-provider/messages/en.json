@@ -12,6 +12,8 @@
     },
     "signUp": {
       "title": "Create new account:",
+      "firstName": "First name",
+      "lastName": "Last name",
       "username": "Username",
       "email": "Email",
       "password": "Password",
@@ -39,11 +41,16 @@
     "logout": "Sign out",
     "profile": "Profile",
     "recentPost": "Recent post",
-    "searchPlaceholder": "Search..."
+    "searchPlaceholder": "Search...",
+    "date": "Date",
+    "edit": "Edit",
+    "delete": "Delete",
+    "clear": "Clear"
   },
   "images": {
     "logoAlt": "Logo",
-    "headerAlt": "Decorative image"
+    "headerAlt": "Decorative image",
+    "previewAlt": "Image preview"
   },
   "notFound": {
     "title": "404",
@@ -65,14 +72,18 @@
   "news": {
     "createNews": "Create news",
     "updateNews": "Update news",
+    "allNews": "All News",
     "mainImage": "Main image",
     "section": "Section",
+    "location": "Location",
     "selectSection": "Select section",
     "title": "Title",
     "shortDescription": "Short description",
     "fullDescription": "Full description",
-    "clear": "Clear",
+    "sortNewest": "Newest first",
+    "sortOldest": "Oldest first",
     "create": "Create",
+    "clear": "Clear",
     "update": "Update",
     "validation": {
       "titleRequired": "Title is required",
@@ -87,12 +98,25 @@
     "updateLocation": "Update location",
     "brothers": "Brotherly people's news",
     "title": "Title",
-    "clear": "Clear",
+    "allSections": "All Sections",
     "create": "Create",
+    "clear": "Clear",
     "update": "Update",
     "validation": {
       "titleRequired": "Title is required"
     }
+  },
+  "users": {
+    "allUsers": "All Users",
+    "fullName": "Full Name",
+    "updateUser": "Update User",
+    "update": "Update",
+    "roleLabel": "Role",
+    "locationLabel": "Location",
+    "languageLabel": "Language",
+    "selectRole": "Select role",
+    "selectLocation": "Select location",
+    "selectLanguage": "Select language"
   },
   "authExtra": {
     "noAccount": "No account?",

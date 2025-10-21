@@ -108,7 +108,7 @@ export const UpdateUserAdminModal = () => {
             className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
             color="primary"
           >
-            {t("locations.updateLocation")}
+            {t("users.updateUser")}
           </Typography>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -117,27 +117,27 @@ export const UpdateUserAdminModal = () => {
             <Input
               {...register("firstName")}
               errorMessage={errors.firstName?.message}
-              label={t("locations.title")}
+              label={t("profile.firstName")}
               className="mb-4"
               fullWidth
             />
             <Input
               {...register("lastName")}
               errorMessage={errors.lastName?.message}
-              label={t("locations.title")}
+              label={t("profile.lastName")}
               className="mb-4"
               fullWidth
             />
             <Input
               {...register("email")}
               errorMessage={errors.email?.message}
-              label={t("locations.title")}
+              label={t("profile.email")}
               className="mb-4"
               fullWidth
             />
             <Box className="mb-4 flex flex-col gap-1">
               <div className="flex items-center justify-between">
-                <Typography>{t("news.section")}</Typography>
+                <Typography>{t("users.roleLabel")}</Typography>
                 {errors.role?.message && (
                   <Typography className={"text-error-main"}>
                     {errors.role?.message}
@@ -154,7 +154,7 @@ export const UpdateUserAdminModal = () => {
                     value={value}
                     variant="standard"
                     fullWidth
-                    placeholder={t("news.selectSection")}
+                    placeholder={t("users.selectRole")}
                     className="border px-2.5 py-2 !text-black"
                     error={!!errors.role}
                     slotProps={{
@@ -187,7 +187,7 @@ export const UpdateUserAdminModal = () => {
             {selectedRole === UserRole.EDITOR && (
               <Box className="mb-4 flex flex-col gap-1">
                 <div className="flex items-center justify-between">
-                  <Typography>{t("news.section")}</Typography>
+                  <Typography>{t("users.locationLabel")}</Typography>
                   {errors.locationUuid?.message && (
                     <Typography className={"text-error-main"}>
                       {errors.locationUuid?.message}
@@ -204,7 +204,7 @@ export const UpdateUserAdminModal = () => {
                       value={value}
                       variant="standard"
                       fullWidth
-                      placeholder={t("news.selectSection")}
+                      placeholder={t("users.selectLocation")}
                       className="border px-2.5 py-2 !text-black"
                       error={!!errors.locationUuid}
                       slotProps={{
@@ -236,7 +236,7 @@ export const UpdateUserAdminModal = () => {
             )}
             <Box className="mb-4 flex flex-col gap-1">
               <div className="flex items-center justify-between">
-                <Typography>{t("news.section")}</Typography>
+                <Typography>{t("users.languageLabel")}</Typography>
                 {errors.language?.message && (
                   <Typography className={"text-error-main"}>
                     {errors.language.message}
@@ -253,7 +253,7 @@ export const UpdateUserAdminModal = () => {
                     value={value}
                     variant="standard"
                     fullWidth
-                    placeholder={t("news.selectSection")}
+                    placeholder={t("users.selectLanguage")}
                     className="border px-2.5 py-2 !text-black"
                     error={!!errors.language}
                     slotProps={{
@@ -289,7 +289,7 @@ export const UpdateUserAdminModal = () => {
                 className={"flex-1"}
                 onClick={handleClear}
               >
-                {t("locations.clear")}
+                {t("common.clear")}
               </Button>
               <Button
                 type="submit"
@@ -297,7 +297,7 @@ export const UpdateUserAdminModal = () => {
                 className={"flex-1"}
                 disabled={!!isLoading}
               >
-                {t("locations.update")}
+                {t("users.update")}
               </Button>
             </Box>
           </form>

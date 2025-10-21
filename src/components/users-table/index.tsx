@@ -4,7 +4,7 @@ import Box from "@mui/material/Box"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { useState } from "react"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { IconButton, TextField, Tooltip } from "@mui/material"
+import { IconButton, TextField, Tooltip, Typography } from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import EditIcon from "@mui/icons-material/Edit"
 import { useGetDateKey } from "@/utils/use-get-date-key"
@@ -66,38 +66,38 @@ export const UsersTable = () => {
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: "fullName",
-      headerName: "Full Name",
+      headerName: t("users.fullName"),
       flex: 1,
       editable: true,
     },
     {
       field: "email",
-      headerName: "Email",
+      headerName: t("profile.email"),
       width: 250,
       editable: true,
     },
     {
       field: "date",
-      headerName: "Date",
+      headerName: t("common.date"),
       width: 180,
       editable: true,
     },
     {
       field: "role",
-      headerName: "Role",
+      headerName: t("profile.role"),
       width: 180,
       editable: true,
     },
     {
       field: "edit",
-      headerName: "Edit",
+      headerName: t("common.edit"),
       type: "actions",
       width: 80,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
         <Box sx={{ display: "flex", gap: 1 }}>
-          <Tooltip title="Edit">
+          <Tooltip title={t("common.edit")}>
             <IconButton
               size="small"
               onClick={() => handleEditClicked(params.row.id)}
@@ -111,14 +111,14 @@ export const UsersTable = () => {
     },
     {
       field: "delete",
-      headerName: "Delete",
+      headerName: t("common.delete"),
       type: "actions",
       width: 80,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
         <Box sx={{ display: "flex", gap: 1 }}>
-          <Tooltip title="Delete">
+          <Tooltip title={t("common.delete")}>
             <IconButton
               size="small"
               onClick={() => deleteUser({ uuid: params.row.id }, refetch)}
@@ -134,6 +134,13 @@ export const UsersTable = () => {
 
   return (
     <>
+      <Typography
+        variant="h5"
+        className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
+        color="primary"
+      >
+        {t("users.allUsers")}
+      </Typography>
       <Box className={"flex flex-col gap-6 [&_*]:!text-black"}>
         <Box className={"flex gap-4"}>
           <TextField
@@ -183,24 +190,19 @@ export const UsersTable = () => {
           paginationModel={paginationModel}
           onPaginationModelChange={handlePaginationChange}
           sx={{
-            // Тёмный текст для ячеек
             "& .MuiDataGrid-cell": {
-              color: "rgba(0, 0, 0, 0.87)", // Основной тёмный цвет MUI, или просто 'black'
+              color: "rgba(0, 0, 0, 0.87)",
             },
-            // Тёмный текст для заголовков колонок
             "& .MuiDataGrid-columnHeader": {
               color: "rgba(0, 0, 0, 0.87)",
             },
-            // Тёмный текст для пагинации (нижняя панель)
             "& .MuiDataGrid-toolbarContainer, & .MuiDataGrid-footerContainer": {
               color: "rgba(0, 0, 0, 0.87)",
             },
-            // Если нужно для чекбоксов или других элементов
             "& .MuiCheckbox-root": {
               color: "rgba(0, 0, 0, 0.87)",
             },
-            // Общий корень, если нужно переопределить фон (для светлой таблицы)
-            backgroundColor: "white", // Убедись, что фон светлый
+            backgroundColor: "white",
           }}
         />
       </Box>

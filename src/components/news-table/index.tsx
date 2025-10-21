@@ -60,12 +60,13 @@ export const NewsTable = () => {
     dispatch(setOffsetToTable(pagination.page * pagination.pageSize))
   }
 
-  const rows = news.map((news) => ({
-    id: news.uuid,
-    title: news.title,
-    location: locations.find((location) => location.uuid === news.locationUuid)
-      ?.title,
-    date: getDateKey(news.createdAt),
+  const rows = news.map((newsItem) => ({
+    id: newsItem.uuid,
+    title: newsItem.title,
+    location: locations.find(
+      (location) => location.uuid === newsItem.locationUuid,
+    )?.title,
+    date: getDateKey(newsItem.createdAt),
   }))
 
   const handleEditClicked = (uuid: string) => {
@@ -76,32 +77,32 @@ export const NewsTable = () => {
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: "title",
-      headerName: "Title",
+      headerName: t("news.title"),
       flex: 1,
       editable: true,
     },
     {
       field: "location",
-      headerName: "Location",
+      headerName: t("news.location"),
       flex: 1,
       editable: true,
     },
     {
       field: "date",
-      headerName: "Date",
+      headerName: t("common.date"),
       width: 180,
       editable: true,
     },
     {
       field: "edit",
-      headerName: "Edit",
+      headerName: t("common.edit"),
       type: "actions",
       width: 80,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
         <Box sx={{ display: "flex", gap: 1 }}>
-          <Tooltip title="Edit">
+          <Tooltip title={t("common.edit")}>
             <IconButton
               size="small"
               onClick={() => handleEditClicked(params.row.id)}
@@ -115,14 +116,14 @@ export const NewsTable = () => {
     },
     {
       field: "delete",
-      headerName: "Delete",
+      headerName: t("common.delete"),
       type: "actions",
       width: 80,
       sortable: false,
       filterable: false,
       renderCell: (params) => (
         <Box sx={{ display: "flex", gap: 1 }}>
-          <Tooltip title="Delete">
+          <Tooltip title={t("common.delete")}>
             <IconButton
               size="small"
               onClick={() => deleteNews({ uuid: params.row.id }, refetch)}
@@ -136,6 +137,11 @@ export const NewsTable = () => {
     },
   ]
 
+  const sortOptions = [
+    { label: t("news.sortNewest"), value: "desc" },
+    { label: t("news.sortOldest"), value: "asc" },
+  ]
+
   return (
     <>
       <Typography
@@ -143,15 +149,12 @@ export const NewsTable = () => {
         className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
         color="primary"
       >
-        Все новости
+        {t("news.allNews")}
       </Typography>
       <Box className={"mt-10 flex flex-col gap-6 [&_*]:!text-black"}>
         <Box className={"flex gap-4"}>
           <SelectRoot
-            items={[
-              { label: "Новые", value: "desc" },
-              { label: "Старые", value: "asc" },
-            ]}
+            items={sortOptions}
             value={orderBy}
             onValueChange={handleOrderByChange}
           >
@@ -160,10 +163,7 @@ export const NewsTable = () => {
               className={"border-primary-main h-full border"}
             />
             <SelectBody>
-              {[
-                { label: "Новые", value: "desc" },
-                { label: "Старые", value: "asc" },
-              ].map(({ value, label }) => (
+              {sortOptions.map(({ value, label }) => (
                 <Select.Item
                   key={value}
                   value={value}
@@ -223,24 +223,19 @@ export const NewsTable = () => {
           paginationModel={paginationModel}
           onPaginationModelChange={handlePaginationChange}
           sx={{
-            // Тёмный текст для ячеек
             "& .MuiDataGrid-cell": {
-              color: "rgba(0, 0, 0, 0.87)", // Основной тёмный цвет MUI, или просто 'black'
+              color: "rgba(0, 0, 0, 0.87)",
             },
-            // Тёмный текст для заголовков колонок
             "& .MuiDataGrid-columnHeader": {
               color: "rgba(0, 0, 0, 0.87)",
             },
-            // Тёмный текст для пагинации (нижняя панель)
             "& .MuiDataGrid-toolbarContainer, & .MuiDataGrid-footerContainer": {
               color: "rgba(0, 0, 0, 0.87)",
             },
-            // Если нужно для чекбоксов или других элементов
             "& .MuiCheckbox-root": {
               color: "rgba(0, 0, 0, 0.87)",
             },
-            // Общий корень, если нужно переопределить фон (для светлой таблицы)
-            backgroundColor: "white", // Убедись, что фон светлый
+            backgroundColor: "white",
           }}
         />
       </Box>
