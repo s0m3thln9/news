@@ -6,7 +6,7 @@ import { useAdminNews } from "@/components/news-table/use-admin-news"
 import { useState } from "react"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { setOffsetToTable, setOrderBy } from "@/components/news-table/slice"
-import { IconButton, TextField, Tooltip } from "@mui/material"
+import { IconButton, TextField, Tooltip, Typography } from "@mui/material"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import DeleteIcon from "@mui/icons-material/Delete"
 import EditIcon from "@mui/icons-material/Edit"
@@ -138,7 +138,14 @@ export const NewsTable = () => {
 
   return (
     <>
-      <Box className={"flex flex-col gap-6 [&_*]:!text-black"}>
+      <Typography
+        variant="h5"
+        className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
+        color="primary"
+      >
+        Все новости
+      </Typography>
+      <Box className={"mt-10 flex flex-col gap-6 [&_*]:!text-black"}>
         <Box className={"flex gap-4"}>
           <SelectRoot
             items={[
@@ -160,7 +167,7 @@ export const NewsTable = () => {
                 <Select.Item
                   key={value}
                   value={value}
-                  className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
+                  className="hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
                 >
                   <Select.ItemText className="font-normal">
                     {label}

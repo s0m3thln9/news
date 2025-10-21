@@ -4,7 +4,13 @@ import Box from "@mui/material/Box"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { useState } from "react"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { Button, IconButton, TextField, Tooltip } from "@mui/material"
+import {
+  Button,
+  IconButton,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material"
 import DeleteIcon from "@mui/icons-material/Delete"
 import EditIcon from "@mui/icons-material/Edit"
 import { useGetDateKey } from "@/utils/use-get-date-key"
@@ -128,6 +134,13 @@ export const LocationsTable = () => {
 
   return (
     <>
+      <Typography
+        variant="h5"
+        className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
+        color="primary"
+      >
+        Все разделы
+      </Typography>
       <Box className={"flex flex-col gap-6 [&_*]:!text-black"}>
         <Box className={"flex gap-4"}>
           <TextField
@@ -160,7 +173,9 @@ export const LocationsTable = () => {
           <Button
             onClick={handleCreateClicked}
             variant={"contained"}
-            sx={{ color: "white" }}
+            style={{
+              color: "#F8FAFF !important",
+            }}
           >
             {t("locations.createLocation")}
           </Button>

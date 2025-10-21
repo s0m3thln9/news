@@ -26,7 +26,7 @@ export const SelectTrigger: FC<SelectTriggerProps> = ({
     >
       <Select.Value
         className={cn(
-          "text-base font-bold text-white normal-case",
+          "text-base font-bold normal-case text-white",
           valueClassName,
         )}
       />
