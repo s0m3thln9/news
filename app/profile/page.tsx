@@ -14,11 +14,11 @@ export default function ProfilePage() {
 
   return (
     <Container maxWidth="xl" className="px-2">
-      <Box className="flex gap-5 max-lg:flex-col lg:gap-10">
-        <Box>
+      <Box className="flex gap-5 max-xl:flex-col xl:gap-10">
+        <Box className="max-xl:self-center">
           <ProfileForm />
         </Box>
-        <Box className="flex grow flex-col gap-8">
+        <Box className="flex flex-col gap-8">
           {(userRole === UserRole.ADMIN || userRole === UserRole.EDITOR) && (
             <CreateNewsForm />
           )}
