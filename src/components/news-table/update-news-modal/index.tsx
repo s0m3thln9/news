@@ -132,12 +132,12 @@ export const UpdateNewsModal = () => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
+        className="h-[100dvh] w-full overflow-y-auto xl:w-[1024px]"
         sx={{
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 1024,
           bgcolor: "background.paper",
           borderRadius: "5px",
           boxShadow: 24,
@@ -169,7 +169,7 @@ export const UpdateNewsModal = () => {
               )}
               <label
                 htmlFor="file-upload"
-                className="file:border-primary-main text-secondary-main file:text-primary-main border-primary-main inline-flex min-w-96 cursor-pointer items-center justify-center rounded border bg-white px-8 py-2 font-[Inter] text-sm font-bold uppercase transition-colors hover:bg-gray-50"
+                className="file:border-primary-main text-secondary-main file:text-primary-main border-primary-main inline-flex w-full max-w-96 cursor-pointer items-center justify-center rounded border bg-white px-8 py-2 font-[Inter] text-sm font-bold uppercase transition-colors hover:bg-gray-50"
               >
                 {t("editor.labels.selectImage")}{" "}
               </label>

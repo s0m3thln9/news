@@ -86,12 +86,12 @@ export const UpdateUserAdminModal = () => {
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
+        className="h-[100dvh] w-full overflow-y-auto sm:w-[540px]"
         sx={{
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          width: 540,
           bgcolor: "background.paper",
           borderRadius: "5px",
           boxShadow: 24,
