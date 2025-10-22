@@ -34,7 +34,7 @@ export const LastNewsItem: FC<LastNewsItemProps> = ({ news, className }) => {
             <Typography
               variant="h5"
               gutterBottom
-              className="line-clamp-2 break-words font-bold leading-tight"
+              className="line-clamp-2 leading-tight font-bold break-words"
             >
               {news?.title}
             </Typography>

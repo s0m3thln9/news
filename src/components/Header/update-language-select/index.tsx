@@ -4,7 +4,7 @@ import { useAppSelector } from "@/hooks/use-app-selector"
 import { FormControl, MenuItem, Select } from "@mui/material"
 import { useEffect, useState } from "react"
 import { Language } from "@/generated/prisma"
-import { useUpdateLanguage } from "@/components/Header/update-language-select/use-update-language"
+import { useUpdateLanguage } from "@/components/header/update-language-select/use-update-language"
 
 export const UpdateLanguageSelect = ({ color }: { color?: string }) => {
   const initialLanguage = useAppSelector((state) => state.userSlice.language)
