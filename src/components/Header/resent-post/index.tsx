@@ -1,6 +1,6 @@
 import { Button } from "@mui/material"
 import { useTranslation } from "@/providers/i18n-provider"
-import { useGetResentPostUuid } from "@/components/header/resent-post/use-get-resent-post-uuid"
+import { useGetResentPostUuid } from "@/components/Header/resent-post/use-get-resent-post-uuid"
 
 export const ResentPost = () => {
   const t = useTranslation()

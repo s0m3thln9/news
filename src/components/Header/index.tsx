@@ -27,10 +27,10 @@ import MenuIcon from "@mui/icons-material/Menu"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { logOut } from "@/features/user/slice"
 import { useTranslation } from "@/providers/i18n-provider"
-import { ResentPost } from "@/components/header/resent-post"
-import { UpdateLanguageSelect } from "@/components/header/update-language-select"
-import { LocationSelect } from "@/components/header/location-select"
-import { NewsSearch } from "@/components/header/news-search"
+import { ResentPost } from "@/components/Header/resent-post"
+import { UpdateLanguageSelect } from "@/components/Header/update-language-select"
+import { LocationSelect } from "@/components/Header/location-select"
+import { NewsSearch } from "@/components/Header/news-search"
 
 export const Header = () => {
   const router = useRouter()
