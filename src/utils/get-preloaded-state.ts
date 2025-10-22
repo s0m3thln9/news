@@ -96,15 +96,17 @@ const getUserUuid = async (
   cookiesObj: ReadonlyRequestCookies,
 ): Promise<string | null> => {
   const jwt = cookiesObj.get("jwt")?.value
+  const jwtVercel = cookiesObj.get("_vercel_jwt")?.value
 
   console.log("jwt", jwt)
+  console.log("jwtVercel", jwtVercel)
 
-  if (!jwt) {
+  if (!jwt || !jwtVercel) {
     return null
   }
 
   try {
-    return verify(jwt, process.env.JWT_SECRET!) as string
+    return verify(jwtVercel, process.env.JWT_SECRET!) as string
   } catch {
     return null
   }
