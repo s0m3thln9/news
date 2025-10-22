@@ -8,13 +8,14 @@ import { RootState } from "@/app/store"
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
 import { Language } from "@/generated/prisma"
 import { Pagination } from "@/types/dto/pagination"
-
-const jwtModule = await import("jsonwebtoken")
+import { verify } from "jsonwebtoken"
 
 export type PreloadedState = Partial<RootState>
 
 export const getPreloadedState = async (): Promise<PreloadedState> => {
   const userUuid = await getUserUuid(await cookies())
+
+  console.log(userUuid)
 
   const headersList = await headers()
 
@@ -93,12 +94,14 @@ const getUserUuid = async (
 ): Promise<string | null> => {
   const jwt = cookiesObj.get("jwt")?.value
 
+  console.log(jwt)
+
   if (!jwt) {
     return null
   }
 
   try {
-    return jwtModule.default.verify(jwt, process.env.JWT_SECRET!) as string
+    return verify(jwt, process.env.JWT_SECRET!) as string
   } catch {
     return null
   }
