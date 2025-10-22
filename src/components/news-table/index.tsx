@@ -152,7 +152,7 @@ export const NewsTable = () => {
         {t("news.allNews")}
       </Typography>
       <Box className={"mt-10 flex flex-col gap-6 [&_*]:!text-black"}>
-        <Box className={"flex gap-4"}>
+        <Box className={"flex items-stretch gap-4"}>
           <SelectRoot
             items={sortOptions}
             value={orderBy}
@@ -160,14 +160,14 @@ export const NewsTable = () => {
           >
             <SelectTrigger
               iconClassName={"fill-primary-main"}
-              className={"border-primary-main h-full border"}
+              className={"border-primary-main border"}
             />
             <SelectBody>
               {sortOptions.map(({ value, label }) => (
                 <Select.Item
                   key={value}
                   value={value}
-                  className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
+                  className="hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
                 >
                   <Select.ItemText className="font-normal">
                     {label}

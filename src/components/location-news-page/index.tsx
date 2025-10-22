@@ -2,7 +2,7 @@
 
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { FC, useEffect } from "react"
-import { Box, Grid, Button, Container, Typography } from "@mui/material"
+import { Button, Container, Typography } from "@mui/material"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import {
   setCurrentLocation,
@@ -42,7 +42,7 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
 
   return (
     <Container maxWidth="xl" className="px-2">
-      <Grid container className="w-full flex-col gap-2.5">
+      <div className="flex w-full flex-col gap-2.5">
         <Typography
           variant="h5"
           className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
@@ -50,13 +50,13 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
         >
           {location?.title}
         </Typography>
-        <Box className="mt-10 flex flex-col gap-2.5">
+        <div className="mt-10 flex flex-col gap-2.5">
           {!isLoading && newsList.length === 0 ? (
             <span>{t("common.noNews")}</span>
           ) : (
             newsList.map((n: NewsDTO) => <NewsListItem news={n} key={n.uuid} />)
           )}
-        </Box>
+        </div>
         {isLoading ? (
           <span>{t("common.loading")}</span>
         ) : (
@@ -71,7 +71,7 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
             </Button>
           )
         )}
-      </Grid>
+      </div>
     </Container>
   )
 }

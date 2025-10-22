@@ -94,7 +94,7 @@
     }
   },
   "locations": {
-    "createLocation": "Создать локацию",
+    "createLocation": "Создать",
     "updateLocation": "Обновить локацию",
     "brothers": "Вести братского народа",
     "title": "Название",

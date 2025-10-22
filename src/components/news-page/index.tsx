@@ -40,7 +40,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
           <ArrowLeftIcon />
           <span>{t("common.back")}</span>
         </div>
-        <h3 className="line-clamp-2 text-[32px] font-bold max-lg:text-xl">
+        <h3 className="line-clamp-2 overflow-hidden break-words text-[32px] font-bold max-lg:text-xl">
           {news.title}
         </h3>
         <img
@@ -53,7 +53,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
           <span>{getDateKey(news.createdAt)}</span>
         </div>
         <div
-          className="tiptap flex flex-col gap-10"
+          className="tiptap flex flex-col gap-10 overflow-hidden break-words"
           dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(news.content) }}
         />
       </Box>

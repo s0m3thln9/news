@@ -2,6 +2,7 @@
 
 import { useCreateNewsForm } from "@/components/create-news-form/create-news-form"
 import { useCreateNewsSubmit } from "@/components/create-news-form/create-news-submit"
+import type { CreateNewsFormData } from "@/components/create-news-form/schema"
 import { useUploadFile } from "@/components/create-news-form/upload-file"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { useTranslation } from "@/providers/i18n-provider"
@@ -77,6 +78,15 @@ export const CreateNewsForm: FC = () => {
     if (fileInputRef.current) fileInputRef.current.value = ""
   }
 
+  const submitHandler = async (data: CreateNewsFormData) => {
+    try {
+      await onSubmit(data)
+      handleClear()
+    } catch (error) {
+      console.error("Ошибка при создании новости:", error)
+    }
+  }
+
   const {
     ref: formRef,
     onChange: formOnChange,
@@ -110,7 +120,7 @@ export const CreateNewsForm: FC = () => {
         {t("news.createNews")}
       </Typography>
       <form
-        onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(submitHandler)}
         className="border-secondary-main mt-10 border-4 p-10"
       >
         <div className="mb-4">

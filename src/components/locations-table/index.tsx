@@ -141,7 +141,7 @@ export const LocationsTable = () => {
       >
         {t("locations.allSections")}
       </Typography>
-      <Box className={"flex flex-col gap-6 [&_*]:!text-black"}>
+      <Box className={"flex flex-col gap-6"}>
         <Box className={"flex gap-4"}>
           <TextField
             variant="filled"
@@ -149,7 +149,7 @@ export const LocationsTable = () => {
             placeholder={t("common.searchPlaceholder")}
             value={searchQuery}
             onChange={handleSearchQueryChange}
-            className="border-primary-main rounded-none border bg-white text-sm max-lg:w-full"
+            className="border-primary-main rounded-none border bg-white text-sm max-lg:w-full [&_*]:!text-black"
             sx={{
               width: 300,
               "& .MuiInputBase-input": {
@@ -198,6 +198,7 @@ export const LocationsTable = () => {
           rowCount={total}
           paginationModel={paginationModel}
           onPaginationModelChange={handlePaginationChange}
+          className="[&_*]:!text-black"
           sx={{
             "& .MuiDataGrid-cell": {
               color: "rgba(0, 0, 0, 0.87)",
