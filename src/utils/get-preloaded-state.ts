@@ -13,9 +13,12 @@ import { verify } from "jsonwebtoken"
 export type PreloadedState = Partial<RootState>
 
 export const getPreloadedState = async (): Promise<PreloadedState> => {
-  const userUuid = await getUserUuid(await cookies())
+  const cookiesObj = await cookies()
+  console.log("cookiesObj", cookiesObj)
 
-  console.log(userUuid)
+  const userUuid = await getUserUuid(cookiesObj)
+
+  console.log("userUuid", userUuid)
 
   const headersList = await headers()
 
@@ -94,7 +97,7 @@ const getUserUuid = async (
 ): Promise<string | null> => {
   const jwt = cookiesObj.get("jwt")?.value
 
-  console.log(jwt)
+  console.log("jwt", jwt)
 
   if (!jwt) {
     return null

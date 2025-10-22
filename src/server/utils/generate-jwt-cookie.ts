@@ -7,9 +7,10 @@ const generateJwtToken = (uuid: string) => {
 
 export const generateJwtCookie = (uuid: string) => {
   return serialize("jwt", generateJwtToken(uuid), {
-    secure: false,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
     sameSite: "strict",
     path: "/",
-    maxAge: 7 * 24 * 60 * 60, // 7 дней
+    maxAge: 7 * 24 * 60 * 60,
   })
 }
