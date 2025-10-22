@@ -1,5 +1,4 @@
 import { Footer } from "@/components/footer"
-import { Header } from "@/components/header"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
@@ -7,6 +6,7 @@ import "./globals.css"
 import type { ReactNode } from "react"
 import { getPreloadedState } from "@/utils/get-preloaded-state"
 import { Providers } from "@/app/providers"
+import { Header } from "@/components/Header"
 
 const inter = Inter({
   variable: "--font-inter",

@@ -48,14 +48,14 @@ const PinnedNews: FC<PinnedNewsProps> = ({ pinnedNews }) => {
                   <Typography
                     variant="h5"
                     gutterBottom
-                    className="line-clamp-3 leading-tight font-bold break-words"
+                    className="line-clamp-3 break-words font-bold leading-tight"
                   >
                     {pinnedNewsItem.title}
                   </Typography>
                   <Typography
                     variant="body1"
                     gutterBottom
-                    className="line-clamp-3 leading-tight break-words"
+                    className="line-clamp-3 break-words leading-tight"
                   >
                     {pinnedNewsItem.description}
                   </Typography>

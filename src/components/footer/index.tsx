@@ -112,12 +112,12 @@ export const Footer = () => {
           </Grid>
           <Grid
             size={{ xs: 12, md: 4 }}
-            className="flex flex-col [900px]:items-end"
+            className="[900px]:items-end flex flex-col"
             sx={{}}
           >
             <Typography
               variant="subtitle1"
-              className="text-primary-main mb-2 font-bold [900px]:text-right"
+              className="text-primary-main [900px]:text-right mb-2 font-bold"
             >
               {t("footer.socialNetworks")}
             </Typography>
@@ -165,7 +165,7 @@ export const Footer = () => {
                   handleLocationSelect(location.uuid)
                   handleClose()
                 }}
-                className="text-text-secondary hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
+                className="text-text-secondary hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
               >
                 {location.title || t("footer.universityFallback")}
               </MenuItem>

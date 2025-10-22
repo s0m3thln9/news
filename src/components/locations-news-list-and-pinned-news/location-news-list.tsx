@@ -64,7 +64,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                 <Typography
                   variant="h5"
                   gutterBottom
-                  className="line-clamp-2 min-h-[3.6rem] leading-tight font-bold break-words"
+                  className="line-clamp-2 min-h-[3.6rem] break-words font-bold leading-tight"
                   sx={{
                     color: "common.black",
                   }}
@@ -105,7 +105,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                   />
                   <Chip
                     size="small"
-                    label={"14 октября"}
+                    label={getDateKey(featuredNews?.createdAt)}
                     color="primary"
                     variant="outlined"
                     sx={{ color: "common.black" }}
@@ -114,14 +114,14 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                 </Box>
                 <Typography
                   variant="subtitle1"
-                  className="mt-1 line-clamp-2 min-h-[2.5rem] leading-tight font-bold break-words"
+                  className="mt-1 line-clamp-2 min-h-[2.5rem] break-words font-bold leading-tight"
                   sx={{ color: "common.black" }}
                 >
                   {featuredNews?.title}
                 </Typography>
                 <Typography
                   variant="body2"
-                  className="mt-1 line-clamp-3 min-h-[3.5rem] leading-tight break-words"
+                  className="mt-1 line-clamp-3 min-h-[3.5rem] break-words leading-tight"
                   sx={{ color: "common.black" }}
                 >
                   {featuredNews?.description}
@@ -157,14 +157,14 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                   </Box>
                   <Typography
                     variant="subtitle1"
-                    className="mt-1 line-clamp-2 min-h-[2.5rem] leading-tight font-bold break-words"
+                    className="mt-1 line-clamp-2 min-h-[2.5rem] break-words font-bold leading-tight"
                     sx={{ color: "common.black" }}
                   >
                     {news.title}
                   </Typography>
                   <Typography
                     variant="body2"
-                    className="mt-1 line-clamp-3 min-h-[3.5rem] leading-tight break-words"
+                    className="mt-1 line-clamp-3 min-h-[3.5rem] break-words leading-tight"
                     sx={{ color: "common.black" }}
                   >
                     {news.description}
