@@ -95,18 +95,18 @@ const getLocationsData = async (pathname: string | null) => {
 const getUserUuid = async (
   cookiesObj: ReadonlyRequestCookies,
 ): Promise<string | null> => {
-  const jwt = cookiesObj.get("jwt")?.value
-  const jwtVercel = cookiesObj.get("_vercel_jwt")?.value
+  const cookieName =
+    process.env.NODE_ENV === "production" ? "__Secure-jwt" : "jwt"
+  const jwt = cookiesObj.get(cookieName)?.value
 
   console.log("jwt", jwt)
-  console.log("jwtVercel", jwtVercel)
 
-  if (!jwt || !jwtVercel) {
+  if (!jwt) {
     return null
   }
 
   try {
-    return verify(jwtVercel, process.env.JWT_SECRET!) as string
+    return verify(jwt, process.env.JWT_SECRET!) as string
   } catch {
     return null
   }
