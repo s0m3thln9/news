@@ -91,7 +91,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
               onClick={() => router.push(`/${featuredNews?.uuid}`)}
             >
               <CardMedia
-                className="aspect-[3/2] w-[45%]"
+                className="aspect-[3/2] w-[45%] shrink-0"
                 image={
                   process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.images[0]
                 }
@@ -136,7 +136,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
                 onClick={() => router.push(`/${news.uuid}`)}
               >
                 <CardMedia
-                  className="aspect-[3/2] w-[45%]"
+                  className="aspect-[3/2] w-[45%] shrink-0"
                   image={process.env.NEXT_PUBLIC_UPLOADS + news.images[0]}
                   title={featuredNews.title}
                 />
