@@ -76,7 +76,6 @@ export const UpdateNewsModal = () => {
       const url = URL.createObjectURL(file)
       setPreviewUrl(url)
       upload({ image: file }).then((data) => {
-        console.log(data)
         setValue("images", [data?.public_id || ""], { shouldValidate: true })
       })
     }
