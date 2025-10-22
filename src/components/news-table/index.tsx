@@ -167,7 +167,7 @@ export const NewsTable = () => {
                 <Select.Item
                   key={value}
                   value={value}
-                  className="hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
+                  className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
                 >
                   <Select.ItemText className="font-normal">
                     {label}
