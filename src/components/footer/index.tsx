@@ -19,7 +19,6 @@ import {
 } from "@mui/material"
 import Image from "next/image"
 import { useState, MouseEvent } from "react"
-
 export const Footer = () => {
   const t = useTranslation()
   const { locations, brothers, handleLocationSelect, handleHomeClick } =
@@ -41,7 +40,7 @@ export const Footer = () => {
     <Box className="bg-secondary-main py-8">
       <Container maxWidth="xl" className="px-2">
         <Grid container spacing={4} columns={12} className="px-6">
-          <Grid size={{ xs: 12, md: 4 }}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Image
               src="/logo2.svg"
               alt={t("images.logoAlt")}
@@ -50,7 +49,7 @@ export const Footer = () => {
               priority
             />
           </Grid>
-          <Grid size={{ xs: 12, md: 4 }}>
+          <Grid size={{ xs: 12, md: 3 }}>
             <Typography
               variant="subtitle1"
               className="text-primary-main mb-2 font-bold"
@@ -111,7 +110,7 @@ export const Footer = () => {
             </List>
           </Grid>
           <Grid
-            size={{ xs: 12, md: 4 }}
+            size={{ xs: 12, md: 3 }}
             className="flex flex-col [900px]:items-end"
             sx={{}}
           >
@@ -133,6 +132,16 @@ export const Footer = () => {
                 </IconButton>
               </Link>
             </Box>
+          </Grid>
+
+          <Grid size={{ xs: 12, md: 3 }}>
+            <Image
+              src="/flag2.png"
+              alt={t("images.headerAlt")}
+              width={766}
+              height={80}
+              className={"h-20 w-auto"}
+            />
           </Grid>
         </Grid>
       </Container>

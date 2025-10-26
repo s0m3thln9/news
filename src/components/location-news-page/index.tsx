@@ -41,7 +41,7 @@ export const LocationNewsPage: FC<LocationNewsPageProps> = ({
   }, [dispatch, location, news.data, news.total])
 
   return (
-    <Container maxWidth="xl" className="px-2">
+    <Container maxWidth="xl" className="bg-[rgba(255,255,255,0.9)] px-2">
       <div className="flex w-full flex-col gap-2.5">
         <Typography
           variant="h5"

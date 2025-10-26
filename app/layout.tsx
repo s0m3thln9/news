@@ -2,11 +2,13 @@ import { Footer } from "@/components/footer"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
-
+import skorina from "../public/skorina.png"
+import flag from "../public/flag.png"
 import type { ReactNode } from "react"
 import { getPreloadedState } from "@/utils/get-preloaded-state"
 import { Providers } from "@/app/providers"
 import { Header } from "@/components/Header"
+import Image from "next/image"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -81,6 +83,20 @@ export default async function RootLayout({
           <Providers preloadedState={preloadedState}>
             <Header />
             <main className="flex grow flex-col gap-5 py-5 lg:gap-10 lg:py-10">
+              <Image
+                src={skorina.src}
+                alt="Скорина"
+                className="center-right-image"
+                width={316}
+                height={400}
+              />
+              <Image
+                src={flag.src}
+                alt="Скорина"
+                className="center-left-image"
+                width={316}
+                height={400}
+              />
               {children}
             </main>
             <Footer />

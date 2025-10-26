@@ -12,7 +12,7 @@ export default async function Home() {
   ])
 
   return (
-    <Container maxWidth="xl" className="px-2">
+    <Container maxWidth="xl" className="bg-[rgba(255,255,255,0.9)] px-2">
       <LastNews news={lastNews.data} />
       <LocationsNewsListAndPinnedNews
         locationsWithNews={locationsWithNews}

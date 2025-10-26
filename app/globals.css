@@ -37,3 +37,23 @@ body {
 .root {
     isolation: isolate;
 }
+
+.center-right-image {
+    position: fixed;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30vw;
+    height: auto;
+    z-index: -99;
+}
+
+.center-left-image {
+    position: fixed;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: auto;
+    height: 100vh;
+    z-index: -99;
+}

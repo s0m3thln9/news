@@ -27,7 +27,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
   const t = useTranslation()
 
   return (
-    <Container maxWidth="md" className="px-2">
+    <Container maxWidth="md" className="bg-[rgba(255,255,255,0.9)] px-2">
       <Box key={news.uuid} className="flex flex-col gap-4">
         <div
           onClick={() =>

@@ -32,7 +32,7 @@ export const NewsListPage: FC<NewsListPageProps> = ({ news }) => {
   }, [dispatch, news])
 
   return (
-    <Container maxWidth="xl" className="px-2">
+    <Container maxWidth="xl" className="bg-[rgba(255,255,255,0.9)] px-2">
       <Grid container className="w-full flex-col gap-2.5">
         <h1 className={"text-primary-main text-2xl font-bold"}>
           {t("news.title")}

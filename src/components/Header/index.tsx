@@ -237,10 +237,11 @@ export const Header = () => {
           </Box>
           <Box className="flex max-w-2/3 items-center max-sm:hidden">
             <Image
-              src="/header.svg"
+              src="/flag2.png"
               alt={t("images.headerAlt")}
               width={766}
               height={80}
+              className={"h-20 w-auto"}
             />
           </Box>
         </Container>
