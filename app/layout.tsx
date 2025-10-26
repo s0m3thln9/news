@@ -86,7 +86,7 @@ export default async function RootLayout({
               <Image
                 src={skorina.src}
                 alt="Скорина"
-                className="center-right-image"
+                className="center-right-image max-md:hidden"
                 width={316}
                 height={400}
               />
