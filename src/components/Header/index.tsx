@@ -207,7 +207,11 @@ export const Header = () => {
             onClose={() => setLogoutPopoverAnchor(null)}
             anchorOrigin={{
               vertical: "bottom",
-              horizontal: "center",
+              horizontal: "left",
+            }}
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "left",
             }}
           >
             <Box display="flex" flexDirection="column">

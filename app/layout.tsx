@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Союз Вестей" }],
   openGraph: {
-    title: "Союз Вестей - Новости России и мира",
+    title: "Союз Вестей - Новости Беларуси и мира",
     description:
       "Будьте в курсе последних событий с Союзом Вестей. Новости, аналитика, репортажи и интервью.",
     url: "", //https://soyuzvestey.by
