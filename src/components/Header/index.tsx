@@ -5,7 +5,6 @@ import { setSignInModalOpen } from "@/components/sign-in-modal/slice"
 import { SignUpModal } from "@/components/sign-up-modal"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { useFormatCurrentDate } from "@/utils/format-current-date"
-import Cookies from "js-cookie"
 import Image from "next/image"
 import {
   AppBar,
@@ -27,6 +26,7 @@ import MenuIcon from "@mui/icons-material/Menu"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { logOut } from "@/features/user/slice"
 import { useTranslation } from "@/providers/i18n-provider"
+import { useSignOutUserMutation } from "@/api/user"
 import { ResentPost } from "@/components/Header/resent-post"
 import { UpdateLanguageSelect } from "@/components/Header/update-language-select"
 import { LocationSelect } from "@/components/Header/location-select"
@@ -44,11 +44,17 @@ export const Header = () => {
   const dispatch = useAppDispatch()
   const t = useTranslation()
   const currentDate = useFormatCurrentDate()
+  const [signOutUser] = useSignOutUserMutation()
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setLogoutPopoverAnchor(null)
-    Cookies.remove("jwt")
-    dispatch(logOut())
+    try {
+      await signOutUser()
+    } catch (error) {
+      console.error("Ошибка при выходе:", error)
+    } finally {
+      dispatch(logOut())
+    }
   }
 
   const handleProfile = () => {

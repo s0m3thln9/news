@@ -17,3 +17,16 @@ export const generateJwtCookie = (uuid: string) => {
     maxAge: 7 * 24 * 60 * 60,
   })
 }
+
+export const deleteJwtCookie = () => {
+  const cookieName =
+    process.env.NODE_ENV === "production" ? "__Secure-jwt" : "jwt"
+
+  return serialize(cookieName, "", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax",
+    path: "/",
+    maxAge: 0,
+  })
+}
