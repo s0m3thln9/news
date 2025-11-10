@@ -6,10 +6,7 @@ export const generateJwtToken = (uuid: string) => {
 }
 
 export const generateJwtCookie = (uuid: string) => {
-  const cookieName =
-    process.env.NODE_ENV === "production" ? "__Secure-jwt" : "jwt"
-
-  return serialize(cookieName, generateJwtToken(uuid), {
+  return serialize("jwt", generateJwtToken(uuid), {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
@@ -19,10 +16,7 @@ export const generateJwtCookie = (uuid: string) => {
 }
 
 export const deleteJwtCookie = () => {
-  const cookieName =
-    process.env.NODE_ENV === "production" ? "__Secure-jwt" : "jwt"
-
-  return serialize(cookieName, "", {
+  return serialize("jwt", "", {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",

@@ -90,9 +90,7 @@ const getLocationsData = async (pathname: string | null) => {
 const getUserUuid = async (
   cookiesObj: ReadonlyRequestCookies,
 ): Promise<string | null> => {
-  const cookieName =
-    process.env.NODE_ENV === "production" ? "__Secure-jwt" : "jwt"
-  const jwt = cookiesObj.get(cookieName)?.value
+  const jwt = cookiesObj.get("jwt")?.value
 
   console.log(cookiesObj.getAll())
 
