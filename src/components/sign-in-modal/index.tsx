@@ -10,7 +10,6 @@ import { useTranslation } from "@/providers/i18n-provider"
 import CloseIcon from "@mui/icons-material/Close"
 import { setSignUpModalOpen } from "@/components/sign-up-modal/slice"
 import { Translate } from "@/components/ui/translate"
-import Link from "next/link"
 
 export const SignInModal = () => {
   const open = useAppSelector((state) => state.signInSlice.modalOpen)

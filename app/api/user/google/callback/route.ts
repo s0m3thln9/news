@@ -42,6 +42,8 @@ export const GET = createRoute([errorBoundary()], async ({ request }) => {
 
   const tokenData = await tokenResponse.json()
 
+  console.log("response", tokenData)
+
   if (!tokenData.access_token) {
     console.error("Token exchange failed", tokenData)
   }
@@ -51,6 +53,8 @@ export const GET = createRoute([errorBoundary()], async ({ request }) => {
   })
 
   const user = await userResponse.json()
+
+  console.log("userdata", user)
 
   const signupUserRequestBody = {
     firstName: user.given_name,
@@ -68,6 +72,8 @@ export const GET = createRoute([errorBoundary()], async ({ request }) => {
   } catch {
     existingUser = null
   }
+
+  console.log("existingUser", existingUser)
 
   if (existingUser) {
     const response = NextResponse.redirect(new URL("/", request.url))
