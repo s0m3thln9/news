@@ -87,15 +87,15 @@ export default async function RootLayout({
                 src={skorina.src}
                 alt="Скорина"
                 className="center-right-image max-md:hidden"
-                width={316}
-                height={400}
+                width={5000}
+                height={5000}
               />
               <Image
                 src={flag.src}
                 alt="Скорина"
                 className="center-left-image"
-                width={316}
-                height={400}
+                width={2048}
+                height={3072}
               />
               {children}
             </main>
