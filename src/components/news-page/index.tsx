@@ -20,12 +20,16 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
   const currentLocationUuid = useAppSelector(
     (state) => state.locationsSlice.currentLocation?.uuid,
   )
-
+  
   const getDateKey = useGetDateKey()
-
+  
   const route = useRouter()
   const t = useTranslation()
-
+  
+  const sanitizedContent = typeof window !== 'undefined'
+    ? DOMPurify.sanitize(news.content)
+    : news.content
+  
   return (
     <Container maxWidth="md" className="bg-[rgba(255,255,255,0.9)] px-2">
       <Box key={news.uuid} className="flex flex-col gap-4">
@@ -54,7 +58,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
         </div>
         <div
           className="tiptap flex flex-col gap-10 overflow-hidden break-words"
-          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(news.content) }}
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
         />
       </Box>
     </Container>
