@@ -94,6 +94,8 @@ const getUserUuid = async (
     process.env.NODE_ENV === "production" ? "__Secure-jwt" : "jwt"
   const jwt = cookiesObj.get(cookieName)?.value
 
+  console.log(cookiesObj.getAll())
+
   if (!jwt) {
     return null
   }
