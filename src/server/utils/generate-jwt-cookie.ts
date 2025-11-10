@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 import { serialize } from "cookie"
 
-const generateJwtToken = (uuid: string) => {
+export const generateJwtToken = (uuid: string) => {
   return jwt.sign(uuid, process.env.JWT_SECRET!)
 }
 
