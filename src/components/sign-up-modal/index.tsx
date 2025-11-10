@@ -70,7 +70,6 @@ export const SignUpModal = () => {
               top: "0",
               right: "0",
               borderRadius: 0,
-              borderTopRightRadius: "5px",
               boxShadow: 0,
               ":hover": {
                 boxShadow: 0,

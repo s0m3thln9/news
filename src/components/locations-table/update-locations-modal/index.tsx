@@ -1,3 +1,4 @@
+import CloseIcon from "@mui/icons-material/Close"
 import { Box, Button, Modal, Typography } from "@mui/material"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { useAppSelector } from "@/hooks/use-app-selector"
@@ -59,7 +60,6 @@ export const UpdateLocationModal = () => {
           left: "50%",
           transform: "translate(-50%, -50%)",
           bgcolor: "background.paper",
-          borderRadius: "5px",
           boxShadow: 24,
         }}
       >
@@ -69,6 +69,30 @@ export const UpdateLocationModal = () => {
             p: 5,
           }}
         >
+          <Button
+            variant={"contained"}
+            sx={{
+              width: "40px",
+              height: "40px",
+              p: 0,
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              minWidth: "48px",
+              position: "absolute",
+              top: "0",
+              right: "0",
+              borderRadius: 0,
+              boxShadow: 0,
+              ":hover": {
+                boxShadow: 0,
+              },
+              bgcolor: "rgba(0,0,0,0.5)",
+            }}
+            onClick={handleClose}
+          >
+            <CloseIcon />
+          </Button>
           <Typography
             variant="h5"
             className="text-primary border-primary-main border-b-4 pb-2.5 font-bold"
