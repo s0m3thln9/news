@@ -36,6 +36,12 @@ export const SignInModal = () => {
     dispatch(setSignUpModalOpen(true))
   }
 
+  const redirectUri = encodeURIComponent(
+    `${process.env.NEXT_PUBLIC_API_URL}/user/google/callback`,
+  )
+
+  const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=16426199789-hcts4u2946deo64n97s8q12a1qp23cps.apps.googleusercontent.com&redirect_uri=${redirectUri}&response_type=code&scope=openid%20email%20profile&access_type=offline`
+
   return (
     <Modal open={open} onClose={handleClose}>
       <Box
@@ -109,6 +115,9 @@ export const SignInModal = () => {
               />
               <Button type={"submit"} variant={"contained"}>
                 <Translate value="auth.signIn.submit" />
+              </Button>
+              <Button type={"button"} href={googleAuthUrl}>
+                <Translate value="auth.signIn.googleAuth" />
               </Button>
             </div>
             <div className={"h-[3px] bg-[#D9D9D9]"} />

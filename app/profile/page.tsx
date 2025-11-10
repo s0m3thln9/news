@@ -13,7 +13,7 @@ export default function ProfilePage() {
   const userRole = useAppSelector((state) => state.userSlice.user?.role)
 
   return (
-    <Container maxWidth="xl" className="px-2 bg-[rgba(255,255,255,0.9)]">
+    <Container maxWidth="xl" className="bg-[rgba(255,255,255,0.9)] px-2">
       <Box className="flex gap-5 max-xl:flex-col xl:gap-10">
         <Box className="max-xl:self-center">
           <ProfileForm />

@@ -8,7 +8,8 @@
       "email": "Адрес эл. почты",
       "password": "Пароль",
       "createAccount": "Создать новый аккаунт",
-      "submit": "Войти"
+      "submit": "Войти",
+      "googleAuth": "Войти с помощью Google"
     },
     "signUp": {
       "title": "Регистрация",
