@@ -66,6 +66,12 @@ const newsApi = createApi({
         body,
       }),
     }),
+    togglePin: builder.mutation<ApiResponse<NewsDTO>, { uuid: string }>({
+      query: ({ uuid }) => ({
+        url: `${uuid}/toggle-pin`,
+        method: "POST",
+      }),
+    }),
   }),
 })
 
@@ -77,4 +83,5 @@ export const {
   useGetNewsWithLocationQuery,
   useDeleteNewsMutation,
   useUpdateNewsMutation,
+  useTogglePinMutation,
 } = newsApi

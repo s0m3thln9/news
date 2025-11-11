@@ -6,7 +6,13 @@ import { useAdminNews } from "@/components/news-table/use-admin-news"
 import { useState } from "react"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { setOffsetToTable, setOrderBy } from "@/components/news-table/slice"
-import { IconButton, TextField, Tooltip, Typography } from "@mui/material"
+import {
+  Checkbox,
+  IconButton,
+  TextField,
+  Tooltip,
+  Typography,
+} from "@mui/material"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import DeleteIcon from "@mui/icons-material/Delete"
 import EditIcon from "@mui/icons-material/Edit"
@@ -21,6 +27,7 @@ import {
   setEditNewsModalOpen,
 } from "@/components/news-table/update-news-modal/slice"
 import { UpdateNewsModal } from "@/components/news-table/update-news-modal"
+import { useTogglePinNews } from "@/components/news-table/use-toogle-pin-news"
 
 export const NewsTable = () => {
   const dispatch = useAppDispatch()
@@ -41,6 +48,7 @@ export const NewsTable = () => {
     orderBy,
   } = useAdminNews()
   const deleteNews = useDeleteNews()
+  const togglePinNews = useTogglePinNews()
   const getDateKey = useGetDateKey()
 
   const [paginationModel, setPaginationModel] = useState({
@@ -74,6 +82,9 @@ export const NewsTable = () => {
     dispatch(setEditNewsCurrent(news.find((n) => n.uuid === uuid) || null))
   }
 
+  const isNewsPinned = (uuid: string) =>
+    !!news.find((newsItem) => newsItem.uuid === uuid)?.pinnedAt
+
   const columns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: "title",
@@ -92,6 +103,24 @@ export const NewsTable = () => {
       headerName: t("common.date"),
       width: 180,
       editable: true,
+    },
+    {
+      field: "pin",
+      headerName: t("common.pin"),
+      type: "actions",
+      width: 80,
+      sortable: false,
+      filterable: false,
+      renderCell: (params) => (
+        <Box sx={{ display: "flex", gap: 1 }}>
+          <Tooltip title={t("common.pin")}>
+            <Checkbox
+              checked={isNewsPinned(params.row.id)}
+              onChange={() => togglePinNews(params.row.id, refetch)}
+            />
+          </Tooltip>
+        </Box>
+      ),
     },
     {
       field: "edit",
