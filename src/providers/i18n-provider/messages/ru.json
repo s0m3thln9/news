@@ -86,7 +86,7 @@
     "sortOldest": "Старые",
     "create": "Создать",
     "clear": "Очистить",
-    "update": "Редактировать",
+    "update": "Обновить",
     "validation": {
       "titleRequired": "Название обязательно",
       "imagesRequired": "Картинка обязательна",

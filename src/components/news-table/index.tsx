@@ -28,15 +28,19 @@ import {
 } from "@/components/news-table/update-news-modal/slice"
 import { UpdateNewsModal } from "@/components/news-table/update-news-modal"
 import { useTogglePinNews } from "@/components/news-table/use-toogle-pin-news"
+import { UserRole } from "@/generated/prisma"
 
 export const NewsTable = () => {
   const dispatch = useAppDispatch()
   const t = useTranslation()
-
+  
   const locs = useAppSelector((state) => state.locationsSlice.locations)
   const brothers = useAppSelector((state) => state.locationsSlice.brothers)
   const locations = brothers ? [...locs, brothers] : locs
-
+  
+  const userRole = useAppSelector((state) => state.userSlice.user?.role)
+  const isAdmin = userRole === UserRole.ADMIN
+  
   const {
     news,
     total,
@@ -50,16 +54,16 @@ export const NewsTable = () => {
   const deleteNews = useDeleteNews()
   const togglePinNews = useTogglePinNews()
   const getDateKey = useGetDateKey()
-
+  
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: limit,
   })
-
+  
   const handleOrderByChange = (newValue: string) => {
     dispatch(setOrderBy(newValue as "asc" | "desc"))
   }
-
+  
   const handlePaginationChange = (pagination: {
     page: number
     pageSize: number
@@ -67,7 +71,7 @@ export const NewsTable = () => {
     setPaginationModel(pagination)
     dispatch(setOffsetToTable(pagination.page * pagination.pageSize))
   }
-
+  
   const rows = news.map((newsItem) => ({
     id: newsItem.uuid,
     title: newsItem.title,
@@ -76,16 +80,16 @@ export const NewsTable = () => {
     )?.title,
     date: getDateKey(newsItem.createdAt),
   }))
-
+  
   const handleEditClicked = (uuid: string) => {
     dispatch(setEditNewsModalOpen(true))
     dispatch(setEditNewsCurrent(news.find((n) => n.uuid === uuid) || null))
   }
-
+  
   const isNewsPinned = (uuid: string) =>
     !!news.find((newsItem) => newsItem.uuid === uuid)?.pinnedAt
-
-  const columns: GridColDef<(typeof rows)[number]>[] = [
+  
+  const baseColumns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: "title",
       headerName: t("news.title"),
@@ -104,24 +108,28 @@ export const NewsTable = () => {
       width: 180,
       editable: true,
     },
-    {
-      field: "pin",
-      headerName: t("common.pin"),
-      type: "actions",
-      width: 80,
-      sortable: false,
-      filterable: false,
-      renderCell: (params) => (
-        <Box sx={{ display: "flex", gap: 1 }}>
-          <Tooltip title={t("common.pin")}>
-            <Checkbox
-              checked={isNewsPinned(params.row.id)}
-              onChange={() => togglePinNews(params.row.id, refetch)}
-            />
-          </Tooltip>
-        </Box>
-      ),
-    },
+  ]
+  
+  const pinColumn: GridColDef<(typeof rows)[number]> = {
+    field: "pin",
+    headerName: t("common.pin"),
+    type: "actions",
+    width: 80,
+    sortable: false,
+    filterable: false,
+    renderCell: (params) => (
+      <Box sx={{ display: "flex", gap: 1 }}>
+        <Tooltip title={t("common.pin")}>
+          <Checkbox
+            checked={isNewsPinned(params.row.id)}
+            onChange={() => togglePinNews(params.row.id, refetch)}
+          />
+        </Tooltip>
+      </Box>
+    ),
+  }
+  
+  const actionColumns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: "edit",
       headerName: t("common.edit"),
@@ -165,12 +173,18 @@ export const NewsTable = () => {
       ),
     },
   ]
-
+  
+  const columns: GridColDef<(typeof rows)[number]>[] = [
+    ...baseColumns,
+    ...(isAdmin ? [pinColumn] : []),
+    ...actionColumns,
+  ]
+  
   const sortOptions = [
     { label: t("news.sortNewest"), value: "desc" },
     { label: t("news.sortOldest"), value: "asc" },
   ]
-
+  
   return (
     <>
       <Typography
