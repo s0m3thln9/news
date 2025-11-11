@@ -20,16 +20,17 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
   const currentLocationUuid = useAppSelector(
     (state) => state.locationsSlice.currentLocation?.uuid,
   )
-  
+
   const getDateKey = useGetDateKey()
-  
+
   const route = useRouter()
   const t = useTranslation()
-  
-  const sanitizedContent = typeof window !== 'undefined'
-    ? DOMPurify.sanitize(news.content)
-    : news.content
-  
+
+  const sanitizedContent =
+    typeof window !== "undefined"
+      ? DOMPurify.sanitize(news.content)
+      : news.content
+
   return (
     <Container maxWidth="md" className="bg-[rgba(255,255,255,0.9)] px-2">
       <Box key={news.uuid} className="flex flex-col gap-4">
