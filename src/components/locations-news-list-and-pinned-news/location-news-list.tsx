@@ -45,9 +45,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
             >
               <CardMedia
                 className="aspect-[3/2]"
-                image={
-                  process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.images[0]
-                }
+                image={process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.image}
                 title={featuredNews.title}
               />
               <CardContent className="relative z-[1] flex flex-1 flex-col overflow-hidden px-2 py-0">
@@ -92,9 +90,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
             >
               <CardMedia
                 className="aspect-[3/2] w-[45%] shrink-0"
-                image={
-                  process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.images[0]
-                }
+                image={process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.image}
                 title={featuredNews?.title}
               />
               <CardContent className="flex-grow overflow-hidden px-2 py-0">
@@ -137,7 +133,7 @@ export const LocationNewsList: FC<LocationNewsListProps> = ({ location }) => {
               >
                 <CardMedia
                   className="aspect-[3/2] w-[45%] shrink-0"
-                  image={process.env.NEXT_PUBLIC_UPLOADS + news.images[0]}
+                  image={process.env.NEXT_PUBLIC_UPLOADS + news.image}
                   title={featuredNews.title}
                 />
                 <CardContent className="flex-grow overflow-hidden px-2 py-0">

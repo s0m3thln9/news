@@ -9,7 +9,7 @@ import { NewsWithLocation } from "@/types/dto/news-with-location"
 
 export const createNewsSchema = z.object({
   title: z.string().min(1, "Название обязательно"),
-  images: z.array(z.string()).min(1, "Картинка обязательна"),
+  image: z.string().min(1, "Картинка обязательна"),
   content: z.string().min(1, "Контент обязателен"),
   description: z.string().min(1, "Описание обязательно"),
   locationUuid: z.string().min(1, "Локация обязательно"),
@@ -24,7 +24,7 @@ export const createNews = async (
   prisma.news.create({
     data: {
       userUuid,
-      images: body.images,
+      image: body.image,
       content: body.content,
       title: body.title,
       description: body.description,
@@ -53,7 +53,6 @@ export const getNewsQueryOptions = (
   where: {
     title: {
       contains: queryParams.search,
-      mode: "insensitive",
     },
     locationUuid: queryParams.locationUuid,
   },
@@ -76,7 +75,6 @@ export const getNews: GetNews = async (queryParams) => ({
     where: {
       title: {
         contains: queryParams.search,
-        mode: "insensitive",
       },
       locationUuid: queryParams.locationUuid,
     },
@@ -177,7 +175,6 @@ export const getNewsWithLocationQueryOptions = (
   where: {
     title: {
       contains: queryParams.search,
-      mode: "insensitive",
     },
     locationUuid: queryParams.locationUuid,
   },
@@ -205,7 +202,6 @@ export const getNewsWithLocation: GetNewsWithLocation = async (
     where: {
       title: {
         contains: queryParams.search,
-        mode: "insensitive",
       },
       locationUuid: queryParams.locationUuid,
     },

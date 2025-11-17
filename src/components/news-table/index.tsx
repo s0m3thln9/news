@@ -33,14 +33,14 @@ import { UserRole } from "@/generated/prisma"
 export const NewsTable = () => {
   const dispatch = useAppDispatch()
   const t = useTranslation()
-  
+
   const locs = useAppSelector((state) => state.locationsSlice.locations)
   const brothers = useAppSelector((state) => state.locationsSlice.brothers)
   const locations = brothers ? [...locs, brothers] : locs
-  
+
   const userRole = useAppSelector((state) => state.userSlice.user?.role)
   const isAdmin = userRole === UserRole.ADMIN
-  
+
   const {
     news,
     total,
@@ -54,16 +54,16 @@ export const NewsTable = () => {
   const deleteNews = useDeleteNews()
   const togglePinNews = useTogglePinNews()
   const getDateKey = useGetDateKey()
-  
+
   const [paginationModel, setPaginationModel] = useState({
     page: 0,
     pageSize: limit,
   })
-  
+
   const handleOrderByChange = (newValue: string) => {
     dispatch(setOrderBy(newValue as "asc" | "desc"))
   }
-  
+
   const handlePaginationChange = (pagination: {
     page: number
     pageSize: number
@@ -71,7 +71,7 @@ export const NewsTable = () => {
     setPaginationModel(pagination)
     dispatch(setOffsetToTable(pagination.page * pagination.pageSize))
   }
-  
+
   const rows = news.map((newsItem) => ({
     id: newsItem.uuid,
     title: newsItem.title,
@@ -80,15 +80,15 @@ export const NewsTable = () => {
     )?.title,
     date: getDateKey(newsItem.createdAt),
   }))
-  
+
   const handleEditClicked = (uuid: string) => {
     dispatch(setEditNewsModalOpen(true))
     dispatch(setEditNewsCurrent(news.find((n) => n.uuid === uuid) || null))
   }
-  
+
   const isNewsPinned = (uuid: string) =>
     !!news.find((newsItem) => newsItem.uuid === uuid)?.pinnedAt
-  
+
   const baseColumns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: "title",
@@ -109,7 +109,7 @@ export const NewsTable = () => {
       editable: true,
     },
   ]
-  
+
   const pinColumn: GridColDef<(typeof rows)[number]> = {
     field: "pin",
     headerName: t("common.pin"),
@@ -128,7 +128,7 @@ export const NewsTable = () => {
       </Box>
     ),
   }
-  
+
   const actionColumns: GridColDef<(typeof rows)[number]>[] = [
     {
       field: "edit",
@@ -173,18 +173,18 @@ export const NewsTable = () => {
       ),
     },
   ]
-  
+
   const columns: GridColDef<(typeof rows)[number]>[] = [
     ...baseColumns,
     ...(isAdmin ? [pinColumn] : []),
     ...actionColumns,
   ]
-  
+
   const sortOptions = [
     { label: t("news.sortNewest"), value: "desc" },
     { label: t("news.sortOldest"), value: "asc" },
   ]
-  
+
   return (
     <>
       <Typography

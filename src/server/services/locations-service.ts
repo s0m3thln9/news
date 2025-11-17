@@ -35,7 +35,6 @@ export const geLocationsQueryOptions = (
   where: {
     title: {
       contains: queryParams.search,
-      mode: "insensitive",
     },
   },
   take: queryParams.limit || 10,
@@ -53,7 +52,6 @@ export const getLocations: GetLocations = async (queryParams) => ({
     where: {
       title: {
         contains: queryParams.search,
-        mode: "insensitive",
       },
     },
   }),

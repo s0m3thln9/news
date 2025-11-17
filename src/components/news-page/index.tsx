@@ -49,7 +49,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
           {news.title}
         </h3>
         <img
-          src={process.env.NEXT_PUBLIC_UPLOADS + news.images[0]}
+          src={process.env.NEXT_PUBLIC_UPLOADS + news.image}
           alt={news.title}
           className="w-full object-cover"
         />

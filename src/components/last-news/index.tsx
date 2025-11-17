@@ -31,7 +31,7 @@ const LastNews: FC<LastNewsProps> = ({ news }) => {
       >
         <Card className="relative flex aspect-[4/3] h-full flex-col overflow-hidden rounded-none">
           <Image
-            src={process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.images[0]}
+            src={process.env.NEXT_PUBLIC_UPLOADS + featuredNews?.image}
             alt={featuredNews?.title}
             fill
             className="absolute object-cover"

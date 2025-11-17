@@ -20,7 +20,7 @@ export const NewsListItem: FC<NewsListItemProps> = ({ news }) => {
     >
       <div className="flex w-[45%] min-w-[160px] shrink-0 items-center justify-center self-start">
         <img
-          src={process.env.NEXT_PUBLIC_UPLOADS + news.images[0]}
+          src={process.env.NEXT_PUBLIC_UPLOADS + news.image}
           alt={news.title}
           className="h-full w-full object-cover"
         />

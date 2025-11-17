@@ -14,7 +14,7 @@ export const useCreateNewsForm = () => {
     defaultValues: {
       title: "",
       description: "",
-      images: [],
+      image: "",
       content: "",
       locationUuid: "",
     },

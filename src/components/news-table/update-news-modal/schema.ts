@@ -3,7 +3,7 @@ import z from "zod"
 export const updateNewsSchema = () => {
   return z.object({
     title: z.string().optional(),
-    images: z.array(z.string()).optional(),
+    image: z.string().optional(),
     content: z.string().optional(),
     description: z.string().optional(),
     locationUuid: z.string().optional(),

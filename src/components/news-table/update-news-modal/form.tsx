@@ -16,7 +16,7 @@ export const useUpdateNewsForm = () => {
     defaultValues: {
       title: currentNews?.title || "",
       description: currentNews?.description || "",
-      images: currentNews?.images || [],
+      image: currentNews?.image || "",
       content: currentNews?.content || "",
       locationUuid: currentNews?.content || "",
     },

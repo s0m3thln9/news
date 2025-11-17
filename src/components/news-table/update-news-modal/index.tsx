@@ -58,7 +58,7 @@ export const UpdateNewsModal = () => {
   }
 
   useEffect(() => {
-    setValue("images", currentNews?.images || [])
+    setValue("image", currentNews?.image || "")
     setValue("title", currentNews?.title || "")
     setValue("description", currentNews?.description || "")
     setValue("locationUuid", currentNews?.locationUuid || "")
@@ -77,7 +77,7 @@ export const UpdateNewsModal = () => {
       const url = URL.createObjectURL(file)
       setPreviewUrl(url)
       upload({ image: file }).then((data) => {
-        setValue("images", [data?.public_id || ""], { shouldValidate: true })
+        setValue("image", data?.public_id || "", { shouldValidate: true })
       })
     }
   }
@@ -88,7 +88,7 @@ export const UpdateNewsModal = () => {
       content: "",
       title: "",
       description: "",
-      images: [],
+      images: "",
     }
     reset(defaultValues, { keepErrors: false, keepDirty: false })
     flushSync(() => {
@@ -96,7 +96,7 @@ export const UpdateNewsModal = () => {
       setValue("content", "")
       setValue("title", "")
       setValue("description", "")
-      setValue("images", [])
+      setValue("image", "")
     })
     clearErrors()
     if (previewUrl) {
@@ -110,7 +110,7 @@ export const UpdateNewsModal = () => {
     ref: formRef,
     onChange: formOnChange,
     ...rest
-  } = register("images", { required: t("news.validation.imagesRequired") })
+  } = register("image", { required: t("news.validation.imagesRequired") })
 
   const mergedRef = (node: HTMLInputElement | null) => {
     fileInputRef.current = node
@@ -185,9 +185,9 @@ export const UpdateNewsModal = () => {
           >
             <div className="mb-4">
               <Typography className="mb-2">{t("news.mainImage")}</Typography>
-              {errors.images?.message && (
+              {errors.image?.message && (
                 <Typography className="text-error-main">
-                  {errors.images.message}
+                  {errors.image.message}
                 </Typography>
               )}
               <label

@@ -184,19 +184,16 @@ export const getUsersQueryOptions = (
         {
           email: {
             contains: search,
-            mode: "insensitive",
           },
         },
         {
           firstName: {
             contains: search,
-            mode: "insensitive",
           },
         },
         {
           lastName: {
             contains: search,
-            mode: "insensitive",
           },
         },
       ],
@@ -222,19 +219,16 @@ export const getUsers: GetUsers = async (queryParams) => {
           {
             email: {
               contains: search,
-              mode: "insensitive",
             },
           },
           {
             firstName: {
               contains: search,
-              mode: "insensitive",
             },
           },
           {
             lastName: {
               contains: search,
-              mode: "insensitive",
             },
           },
         ],

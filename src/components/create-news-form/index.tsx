@@ -49,7 +49,7 @@ export const CreateNewsForm: FC = () => {
       const url = URL.createObjectURL(file)
       setPreviewUrl(url)
       upload({ image: file }).then((data) => {
-        setValue("images", [data?.public_id || ""], { shouldValidate: true })
+        setValue("image", data?.public_id || "", { shouldValidate: true })
       })
     }
   }
@@ -60,7 +60,7 @@ export const CreateNewsForm: FC = () => {
       content: "",
       title: "",
       description: "",
-      images: [],
+      image: "",
     }
     reset(defaultValues, { keepErrors: false, keepDirty: false })
     flushSync(() => {
@@ -68,7 +68,7 @@ export const CreateNewsForm: FC = () => {
       setValue("content", "")
       setValue("title", "")
       setValue("description", "")
-      setValue("images", [])
+      setValue("image", "")
     })
     clearErrors()
     if (previewUrl) {
@@ -91,7 +91,7 @@ export const CreateNewsForm: FC = () => {
     ref: formRef,
     onChange: formOnChange,
     ...rest
-  } = register("images", { required: t("news.validation.imagesRequired") })
+  } = register("image", { required: t("news.validation.imagesRequired") })
 
   const mergedRef = (node: HTMLInputElement | null) => {
     fileInputRef.current = node
@@ -125,9 +125,9 @@ export const CreateNewsForm: FC = () => {
       >
         <div className="mb-4">
           <Typography className="mb-2">{t("news.mainImage")}</Typography>
-          {errors.images?.message && (
+          {errors.image?.message && (
             <Typography className="text-error-main">
-              {errors.images.message}
+              {errors.image.message}
             </Typography>
           )}
           <label
