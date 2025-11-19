@@ -12,7 +12,7 @@ import { Controller } from "react-hook-form"
 import { Box, Button, MenuItem, TextField, Typography } from "@mui/material"
 import { Input } from "@/components/ui/input"
 import { TipTapEditor } from "./tip-tap-editor"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 
 export const CreateNewsForm: FC = () => {
   const t = useTranslation()

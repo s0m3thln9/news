@@ -1,6 +1,6 @@
 import { useUpdateLanguageMutation } from "@/api/user"
 import { signIn, updateLanguage } from "@/features/user/slice"
-import { $Enums } from "@/generated/prisma"
+import { $Enums } from "@prisma/client"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import Language = $Enums.Language
 import { useAppSelector } from "@/hooks/use-app-selector"

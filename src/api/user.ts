@@ -9,7 +9,7 @@ import {
   UpdateUserProfileRequestBody,
   UpdateUserRequestBody,
 } from "@/server/services/user-service"
-import { $Enums } from "@/generated/prisma"
+import { $Enums } from "@prisma/client"
 import Language = $Enums.Language
 import { Pagination } from "@/types/dto/pagination"
 

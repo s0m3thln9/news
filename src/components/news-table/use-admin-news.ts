@@ -9,7 +9,7 @@ import {
   setSearchQueryToTable,
   setTotalToTable,
 } from "@/components/news-table/slice"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 
 export function useAdminNews() {
   const dispatch = useAppDispatch()

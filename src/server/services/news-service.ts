@@ -1,10 +1,10 @@
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
 import type { NewsDTO } from "@/types/dto/news"
-import { Prisma } from "@/generated/prisma"
+import { Prisma } from "@prisma/client"
 import { Pagination } from "@/types/dto/pagination"
 import { ApiError } from "@/types/api-response"
-import { DefaultArgs } from "@/generated/prisma/runtime/library"
+import { DefaultArgs } from "@prisma/client/runtime/library"
 import { NewsWithLocation } from "@/types/dto/news-with-location"
 
 export const createNewsSchema = z.object({

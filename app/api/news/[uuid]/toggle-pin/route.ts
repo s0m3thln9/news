@@ -5,7 +5,7 @@ import {
   requireRole,
 } from "@/server/utils/middleware/compose"
 import { handleResponse } from "@/server/utils/handle-response"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 import { togglePinNews } from "@/server/services/news-service"
 import { checkEditorAllowedToNews } from "@/server/utils/check-editor-allowed-to-news"
 

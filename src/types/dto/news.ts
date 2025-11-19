@@ -1,3 +1,3 @@
-import { News } from "@/generated/prisma"
+import { News } from "@prisma/client"
 
 export type NewsDTO = Omit<News, "userUuid" | "locationUuid">

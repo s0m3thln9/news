@@ -2,7 +2,7 @@ import { createApi } from "@reduxjs/toolkit/query/react"
 import { baseQuery } from "@/api/index"
 import { ApiResponse } from "@/types/api-response"
 import { Pagination } from "@/types/dto/pagination"
-import { Location } from "@/generated/prisma"
+import { Location } from "@prisma/client"
 import {
   CreateLocationRequestBody,
   GetLocationsQueryParams,

@@ -3,10 +3,10 @@
 import { cookies, headers } from "next/headers"
 import { getMe, updateLanguage } from "@/server/services/user-service"
 import { getLocations } from "@/server/services/locations-service"
-import type { Location } from "@/generated/prisma"
+import type { Location } from "@prisma/client"
 import { RootState } from "@/app/store"
 import { ReadonlyRequestCookies } from "next/dist/server/web/spec-extension/adapters/request-cookies"
-import { Language } from "@/generated/prisma"
+import { Language } from "@prisma/client"
 import { Pagination } from "@/types/dto/pagination"
 import { verify } from "jsonwebtoken"
 

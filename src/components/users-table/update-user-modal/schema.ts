@@ -1,4 +1,4 @@
-import { Language, UserRole } from "@/generated/prisma"
+import { Language, UserRole } from "@prisma/client"
 import z from "zod"
 
 export const updateUserSchema = () => {

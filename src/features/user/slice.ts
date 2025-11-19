@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { UserDTO } from "@/types/dto/user"
-import { Language } from "@/generated/prisma"
+import { Language } from "@prisma/client"
 
 type InitialState = {
   user: UserDTO | null

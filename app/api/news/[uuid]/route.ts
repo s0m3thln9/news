@@ -6,7 +6,7 @@ import {
   requireRole,
 } from "@/server/utils/middleware/compose"
 import { handleResponse } from "@/server/utils/handle-response"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 import {
   deleteNews,
   updateNews,

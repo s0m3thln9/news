@@ -19,7 +19,7 @@ import { TipTapEditor } from "@/components/create-news-form/tip-tap-editor"
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react"
 import { useUploadFile } from "@/components/create-news-form/upload-file"
 import { flushSync } from "react-dom"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 
 export const UpdateNewsModal = () => {
   const dispatch = useAppDispatch()

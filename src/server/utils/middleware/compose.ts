@@ -1,6 +1,6 @@
 import { handleError } from "@/server/utils/handle-error"
 import { prisma } from "@/server/prisma-client"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 
 export interface Context {
   request: Request

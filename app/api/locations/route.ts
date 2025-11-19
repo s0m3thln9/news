@@ -11,7 +11,7 @@ import {
   getLocations,
 } from "@/server/services/locations-service"
 import { handleResponse } from "@/server/utils/handle-response"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 
 /**
  * @swagger

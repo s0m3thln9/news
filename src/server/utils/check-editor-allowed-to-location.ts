@@ -1,6 +1,6 @@
 import { prisma } from "@/server/prisma-client"
 import { ApiError } from "@/types/api-response"
-import { $Enums } from "@/generated/prisma"
+import { $Enums } from "@prisma/client"
 import UserRole = $Enums.UserRole
 
 export const checkEditorAllowedToLocation = async (

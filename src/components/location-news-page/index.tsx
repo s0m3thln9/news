@@ -10,7 +10,7 @@ import {
 } from "@/features/locations/slice"
 import { NewsDTO } from "@/types/dto/news"
 import { NewsListItem } from "@/components/news-list-item"
-import { Location } from "@/generated/prisma"
+import { Location } from "@prisma/client"
 import { Pagination } from "@/types/dto/pagination"
 import { setTotal } from "@/features/search-news/slice"
 import { useNews } from "@/features/search-news/use-news"

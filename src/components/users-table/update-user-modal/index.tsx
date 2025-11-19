@@ -16,7 +16,7 @@ import { flushSync } from "react-dom"
 import { useUpdateUser } from "@/components/users-table/update-user-modal/use-update-user"
 import { useUpdateUserForm } from "@/components/users-table/update-user-modal/form"
 import { setEditUserAdminModalOpen } from "@/components/users-table/update-user-modal/slice"
-import { UserRole, Language } from "@/generated/prisma"
+import { UserRole, Language } from "@prisma/client"
 import { Controller } from "react-hook-form"
 
 export const UpdateUserAdminModal = () => {

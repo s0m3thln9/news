@@ -5,7 +5,7 @@ import {
   jsonBody,
   requireRole,
 } from "@/server/utils/middleware/compose"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 import { handleResponse } from "@/server/utils/handle-response"
 import {
   deleteLocation,

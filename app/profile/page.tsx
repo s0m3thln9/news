@@ -7,7 +7,7 @@ import { NewsTable } from "@/components/news-table"
 import { LocationsTable } from "@/components/locations-table"
 import { UsersTable } from "@/components/users-table"
 import { useAppSelector } from "@/hooks/use-app-selector"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 
 export default function ProfilePage() {
   const userRole = useAppSelector((state) => state.userSlice.user?.role)

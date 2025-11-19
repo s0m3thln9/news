@@ -1,6 +1,6 @@
 "use client"
 
-import { Language } from "@/generated/prisma"
+import { Language } from "@prisma/client"
 import { useAppSelector } from "@/hooks/use-app-selector"
 
 export const formatCurrentDate = (language: Language): string => {

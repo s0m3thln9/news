@@ -1,6 +1,6 @@
 import z from "zod"
 import { prisma } from "@/server/prisma-client"
-import type { Location, Prisma, PrismaPromise } from "@/generated/prisma"
+import type { Location, Prisma, PrismaPromise } from "@prisma/client"
 import { LocationWithNews } from "@/types/dto/location-with-news"
 import { Pagination } from "@/types/dto/pagination"
 

@@ -28,7 +28,7 @@ import {
 } from "@/components/news-table/update-news-modal/slice"
 import { UpdateNewsModal } from "@/components/news-table/update-news-modal"
 import { useTogglePinNews } from "@/components/news-table/use-toogle-pin-news"
-import { UserRole } from "@/generated/prisma"
+import { UserRole } from "@prisma/client"
 
 export const NewsTable = () => {
   const dispatch = useAppDispatch()

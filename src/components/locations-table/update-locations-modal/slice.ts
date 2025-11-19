@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { Location } from "@/generated/prisma"
+import { Location } from "@prisma/client"
 
 type InitialState = {
   modalOpen: boolean

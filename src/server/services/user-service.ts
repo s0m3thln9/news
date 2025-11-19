@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt"
-import { Language, Prisma, User, UserRole } from "@/generated/prisma"
+import { Language, Prisma, User, UserRole } from "@prisma/client"
 import { ApiError } from "@/types/api-response"
 import { UserDTO } from "@/types/dto/user"
 import z from "zod"

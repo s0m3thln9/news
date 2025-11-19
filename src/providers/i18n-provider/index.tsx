@@ -14,7 +14,7 @@ import EN from "./messages/en.json"
 import RU from "./messages/ru.json"
 import { updateLanguage } from "@/features/user/slice"
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
-import { Language } from "@/generated/prisma"
+import { Language } from "@prisma/client"
 
 export const languagesMap = {
   EN,
