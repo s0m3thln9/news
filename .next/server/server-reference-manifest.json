@@ -1,0 +1,120 @@
+{
+  "node": {
+    "7f3819e7a0d46f5040874ca029a32c9ecde6b39b9b": {
+      "workers": {
+        "app/[uuid]/page": {
+          "moduleId": "870340",
+          "async": false,
+          "exportedName": "getLanguageFromRequest",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/_not-found/page": {
+          "moduleId": "803673",
+          "async": false,
+          "exportedName": "getLanguageFromRequest",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/locations/[uuid]/page": {
+          "moduleId": "346176",
+          "async": false,
+          "exportedName": "getLanguageFromRequest",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/news/page": {
+          "moduleId": "161464",
+          "async": false,
+          "exportedName": "getLanguageFromRequest",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/page": {
+          "moduleId": "951227",
+          "async": false,
+          "exportedName": "getLanguageFromRequest",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/profile/page": {
+          "moduleId": "5303",
+          "async": false,
+          "exportedName": "getLanguageFromRequest",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/swagger/page": {
+          "moduleId": "64923",
+          "async": false,
+          "exportedName": "getLanguageFromRequest",
+          "filename": "src/utils/get-preloaded-state.ts"
+        }
+      },
+      "layer": {
+        "app/[uuid]/page": "rsc",
+        "app/_not-found/page": "rsc",
+        "app/locations/[uuid]/page": "rsc",
+        "app/news/page": "rsc",
+        "app/page": "rsc",
+        "app/profile/page": "rsc",
+        "app/swagger/page": "rsc"
+      },
+      "filename": "src/utils/get-preloaded-state.ts",
+      "exportedName": "getLanguageFromRequest"
+    },
+    "7f49d5342e93ce01569d57cec547a314a7d99d0ce8": {
+      "workers": {
+        "app/[uuid]/page": {
+          "moduleId": "870340",
+          "async": false,
+          "exportedName": "getPreloadedState",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/_not-found/page": {
+          "moduleId": "803673",
+          "async": false,
+          "exportedName": "getPreloadedState",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/locations/[uuid]/page": {
+          "moduleId": "346176",
+          "async": false,
+          "exportedName": "getPreloadedState",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/news/page": {
+          "moduleId": "161464",
+          "async": false,
+          "exportedName": "getPreloadedState",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/page": {
+          "moduleId": "951227",
+          "async": false,
+          "exportedName": "getPreloadedState",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/profile/page": {
+          "moduleId": "5303",
+          "async": false,
+          "exportedName": "getPreloadedState",
+          "filename": "src/utils/get-preloaded-state.ts"
+        },
+        "app/swagger/page": {
+          "moduleId": "64923",
+          "async": false,
+          "exportedName": "getPreloadedState",
+          "filename": "src/utils/get-preloaded-state.ts"
+        }
+      },
+      "layer": {
+        "app/[uuid]/page": "rsc",
+        "app/_not-found/page": "rsc",
+        "app/locations/[uuid]/page": "rsc",
+        "app/news/page": "rsc",
+        "app/page": "rsc",
+        "app/profile/page": "rsc",
+        "app/swagger/page": "rsc"
+      },
+      "filename": "src/utils/get-preloaded-state.ts",
+      "exportedName": "getPreloadedState"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "HhbcvwIwLa7qr2C5lU38OG7lnmq8zH7A533PqqT8i+8="
+}

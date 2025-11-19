@@ -1,0 +1,161 @@
+{
+  "version": 3,
+  "pages404": true,
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/:path*",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        },
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        },
+        {
+          "key": "Access-Control-Max-Age",
+          "value": "86400"
+        }
+      ],
+      "regex": "^/api(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))?(?:/)?$"
+    }
+  ],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [
+    {
+      "page": "/api/locations/[uuid]",
+      "regex": "^/api/locations/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPuuid": "nxtPuuid"
+      },
+      "namedRegex": "^/api/locations/(?<nxtPuuid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/locations/[uuid]/add-editor",
+      "regex": "^/api/locations/([^/]+?)/add\\-editor(?:/)?$",
+      "routeKeys": {
+        "nxtPuuid": "nxtPuuid"
+      },
+      "namedRegex": "^/api/locations/(?<nxtPuuid>[^/]+?)/add\\-editor(?:/)?$"
+    },
+    {
+      "page": "/api/news/[uuid]",
+      "regex": "^/api/news/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPuuid": "nxtPuuid"
+      },
+      "namedRegex": "^/api/news/(?<nxtPuuid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/news/[uuid]/toggle-pin",
+      "regex": "^/api/news/([^/]+?)/toggle\\-pin(?:/)?$",
+      "routeKeys": {
+        "nxtPuuid": "nxtPuuid"
+      },
+      "namedRegex": "^/api/news/(?<nxtPuuid>[^/]+?)/toggle\\-pin(?:/)?$"
+    },
+    {
+      "page": "/api/user/[uuid]",
+      "regex": "^/api/user/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPuuid": "nxtPuuid"
+      },
+      "namedRegex": "^/api/user/(?<nxtPuuid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/locations/[uuid]",
+      "regex": "^/locations/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPuuid": "nxtPuuid"
+      },
+      "namedRegex": "^/locations/(?<nxtPuuid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/[uuid]",
+      "regex": "^/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPuuid": "nxtPuuid"
+      },
+      "namedRegex": "^/(?<nxtPuuid>[^/]+?)(?:/)?$"
+    }
+  ],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/news",
+      "regex": "^/news(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/news(?:/)?$"
+    },
+    {
+      "page": "/profile",
+      "regex": "^/profile(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profile(?:/)?$"
+    },
+    {
+      "page": "/swagger",
+      "regex": "^/swagger(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/swagger(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSuffix": ".prefetch.rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments"
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

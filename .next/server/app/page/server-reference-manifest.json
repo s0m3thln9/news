@@ -1,0 +1,35 @@
+{
+  "node": {
+    "7f3819e7a0d46f5040874ca029a32c9ecde6b39b9b": {
+      "workers": {
+        "app/page": {
+          "moduleId": "951227",
+          "async": false,
+          "exportedName": "getLanguageFromRequest",
+          "filename": "src/utils/get-preloaded-state.ts"
+        }
+      },
+      "layer": {
+        "app/page": "rsc"
+      },
+      "exportedName": "getLanguageFromRequest",
+      "filename": "src/utils/get-preloaded-state.ts"
+    },
+    "7f49d5342e93ce01569d57cec547a314a7d99d0ce8": {
+      "workers": {
+        "app/page": {
+          "moduleId": "951227",
+          "async": false,
+          "exportedName": "getPreloadedState",
+          "filename": "src/utils/get-preloaded-state.ts"
+        }
+      },
+      "layer": {
+        "app/page": "rsc"
+      },
+      "exportedName": "getPreloadedState",
+      "filename": "src/utils/get-preloaded-state.ts"
+    }
+  },
+  "edge": {}
+}

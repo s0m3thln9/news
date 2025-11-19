@@ -1,0 +1,3 @@
+{
+  "/api/locations/[uuid]/add-editor/route": "app/api/locations/[uuid]/add-editor/route.js"
+}

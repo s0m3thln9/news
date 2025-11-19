@@ -1,0 +1,12 @@
+{
+  "pages": {
+    "/api/user/update-language/route": [
+      "static/chunks/833aba1c147377c3.js",
+      "static/chunks/138525b1f5c6a953.js",
+      "static/chunks/bbf89c5280eb1f0c.js",
+      "static/chunks/eb089934649e78cd.js",
+      "static/chunks/00bcba05fbac4add.js",
+      "static/chunks/turbopack-205c1cd409975833.js"
+    ]
+  }
+}

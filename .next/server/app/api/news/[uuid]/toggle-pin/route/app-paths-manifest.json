@@ -1,0 +1,3 @@
+{
+  "/api/news/[uuid]/toggle-pin/route": "app/api/news/[uuid]/toggle-pin/route.js"
+}
