@@ -326,9 +326,12 @@ export const googleAuth = async (code: string, url: string) => {
   }
 
   console.log("existingUser", existingUser)
+  console.log("url", new URL("/", url))
 
   if (existingUser) {
-    const response = NextResponse.redirect(new URL("/", url))
+    const response = NextResponse.redirect(
+      new URL("/", process.env.NEXT_PUBLIC_HOME_URL),
+    )
 
     response.cookies.set("jwt", generateJwtToken(existingUser.uuid), {
       httpOnly: true,
@@ -343,7 +346,9 @@ export const googleAuth = async (code: string, url: string) => {
 
   const createdUser = await signUpUser(signupUserRequestBody)
 
-  const response = NextResponse.redirect(new URL("/", url))
+  const response = NextResponse.redirect(
+    new URL("/", process.env.NEXT_PUBLIC_HOME_URL),
+  )
 
   response.cookies.set("jwt", generateJwtToken(createdUser.uuid), {
     httpOnly: true,
