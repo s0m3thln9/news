@@ -16,6 +16,9 @@ import { googleAuth } from "@/server/services/user-service"
  */
 export const GET = createRoute([errorBoundary()], async ({ request }) => {
   const { searchParams } = new URL(request.url)
+
+  console.log(request.url)
+
   const code = searchParams.get("code") || ""
   return googleAuth(code, request.url)
 })

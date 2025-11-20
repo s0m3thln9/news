@@ -49,8 +49,8 @@ model News {
   author       User      @relation(fields: [userUuid], references: [uuid], onDelete: Cascade)
   image        String
   title        String
-  description  String
-  content      String
+  description  String    @db.Text
+  content      String    @db.LongText
   pinnedAt     DateTime?
   location     Location  @relation(fields: [locationUuid], references: [uuid], onDelete: Cascade)
   createdAt    DateTime  @default(now()) @db.Timestamp(3)
