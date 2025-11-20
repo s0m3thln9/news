@@ -122,7 +122,7 @@ export const Footer = () => {
             </Typography>
             <Box className="flex items-center gap-2">
               <Link
-                href="https://t.me/yourchannel"
+                href="https://t.me/soyuzvestey"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t("authExtra.telegramAria")}

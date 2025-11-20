@@ -93,7 +93,7 @@ export const Header = () => {
             <Box className="hidden items-center gap-4 lg:flex">
               <UpdateLanguageSelect />
               <Link
-                href="https://t.me/yourchannel"
+                href="https://t.me/soyuzvestey"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={t("authExtra.telegramAria")}
@@ -147,7 +147,7 @@ export const Header = () => {
                 </MenuItem>
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Link
-                    href="https://t.me/yourchannel"
+                    href="https://t.me/soyuzvestey"
                     target="_blank"
                     rel="noopener noreferrer"
                     sx={{
