@@ -17,56 +17,102 @@ const inter = Inter({
   weight: ["400", "700"],
 })
 
-export const metadata: Metadata = {
-  title: "Союз Вестей - Новости России и мира",
-  description:
-    "Последние новости Беларуси и Туркменистана, аналитика, репортажи, интервью и актуальные события от Союза Вестей.",
-  keywords: [
-    "новости",
-    "Союз Вестей",
-    "Беларусь",
-    "международные новости",
-    "аналитика",
-    "события",
-  ],
-  authors: [{ name: "Союз Вестей" }],
-  openGraph: {
-    title: "Союз Вестей - Новости Беларуси и мира",
+const SITE_URL = "https://soyuzvestey.by"
+
+const getLocaleCode = (lang: string) => {
+  const map: Record<string, string> = {
+    ru: "ru_RU",
+    en: "en_US",
+  }
+  return map[lang] || "ru_RU"
+}
+
+export async function generateMetadata(): Promise<Metadata> {
+  const preloadedState = await getPreloadedState()
+  const lang = preloadedState.userSlice?.language?.toLowerCase() || "ru"
+  const locale = getLocaleCode(lang)
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: {
+      default: "Союз Вестей - Новости России и мира",
+      template: "%s | Союз Вестей",
+    },
     description:
-      "Будьте в курсе последних событий с Союзом Вестей. Новости, аналитика, репортажи и интервью.",
-    url: "", //https://soyuzvestey.by
-    siteName: "Союз Вестей",
-    images: [
-      {
-        url: "", //https://soyuzvestey.ru/og-image.jpg
-        width: 1200,
-        height: 630,
-        alt: "Союз Вестей - Новости",
-      },
+      "Последние новости Беларуси и Туркменистана, аналитика, репортажи, интервью и актуальные события от Союза Вестей.",
+    keywords: [
+      "Союз Вестей",
+      "новости онлайн",
+      "новости",
+      "Беларусь",
+      "Туркменистан",
+      "СНГ",
+      "Союзное государство",
+      "Минск",
+      "политика",
+      "экономика",
+      "общество",
+      "происшествия",
+      "международные отношения",
+      "аналитика",
+      "интервью",
+      "новости сегодня",
+      "новости вузов",
+      "образование в Беларуси",
+      "студенты РБ",
+      "вступительная кампания",
+      "абитуриент",
+      "ЦТ",
+      "ЦЭ",
+      "Скорина",
+      "БГУИР",
+      "Сухого",
+      "БЕЛГут",
+      "БГУ",
+      "БНТУ",
     ],
-    locale: "", //ru_RU
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Союз Вестей - Новости Беларуси и Туркменистана",
-    description: "Последние новости, аналитика и репортажи от Союза Вестей.",
-    images: [""], //https://soyuzvestey.ru/twitter-image.jpg
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+    authors: [{ name: "Союз Вестей", url: SITE_URL }],
+    openGraph: {
+      title: "Союз Вестей - Новости Беларуси и мира",
+      description:
+        "Будьте в курсе последних событий с Союзом Вестей. Новости, аналитика, репортажи и интервью.",
+      url: "/",
+      siteName: "Союз Вестей",
+      images: [
+        {
+          url: "/og-image.jpg",
+          width: 1200,
+          height: 600,
+          alt: "Союз Вестей - Главные новости",
+        },
+      ],
+      locale: locale,
+      type: "website",
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: "Союз Вестей",
+      description: "Последние новости, аналитика и репортажи.",
+      images: ["/og-image.jpg"],
+    },
+
+    robots: {
       index: true,
       follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
     },
-  },
-  alternates: {
-    canonical: "", //https://soyuzvestey.ru
-  },
+
+    alternates: {
+      canonical: "/",
+    },
+  }
 }
 
 export default async function RootLayout({
@@ -75,27 +121,26 @@ export default async function RootLayout({
   children: ReactNode
 }>) {
   const preloadedState = await getPreloadedState()
-
+  const lang = preloadedState.userSlice?.language?.toLowerCase() || "ru"
   return (
-    <html lang={preloadedState.userSlice?.language.toLowerCase()}>
+    <html lang={lang}>
       <body className={`${inter.variable} antialiased`}>
         <div className="root z-[1] flex min-h-screen flex-col">
           <Providers preloadedState={preloadedState}>
             <Header />
             <main className="flex grow flex-col gap-5 py-5 lg:gap-10 lg:py-10">
               <Image
-                src={skorina.src}
-                alt="Скорина"
+                src={skorina}
+                alt="Франциск Скорина"
                 className="center-right-image max-md:hidden"
-                width={5000}
-                height={5000}
+                placeholder="blur"
+                priority
               />
               <Image
-                src={flag.src}
-                alt="Скорина"
+                src={flag}
+                alt="Флаг"
                 className="center-left-image"
-                width={2048}
-                height={3072}
+                priority
               />
               {children}
             </main>
