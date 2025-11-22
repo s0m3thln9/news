@@ -27,7 +27,7 @@ export const NewsListItem: FC<NewsListItemProps> = ({ news }) => {
       </div>
       <div className="flex max-w-[50%] flex-col justify-between">
         <div className="flex flex-col gap-2 sm:gap-10">
-          <h3 className="line-clamp-3 w-full overflow-hidden text-[32px] font-bold break-words max-lg:line-clamp-1 max-lg:text-xl">
+          <h3 className="line-clamp-3 w-full overflow-hidden break-words text-[32px] font-bold max-lg:line-clamp-1 max-lg:text-xl">
             {news.title}
           </h3>
           <p className="line-clamp-3 w-full overflow-hidden break-words max-lg:line-clamp-2 max-lg:text-sm">

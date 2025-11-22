@@ -245,7 +245,7 @@ export const Header = () => {
               priority
             />
           </Box>
-          <Box className="flex max-w-2/3 items-center max-sm:hidden">
+          <Box className="max-w-2/3 flex items-center max-sm:hidden">
             <Image
               src="/flag2.png"
               alt={t("images.headerAlt")}
