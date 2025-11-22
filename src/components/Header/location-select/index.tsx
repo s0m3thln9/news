@@ -88,7 +88,7 @@ export const LocationSelect = () => {
               <Select.Item
                 key={uuid}
                 value={uuid}
-                className="hover:bg-primary-main/10 relative flex cursor-pointer select-none items-center rounded-sm px-3 py-2 text-sm outline-none"
+                className="hover:bg-primary-main/10 relative flex cursor-pointer items-center rounded-sm px-3 py-2 text-sm outline-none select-none"
               >
                 <Select.ItemText className="font-normal">
                   {title}
@@ -101,7 +101,7 @@ export const LocationSelect = () => {
       <Button
         onClick={() => handleLocationSelect(brothers?.uuid || "")}
         className={cn(
-          `relative flex items-center rounded-none px-5 font-bold normal-case text-white transition-all duration-300 ease-in-out max-lg:px-2 max-sm:hidden`,
+          `relative flex items-center rounded-none px-5 font-bold text-white normal-case transition-all duration-300 ease-in-out max-lg:px-2 max-sm:hidden`,
           beforeClass,
           activeTab === "brothers"
             ? "bg-primary-main before:opacity-100"

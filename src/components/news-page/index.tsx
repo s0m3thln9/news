@@ -45,7 +45,7 @@ export const NewsPage: FC<NewsPageProps> = ({ news }) => {
           <ArrowLeftIcon />
           <span>{t("common.back")}</span>
         </div>
-        <h3 className="line-clamp-2 overflow-hidden break-words text-[32px] font-bold max-lg:text-xl">
+        <h3 className="line-clamp-2 overflow-hidden text-[32px] font-bold break-words max-lg:text-xl">
           {news.title}
         </h3>
         <img
