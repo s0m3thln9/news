@@ -36,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
-      url: process.env.NEXT_PUBLIC_HOME_URL || "http://localhost:3000",
+      url: process.env.NEXT_PUBLIC_HOME_URL || "https://soyuzvestey.by",
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1.0,

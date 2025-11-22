@@ -1,7 +1,5 @@
 import { MetadataRoute } from "next"
 
-const SITE_URL = "https://soyuzvestey.by"
-
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: {
@@ -9,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/profile", "/api"],
     },
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    sitemap: `${process.env.NEXT_PUBLIC_HOME_URL}/sitemap.xml`,
   }
 }

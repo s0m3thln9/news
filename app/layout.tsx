@@ -17,8 +17,6 @@ const inter = Inter({
   weight: ["400", "700"],
 })
 
-const SITE_URL = "https://soyuzvestey.by"
-
 const getLocaleCode = (lang: string) => {
   const map: Record<string, string> = {
     ru: "ru_RU",
@@ -33,9 +31,11 @@ export async function generateMetadata(): Promise<Metadata> {
   const locale = getLocaleCode(lang)
 
   return {
-    metadataBase: new URL(SITE_URL),
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_HOME_URL || "https://soyuzvestey.by",
+    ),
     title: {
-      default: "Союз Вестей - Новости России и мира",
+      default: "Союз Вестей - Новости Беларуси и мира",
       template: "%s | Союз Вестей",
     },
     description:
@@ -71,7 +71,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "БГУ",
       "БНТУ",
     ],
-    authors: [{ name: "Союз Вестей", url: SITE_URL }],
+    authors: [{ name: "Союз Вестей", url: process.env.NEXT_PUBLIC_HOME_URL }],
     openGraph: {
       title: "Союз Вестей - Новости Беларуси и мира",
       description:
@@ -80,7 +80,7 @@ export async function generateMetadata(): Promise<Metadata> {
       siteName: "Союз Вестей",
       images: [
         {
-          url: "/og-image.jpg",
+          url: `${process.env.NEXT_PUBLIC_HOME_URL}/og-image.jpg`,
           width: 1200,
           height: 600,
           alt: "Союз Вестей - Главные новости",
@@ -94,7 +94,7 @@ export async function generateMetadata(): Promise<Metadata> {
       card: "summary_large_image",
       title: "Союз Вестей",
       description: "Последние новости, аналитика и репортажи.",
-      images: ["/og-image.jpg"],
+      images: [`${process.env.NEXT_PUBLIC_HOME_URL}/og-image.jpg`],
     },
 
     robots: {
