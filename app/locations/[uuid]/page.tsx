@@ -1,7 +1,38 @@
 import { LocationNewsPage } from "@/components/location-news-page"
+import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getNews, GetNewsQueryParams } from "@/server/services/news-service"
 import { getLocation } from "@/server/services/locations-service"
+
+type Props = {
+  params: Promise<{ uuid: string }>
+  searchParams: Promise<GetNewsQueryParams>
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { uuid } = await params
+  const uuidRegex =
+    /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+  if (!uuid || !uuidRegex.test(uuid)) {
+    return {}
+  }
+
+  const location = await getLocation(uuid)
+
+  if (!location) {
+    return {}
+  }
+
+  return {
+    title: location.title,
+    description: `Новости и события: ${location.title} на портале Союз Вестей`,
+
+    openGraph: {
+      title: `Новости: ${location.title}`,
+      description: `Все актуальные события из региона ${location.title}`,
+    },
+  }
+}
 
 export default async function LocationPage({
   params,
