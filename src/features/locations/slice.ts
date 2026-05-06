@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { LocationWithNews } from "@/types/dto/location-with-news"
 import { NewsDTO } from "@/types/dto/news"
+import { Location } from "@prisma/client"
 
 type InitialState = {
   locations: LocationWithNews[]
@@ -47,6 +48,24 @@ export const locationsSlice = createSlice({
         state.currentLocation.news = action.payload
       }
     },
+    addLocation: (state, action: PayloadAction<Location>) => {
+      state.locations = [...state.locations, { ...action.payload, news: [] }]
+    },
+    removeLocation: (state, action: PayloadAction<string>) => {
+      state.locations = state.locations.filter(
+        (location) => location.uuid !== action.payload,
+      )
+    },
+    updateLocationMeta: (state, action: PayloadAction<Location>) => {
+      state.locations = state.locations.map((location) =>
+        location.uuid === action.payload.uuid
+          ? { ...location, ...action.payload }
+          : location,
+      )
+      if (state.currentLocation?.uuid === action.payload.uuid) {
+        state.currentLocation = { ...state.currentLocation, ...action.payload }
+      }
+    },
     loadMoreNewsToLocation: (state, action: PayloadAction<NewsDTO[]>) => {
       if (!state.currentLocation) return
 
@@ -76,5 +95,8 @@ export const {
   updateLocationWithNews,
   addNewsToLocation,
   loadMoreNewsToLocation,
+  addLocation,
+  removeLocation,
+  updateLocationMeta,
 } = locationsSlice.actions
 export default locationsSlice.reducer

@@ -12,6 +12,7 @@ import {
 const locationsApi = createApi({
   reducerPath: "locationsApi",
   baseQuery: baseQuery("locations"),
+  tagTypes: ["Location"],
   endpoints: (builder) => ({
     getLocations: builder.query<
       ApiResponse<Pagination<Location[]>>,
@@ -22,12 +23,14 @@ const locationsApi = createApi({
         method: "GET",
         params,
       }),
+      providesTags: ["Location"],
     }),
     deleteLocation: builder.mutation<ApiResponse<Location>, string>({
       query: (uuid) => ({
         url: `${uuid}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["Location"],
     }),
     updateLocation: builder.mutation<
       ApiResponse<Location>,
@@ -38,6 +41,7 @@ const locationsApi = createApi({
         method: "PATCH",
         body,
       }),
+      invalidatesTags: ["Location"],
     }),
     createLocation: builder.mutation<
       ApiResponse<Location>,
@@ -48,6 +52,7 @@ const locationsApi = createApi({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["Location"],
     }),
   }),
 })

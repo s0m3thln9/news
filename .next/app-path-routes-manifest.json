@@ -18,10 +18,14 @@
   "/api/user/sign-out/route": "/api/user/sign-out",
   "/api/user/sign-up/route": "/api/user/sign-up",
   "/api/user/update-language/route": "/api/user/update-language",
+  "/apple-icon.png/route": "/apple-icon.png",
   "/favicon.ico/route": "/favicon.ico",
+  "/icon.png/route": "/icon.png",
   "/locations/[uuid]/page": "/locations/[uuid]",
   "/news/page": "/news",
   "/page": "/",
   "/profile/page": "/profile",
+  "/robots.txt/route": "/robots.txt",
+  "/sitemap.xml/route": "/sitemap.xml",
   "/swagger/page": "/swagger"
 }

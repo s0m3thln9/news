@@ -3,7 +3,7 @@
     "7f3819e7a0d46f5040874ca029a32c9ecde6b39b9b": {
       "workers": {
         "app/profile/page": {
-          "moduleId": "5303",
+          "moduleId": "[project]/.next-internal/server/app/profile/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/utils/get-preloaded-state.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "getLanguageFromRequest",
           "filename": "src/utils/get-preloaded-state.ts"
@@ -18,7 +18,7 @@
     "7f49d5342e93ce01569d57cec547a314a7d99d0ce8": {
       "workers": {
         "app/profile/page": {
-          "moduleId": "5303",
+          "moduleId": "[project]/.next-internal/server/app/profile/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/utils/get-preloaded-state.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
           "async": false,
           "exportedName": "getPreloadedState",
           "filename": "src/utils/get-preloaded-state.ts"

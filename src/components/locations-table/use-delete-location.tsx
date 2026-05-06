@@ -1,6 +1,7 @@
 import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { useDeleteLocationMutation } from "@/api/locations"
 import { deleteLocationFromTable } from "@/components/locations-table/slice"
+import { removeLocation } from "@/features/locations/slice"
 
 export const useDeleteLocation = () => {
   const [deleteLocationMutation] = useDeleteLocationMutation()
@@ -11,6 +12,7 @@ export const useDeleteLocation = () => {
       const res = await deleteLocationMutation(data.uuid).unwrap()
       if (res && res.data) {
         dispatch(deleteLocationFromTable(res.data.uuid))
+        dispatch(removeLocation(res.data.uuid))
         refetch()
       }
     } catch (error) {

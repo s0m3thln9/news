@@ -14,6 +14,7 @@ import { NewsWithLocation } from "@/types/dto/news-with-location"
 const newsApi = createApi({
   reducerPath: "newsApi",
   baseQuery: baseQuery("news"),
+  tagTypes: ["News"],
   endpoints: (builder) => ({
     getNews: builder.query<
       ApiResponse<Pagination<NewsDTO[]>>,
@@ -24,6 +25,7 @@ const newsApi = createApi({
         method: "GET",
         params,
       }),
+      providesTags: ["News"],
     }),
     getNewsWithLocation: builder.query<
       ApiResponse<Pagination<NewsWithLocation[]>>,
@@ -34,6 +36,7 @@ const newsApi = createApi({
         method: "GET",
         params,
       }),
+      providesTags: ["News"],
     }),
     createNews: builder.mutation<ApiResponse<NewsDTO[]>, CreateNewsRequestBody>(
       {
@@ -42,6 +45,7 @@ const newsApi = createApi({
           method: "POST",
           body,
         }),
+        invalidatesTags: ["News"],
       },
     ),
     getResentPostUuid: builder.mutation<ApiResponse<string>, void>({
@@ -55,6 +59,7 @@ const newsApi = createApi({
         url: `${uuid}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["News"],
     }),
     updateNews: builder.mutation<
       ApiResponse<NewsDTO>,
@@ -65,12 +70,14 @@ const newsApi = createApi({
         method: "PATCH",
         body,
       }),
+      invalidatesTags: ["News"],
     }),
     togglePin: builder.mutation<ApiResponse<NewsDTO>, { uuid: string }>({
       query: ({ uuid }) => ({
         url: `${uuid}/toggle-pin`,
         method: "POST",
       }),
+      invalidatesTags: ["News"],
     }),
   }),
 })

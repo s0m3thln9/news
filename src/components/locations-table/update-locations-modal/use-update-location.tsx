@@ -2,6 +2,7 @@ import { useAppDispatch } from "@/hooks/use-app-dispatch"
 import { useAppSelector } from "@/hooks/use-app-selector"
 import { useUpdateLocationMutation } from "@/api/locations"
 import { updateLocation } from "@/components/locations-table/slice"
+import { updateLocationMeta } from "@/features/locations/slice"
 import { setEditLocationModalOpen } from "@/components/locations-table/update-locations-modal/slice"
 import { UpdateLocationRequestBody } from "@/server/services/locations-service"
 
@@ -21,6 +22,7 @@ export const useUpdateLocation = () => {
         }).unwrap()
         if (res && res.data) {
           dispatch(updateLocation(res.data))
+          dispatch(updateLocationMeta(res.data))
           dispatch(setEditLocationModalOpen(false))
         }
       } catch (error) {

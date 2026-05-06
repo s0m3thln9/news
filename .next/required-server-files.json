@@ -106,7 +106,7 @@
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "D:\\web\\news",
+    "outputFileTracingRoot": "D:\\web-projects\\news",
     "experimental": {
       "useSkewCookie": false,
       "cacheLife": {
@@ -295,10 +295,10 @@
     "bundlePagesRouterDependencies": false,
     "configFileName": "next.config.ts",
     "turbopack": {
-      "root": "D:\\web\\news"
+      "root": "D:\\web-projects\\news"
     }
   },
-  "appDir": "D:\\web\\news",
+  "appDir": "D:\\web-projects\\news",
   "relativeAppDir": "",
   "files": [
     ".next\\routes-manifest.json",

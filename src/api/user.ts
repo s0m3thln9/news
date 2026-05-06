@@ -16,6 +16,7 @@ import { Pagination } from "@/types/dto/pagination"
 const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: baseQuery("user"),
+  tagTypes: ["User"],
   endpoints: (builder) => ({
     signUpUser: builder.mutation<ApiResponse<UserDTO>, SignUpRequestBody>({
       query: (body) => ({
@@ -60,12 +61,14 @@ const userApi = createApi({
         method: "GET",
         params,
       }),
+      providesTags: ["User"],
     }),
     deleteUser: builder.mutation<ApiResponse<UserDTO>, string>({
       query: (uuid) => ({
         url: `${uuid}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["User"],
     }),
     updateUserAdmin: builder.mutation<
       ApiResponse<UserDTO>,
@@ -76,6 +79,7 @@ const userApi = createApi({
         method: "PATCH",
         body,
       }),
+      invalidatesTags: ["User"],
     }),
     signOutUser: builder.mutation<ApiResponse<null>, void>({
       query: () => ({
